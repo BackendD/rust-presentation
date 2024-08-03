@@ -1,0 +1,202 @@
+
+body {
+    font-family: Vazirmatn, 'PT Sans', sans-serif;
+    min-height: 740px;
+    background-color: #ffd5c6;
+}
+
+li {
+    margin: 0.2em;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+    padding: 0 0.1em;
+    text-shadow: -1px 1px 2px rgba(100, 100, 100, 0.1);
+    border-radius: 0.2em;
+
+    transition: 0.5s;
+}
+
+a:hover,
+a:focus {
+    text-shadow: -1px 3px 2px rgba(100, 100, 100, 0.5);
+}
+
+c {
+    background-color: blue;
+    color: aquamarine;
+}
+
+#rust-logo {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    height: 80%;
+    transform: translate(-50%, -50%);
+    width: auto;
+    display: block;
+    opacity: 0.04;
+}
+
+#rust-robot {
+    position: fixed;
+    z-index: -100;
+    height: 35%;
+    width: auto;
+    opacity: 0.7;
+    transition: opacity 2s;
+    left: 0;
+    bottom: 0;
+}
+
+#sobhan-logo {
+    position: fixed;
+    z-index: -100;
+    height: 70px;
+    width: auto;
+    opacity: 0.9;
+    transition: opacity 2s;
+    right: 10px;
+    bottom: 10px;
+}
+
+.top-header {
+    background-color: blueviolet;
+    color: white;
+    opacity: 0.9;
+    padding: 10px;
+    border-radius: 20px;
+    text-align: center;
+}
+
+/*
+    Make inactive steps a little bit transparent.
+*/
+.impress-enabled .step {
+    margin: 0;
+    opacity: 0.2;
+    transition: opacity 1s;
+    background: rgba(255, 255, 255, 0.6);
+}
+
+.impress-enabled .step.active {
+    opacity: 1
+}
+
+/*
+    These 'slide' step styles were heavily inspired by HTML5 Slides:
+    http://html5slides.googlecode.com/svn/trunk/styles.css
+
+    Note that we also use a background image, again just to facilitate a common
+    feature from PowerPoint and LibreOffice worlds. In this case the background
+    image is just the impress.js favicon - as if it were a company logo or something.
+
+*/
+.slide {
+    position: relative;
+    display: block;
+
+    width: 1850px;
+    height: 1000px;
+    padding: 20px 30px;
+    margin: 20px auto;
+
+    background-color: white;
+    border: 2px solid rgba(0, 0, 0, .3);
+    border-radius: 30px;
+    box-sizing: border-box;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, .1);
+
+    text-shadow: 0 3px 3px rgba(0, 0, 0, .2);
+
+    font-size: 45px;
+    letter-spacing: -2px;
+    line-height: 1.5;
+}
+
+#cover, #vanderbilt, #coffin, #appliance, #enforced {
+    h1, h2, h3 {
+        position: absolute;
+        width: 90%;
+        text-align: center;
+    }
+
+    h1 {
+        top: 50px;
+    }
+
+    h2 {
+        top: 600px;
+    }
+
+    h3 {
+        top: 800px;
+    }
+}
+
+#story {
+    h1 {
+        position: absolute;
+        width: 90%;
+        text-align: center;
+        top: 50px;
+    }
+}
+
+#sheldon-train-conductor {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    height: 70%;
+    transform: translate(-50%, -50%);
+    width: auto;
+    display: block;
+    opacity: 0.5;
+}
+
+#usRailroadMileage {
+    max-height: 100%;
+    max-width: 100%;
+}
+
+#train {
+    display: flex;
+    gap: 20px;
+    /*flex-wrap: wrap;*/
+    justify-content: space-around;
+    /*div {*/
+    /*    flex: 1 1 auto;*/
+    /*}*/
+}
+
+#boxcar {
+    max-height: 100%;
+    /*max-width: 50%;*/
+}
+
+#brakeman {
+    max-height: 100%;
+    /*max-width: 50%;*/
+}
+
+#george-westinghouse, #air-brake {
+    height: 100%;
+}
+
+#westinghouse, #airbrake, #railroad-ad {
+    display: flex;
+    gap: 20px;
+    /*flex-wrap: wrap;*/
+    justify-content: space-between;
+
+    div {
+        flex: 1 1 auto;
+        align-self: flex-end;
+    }
+}
+
+#railroad-ad .div {
+    align-self: flex-end;
+}

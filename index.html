@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Rust</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100..900&display=swap" rel="stylesheet">
+
+    <link href="css/impress-common.css" rel="stylesheet"/>
+    <link href="css/presentation.css" rel="stylesheet"/>
+</head>
+<body class="impress-not-supported">
+
+<!-- Some images that are fixed to background in the css -->
+<img id="rust-logo" src="image/rust-logo.png">
+<img id="rust-robot" src="image/rust-robot.png">
+
+<div id="impress">
+
+    <div id="preview"
+         data-x="10000"
+         data-y="6000"
+         data-z="13500"
+         class="step">
+    </div>
+
+    <div id="cover"
+         data-x="0"
+         data-y="0"
+         data-z="0"
+         class="step slide cover rtl">
+        <h1>معرفی زبان برنامه‌نویسی Rust</h1>
+        <h2>حسن کریمی</h2>
+        <h3>بهار 1403</h3>
+        <img id="sobhan-logo" src="image/sobhan-logo.png">
+    </div>
+
+    <div id="agenda"
+         data-x="2000"
+         class="step slide rtl">
+        <div class="top-header">لیست مباحث</div>
+        <div class="markdown">
+            - [داستان]()
+            - [معرفی]()
+            - [ویژگی‌ها]()
+            - [مایکروسرویس]()
+        </div>
+    </div>
+
+    <div id="story"
+         data-x="4000"
+         class="step slide rtl">
+        <h1>داستان ترمز قطار</h1>
+        <img id="sheldon-train-conductor" src="image/sheldon-train-conductor.png">
+    </div>
+
+    <div id="railroad-mileage"
+         data-y="1100"
+         class="step slide">
+        <canvas id="usRailroadMileage"></canvas>
+    </div>
+
+    <div id="train"
+         data-y="2200"
+         class="step slide rtl">
+        <img id="brakeman" src="image/brakeman.jpg">
+        <img id="boxcar" src="image/boxcar.png">
+    </div>
+
+    <div id="westinghouse"
+         data-y="3300"
+         class="step slide rtl">
+        <img id="george-westinghouse" src="image/george-westinghouse.png">
+        <div class="markdown">
+            ## جورج وستینگ‌هاوس
+            ### 1846 - 1914
+            ### مخترع و کارآفرین
+        </div>
+    </div>
+
+    <div id="airbrake"
+         data-y="4400"
+         class="step slide rtl">
+        <img id="air-brake" src="image/air-brake.jpg">
+        <div class="markdown">
+            ## ترمز بادی قطار
+            ### 1869
+            ### کنترل توسط هوای کمپرس شده از داخل لوکوموتیو
+            ### شبکه بهم پیوسته از لوله‌های هوا
+            ### ترمز همزمان همه واگن‌ها
+            ### طراحی Safe Failure
+        </div>
+    </div>
+
+    <div id="vanderbilt"
+         data-y="5500"
+         class="step slide rtl">
+        <h1>«می‌گی که با باد می‌تونی قطار رو نگه داری؟»</h1>
+        <h3>کرنلیوس وندربیلت، مالک خط آهن سنترال نیویورک</h3>
+    </div>
+
+    <div id="railroad-ad"
+         data-y="6600"
+         class="step slide rtl">
+        <img id="railroad-advertise" src="image/railroad-ad.jpg">
+        <div class="markdown">
+            ### عملکرد سریع این قطار توسط ترمز‌های بادی وستینگ‌هاوس محافظت می‌شود
+        </div>
+    </div>
+
+    <div id="coffin"
+         data-y="7700"
+         class="step slide rtl">
+        <h1>«آنها [کمسیون راه‌آهن] فکر می کردند که این به نوعی یک امر ضروریه، که به طور طبیعی اتفاق می‌افتد و برخی از
+            مردان کشته می‌شوند.»</h1>
+        <h3>لورنزو استفن کافین، کمیسر راه آهن آیووا</h3>
+    </div>
+
+    <div id="appliance"
+         data-y="8800"
+         class="step slide rtl">
+        <h1>1893</h1>
+        <h2>قانون تعبیه اسباب ایمنی راه آهن</h2>
+    </div>
+
+    <div id="enforced"
+         data-y="9900"
+         class="step slide rtl">
+        <h1>1900</h1>
+        <h2>اجرای کامل قانون</h2>
+    </div>
+
+    <div id="basic"
+         data-x="6000"
+         data-y="0"
+         class="step slide rtl">
+        Rust Basic
+    </div>
+
+    <div id="fundamental-types"
+         data-y="1100"
+         class="step slide markdown">
+        # Fundamental Types
+        - i8, i16, i32, i64, i128, u8, u16, u32, u64, u128
+        - isize, usize, f32, f64
+        - bool, char (Unicode character, 32 bits wide), &str, String
+        - struct, enum, Tuple
+    </div>
+
+    <div id="ownership"
+         data-y="2200"
+         class="step slide rtl">
+        Ownership
+    </div>
+
+    <div id="references"
+         data-y="3300"
+         class="step slide rtl">
+        References
+    </div>
+
+    <div id="borrowing"
+         data-y="4400"
+         class="step slide rtl">
+        Borrowing
+    </div>
+
+    <div id="lifetime"
+         data-y="5500"
+         class="step slide rtl">
+        Lifetime
+    </div>
+
+    <div id="expression"
+         data-y="6600"
+         class="step slide rtl">
+        Expression Language
+    </div>
+
+    <div id="advanced"
+         data-x="8000"
+         data-y="0"
+         class="step slide rtl">
+        Rust Advanced
+    </div>
+
+    <div id="error-handling"
+         data-y="1100"
+         class="step slide rtl">
+        Error Handling
+    </div>
+
+    <div id="crates-modules"
+         data-y="2200"
+         class="step slide rtl">
+        Crates and Modules
+    </div>
+
+    <div id="traits"
+         data-y="3300"
+         class="step slide rtl">
+        Traits
+    </div>
+
+    <div id="generics"
+         data-y="4400"
+         class="step slide rtl">
+        Generics
+    </div>
+
+    <div id="closures"
+         data-y="5500"
+         class="step slide rtl">
+        Closures
+    </div>
+
+    <div id="concurrency"
+         data-y="6600"
+         class="step slide rtl">
+        Concurrency
+    </div>
+
+    <div id="async"
+         data-y="7700"
+         class="step slide rtl">
+        Async
+    </div>
+
+    <div id="macros"
+         data-y="8800"
+         class="step slide rtl">
+        Macros
+    </div>
+
+    <div id="unsafe"
+         data-y="9900"
+         class="step slide rtl">
+        Unsafe Code
+    </div>
+
+    <div id="oop"
+         data-x="10000"
+         data-y="0"
+         class="step slide rtl">
+        OOP
+    </div>
+
+    <div id="object"
+         data-y="1100"
+         class="step slide rtl">
+        Object
+    </div>
+
+    <div id="encapsulation"
+         data-y="2200"
+         class="step slide rtl">
+        Encapsulation
+    </div>
+
+    <div id="inheritance"
+         data-y="3300"
+         class="step slide markdown rtl">
+        # وراثت را پشتیبانی نمی‌کند
+        ### دلایل استفاده از وراثت
+        - استفاده مجدد از کد
+        - پولیمورفیسم (چندریختی)
+    </div>
+
+    <div id="reuse"
+         data-x="11000"
+         data-y="3300"
+         data-z="-1000"
+          data-rotate-y="90"
+         class="step slide markdown rtl">
+        # استفاده مجدد از کد
+
+        - قابلیت پیاده‌سازی با استفاده از `default trait method` (بصورت محدود)
+    </div>
+
+    <div id="polymorphism"
+         data-z="-3000"
+          data-rotate-y="90"
+         class="step slide markdown rtl">
+        # پولیمورفیسم (چندریختی):
+
+        جایگذینی آبجکت‌ها به‌جای یکدیگر در زمان اجرا چنانچه مشترکا ویژگی خاصی دارند. کدی که می‌تواند با داده‌های تایپ‌های مختلف (در وراثت، زیرکلاس‌ها) کار کند.
+
+        - استفاده از جنریک‌ها برای انتزاع تایپ‌های مختلف و اعمال محدودیت با استفاده از traitها (bounded parametric polymorphism)
+    </div>
+
+    <div id="web"
+         data-x="12000"
+         data-y="0"
+         data-z="0"
+         class="step slide rtl">
+        Rust Web Development
+    </div>
+
+    <div id="actix"
+         data-y="1100"
+         data-z="0"
+         class="step slide rtl">
+        Actix
+    </div>
+
+    <div id="rust-vs-java"
+         data-x="14000"
+         data-y="0"
+         data-z="0"
+         class="step slide rtl">
+        Rust vs Java
+    </div>
+
+    <div id="rust-vs-go"
+         data-y="1100"
+         class="step slide rtl">
+        Rust vs Go
+    </div>
+
+    <div id="rust-vs-c-and-cpp"
+         data-y="2200"
+         class="step slide rtl">
+        Rust vs C and C++
+    </div>
+
+    <div id="sideline"
+         data-x="16000"
+         data-y="0"
+         data-z="0"
+         class="step slide rtl">
+        حواشی
+    </div>
+
+    <div id="linux"
+         data-y="1100"
+         class="step slide rtl">
+        لینوکس
+    </div>
+
+    <div id="nsa"
+         data-y="2200"
+         class="step slide rtl">
+        توصیه NSA
+    </div>
+
+    <div id="learning-curve"
+         data-y="3300"
+         class="step slide rtl">
+        منحنی یادگیری
+    </div>
+
+    <div id="syntax"
+         data-y="4400"
+         class="step slide rtl">
+        پیچیدگی syntax
+    </div>
+</div>
+
+<div id="impress-toolbar"></div>
+
+<div class="impress-progressbar">
+    <div></div>
+</div>
+<div class="impress-progress"></div>
+
+<div id="impress-help"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="js/markdown.js"></script>
+<script src="js/impress.js"></script>
+<script src="js/us-railroad-mileage.js"></script>
+
+
+<script>impress().init()</script>
+</body>
+</html>
