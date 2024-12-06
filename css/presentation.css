@@ -200,3 +200,23 @@ c {
 #railroad-ad .div {
     align-self: flex-end;
 }
+
+#syntax {
+    h2 {
+        position: absolute;
+        width: 90%;
+        text-align: right;
+        top: 50px;
+    }
+}
+
+#syntax-complexity {
+    position: absolute;
+    top: 50%;
+    left: 10%;
+    height: 98%;
+    transform: translate(-10%, -50%);
+    width: auto;
+    display: block;
+    opacity: 0.95;
+}
