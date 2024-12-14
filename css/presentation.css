@@ -29,6 +29,10 @@ c {
     color: aquamarine;
 }
 
+img {
+    border-radius: 15px;
+}
+
 #rust-logo {
     position: absolute;
     top: 50%;
@@ -199,6 +203,82 @@ c {
 
 #railroad-ad .div {
     align-self: flex-end;
+}
+
+#rust-vs-java, #rust-vs-go, #rust-vs-c-and-cpp {
+    h3 {
+        text-align: center;
+    }
+}
+
+#rust-vs-go {
+    margin: 5px;
+    padding: 5px;
+
+    #discord-blog {
+        font-size: 25px;
+        font-family: FreeMono;
+        position: absolute;
+        bottom: 35px;
+        left: 100px;
+        opacity: 0.5;
+    }
+}
+
+#discord-read-state-overview {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    height: 70%;
+    transform: translate(-50%, -50%);
+    width: auto;
+    display: block;
+    box-shadow: 0 0 10px gray;
+    opacity: 0.8;
+}
+
+#discord-logo {
+    position: absolute;
+    height: 50px;
+    bottom: 30px;
+    left: 30px;
+    width: auto;
+    display: block;
+    opacity: 0.5;
+}
+
+#discord-graph-1 {
+    position: absolute;
+    top: 10px;
+    left: 30px;
+    height: 40%;
+    width: auto;
+    display: block;
+}
+
+#go-gc-force {
+    position: absolute;
+    top: 33%;
+    right: 15px;
+    height: 27%;
+    width: auto;
+    display: block;
+    opacity: 0.95;
+}
+
+#discord-go-result {
+    ul {
+        font-family: "Vazirmatn UI";
+        font-size: 32px;
+        display: block;
+        bottom: 10px;
+    }
+
+    div {
+        position: absolute;
+        bottom: 70px;
+        left: 85px;
+    }
 }
 
 #syntax {
