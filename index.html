@@ -369,19 +369,30 @@
          data-z="-3000"
          data-rotate-y="90"
          class="step slide rtl">
-        <h3>نتایج Rust</h3>
-        انتقال از Go به Rust:
-        حذف برخی از کدها بدلیل فقدان جنریک (در نسخه‌های پایین‌تر از 1.18 - اوایل بهار 2020)
-        حذف کدهای دستی محافظت از حافظه در cross-goroutine
-        حذف لایبرری initial metric بخاطر استفاده از همزمانی Rust
-        کم کردن تعداد کپی از حافظه
+        <h3>انتقال از Go به Rust</h3>
+        <div id="go-to-rust">
+            <ul>
+                <li>حذف برخی از کدها بدلیل فقدان جنریک (در نسخه‌های پایین‌تر از 1.18 - اوایل بهار 2020)</li>
+                <li>حذف کدهای دستی محافظت از حافظه در cross-goroutine</li>
+                <li>حذف لایبرری initial metric بخاطر استفاده از همزمانی Rust</li>
+                <li>کم کردن تعداد کپی از حافظه</li>
+            </ul>
+        </div>
         <img id="discord-graph-2" src="image/discord-graph-2.png">
 
-        افزایش ظرفیت کش LRU تا 8 * 1e6
-        بهینه کردن ساختار ReadState برای استفاده کمتر از حافظه
+        <div id="improve-code">
+            <ul>
+                <li>افزایش ظرفیت کش LRU تا 8 * 1e6</li>
+                <li>بهینه کردن ساختار ReadState برای استفاده کمتر از حافظه</li>
+            </ul>
+        </div>
         <img id="discord-graph-3" src="image/discord-graph-3.png">
 
-        استفاده از ورژن 0.2 لایبرری tokio (رانتایم Async - ورژن فعلی 1.4)
+        <div id="update-dependency">
+            <ul>
+                <li>استفاده از ورژن 0.2 لایبرری tokio (رانتایم Async - ورژن فعلی 1.4)</li>
+            </ul>
+        </div>
         <img id="discord-graph-4" src="image/discord-graph-4.png">
     </div>
 
