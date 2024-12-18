@@ -140,7 +140,7 @@ img {
     }
 }
 
-#story {
+#story{
     h1 {
         position: absolute;
         width: 90%;
@@ -203,6 +203,30 @@ img {
 
 #railroad-ad .div {
     align-self: flex-end;
+}
+
+#cute-rust-logo {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    height: 70%;
+    border-radius: 500px;
+    transform: translate(-50%, -50%);
+    width: auto;
+    display: block;
+    /*opacity: 0.5;*/
+}
+
+#rust-advanced {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    height: 70%;
+    border-radius: 500px;
+    transform: translate(-50%, -50%);
+    width: auto;
+    display: block;
+    /*opacity: 0.5;*/
 }
 
 #rust-vs-java, #rust-vs-go, #rust-vs-c-and-cpp {
