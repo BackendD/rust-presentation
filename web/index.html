@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Rust — توسعه وب</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100..900&display=swap" rel="stylesheet">
+
+    <link href="../css/impress-common.css" rel="stylesheet"/>
+    <link href="../css/presentation.css" rel="stylesheet"/>
+    <link href="../css/presentation-shared.css" rel="stylesheet"/>
+    
+</head>
+<body class="impress-not-supported">
+
+<!-- Top Global Section Navigation -->
+<nav class="presentation-nav">
+    <a href="../advanced/index.html" class="nav-prev-next" title="مفاهیم پیشرفته و OOP">‹ قبلی</a><a href="../index.html">مبانی و تاریخچه</a><a href="../advanced/index.html">مفاهیم پیشرفته و OOP</a><a href="../web/index.html" class="active">توسعه وب</a><a href="../sideline/index.html">مقایسه و حواشی</a><a href="../patterns/index.html">الگوهای طراحی</a><a href="../sideline/index.html" class="nav-prev-next" title="مقایسه و حواشی">بعدی ›</a>
+</nav>
+
+<!-- Fixed background images -->
+<img id="rust-logo" src="../image/rust-logo.png">
+<img id="rust-robot" src="../image/rust-robot.png">
+
+<div id="impress">
+
+    <div id="preview"
+         data-x="0"
+         data-y="1100"
+         data-z="3000"
+         class="step">
+    </div>
+
+<div id="web"
+         data-x="0"
+         data-y="0"
+         data-z="0"
+         class="step slide rtl">
+        <div class="top-header">توسعه وب با Rust</div>
+        <div class="info-box" style="margin-top:18px;">
+            Rust یکی از سریع‌ترین فریمورک‌های وب را دارد — <strong>بدون Garbage Collector</strong>.
+        </div>
+        <ul style="margin-top:16px; font-size:38px;">
+            <li><strong>Actix-web</strong> — پرفرمنس بسیار بالا، Actor model</li>
+            <li><strong>Axum</strong> — ساخته شده روی Tokio، ergonomic API</li>
+            <li><strong>Rocket</strong> — ساده و type-safe، compile-time routing</li>
+            <li><strong>Warp</strong> — Composable filter-based</li>
+            <li><strong>Leptos</strong> / <strong>Yew</strong> — Full-stack / Frontend با WASM</li>
+        </ul>
+        <div class="warn-box" style="margin-top:14px; font-size:34px;">
+            در TechEmpower Benchmark، Actix-web معمولاً در رتبه‌های اول جهان قرار دارد.
+        </div>
+    
+        <div class="notes">مرور اکوسیستم توسعه وب سریع و ایمن در راست؛ فریمورک‌های مطرح و مزیت مصرف ناچیز رم و عدم وجود GC pause.</div>
+    </div>
+
+    <!-- Actix -->
+    
+
+<div id="actix"
+         data-y="1100"
+         data-z="0"
+         class="step slide rtl">
+        <div class="top-header">Actix-web</div>
+        <div class="code-block" style="margin-top:14px;">
+<pre><code class="rust">use actix_web::{web, App, HttpServer, HttpResponse, Responder};
+use serde::{Deserialize, Serialize};
+
+#[derive(Serialize)]
+struct User { id: u32, name: String }
+
+#[derive(Deserialize)]
+struct Query { name: String }
+
+async fn hello(query: web::Query&lt;Query&gt;) -&gt; impl Responder {
+    HttpResponse::Ok().json(User {
+        id: 1,
+        name: query.name.clone(),
+    })
+}
+
+async fn health() -&gt; impl Responder {
+    HttpResponse::Ok().body("سرور سالم است ✅")
+}
+
+#[actix_web::main]
+async fn main() -&gt; std::io::Result&lt;()&gt; {
+    HttpServer::new(|| {
+        App::new()
+            .route("/hello", web::get().to(hello))
+            .route("/health", web::get().to(health))
+    })
+    .bind("127.0.0.1:8080")?
+    .run()
+    .await
+}</code></pre>
+        </div>
+    
+        <div class="notes">معرفی فریمورک بسیار سریع Actix-web و ساختار route handling و تزریق وابستگی در آن.</div>
+    </div>
+
+    <!-- Axum -->
+    
+
+<div id="axum"
+         data-x="0"
+         data-y="2200"
+         data-z="0"
+         class="step slide rtl">
+        <div class="top-header">Axum</div>
+        <div class="info-box" style="margin-top:10px; font-size:33px;">
+            Axum توسط تیم Tokio ساخته شده و از Tower middleware ecosystem استفاده می‌کند.
+        </div>
+        <div class="code-block" style="margin-top:10px;">
+<pre><code class="rust">use axum::{routing::get, Router, Json};
+use serde::Serialize;
+
+#[derive(Serialize)]
+struct Message { text: String }
+
+async fn root() -&gt; Json&lt;Message&gt; {
+    Json(Message { text: "سلام از Axum!".to_string() })
+}
+
+async fn user(
+    axum::extract::Path(id): axum::extract::Path&lt;u32&gt;
+) -&gt; Json&lt;Message&gt; {
+    Json(Message { text: format!("کاربر شماره {}", id) })
+}
+
+#[tokio::main]
+async fn main() {
+    let app = Router::new()
+        .route("/", get(root))
+        .route("/user/:id", get(user));
+
+    let listener =
+        tokio::net::TcpListener::bind("0.0.0.0:3000").await.unwrap();
+    axum::serve(listener, app).await.unwrap();
+}</code></pre>
+        </div>
+    
+        <div class="notes">معرفی فریمورک مدرن و محبوب Axum بر بستر اکوسیستم Tokio و Tower برای وب‌سرویس‌های مقیاس‌پذیر.</div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         COMPARISONS SECTION  (x=14000)
+    ═══════════════════════════════════════════════════════════ -->
+
+    
+
+</div>
+
+<div id="impress-toolbar"></div>
+
+<div class="impress-progressbar">
+    <div></div>
+</div>
+<div class="impress-progress"></div>
+
+<div id="impress-help"></div>
+
+
+<script src="../js/markdown.js"></script>
+<script src="../js/highlight.min.js"></script>
+<script src="../js/impress.js"></script>
+
+<script>
+    // Helper to split highlighted HTML into balanced lines without breaking tags
+    function splitHighlightedLines(html) {
+        var rawLines = html.split(/\r?\n/);
+        if (rawLines.length > 0 && rawLines[rawLines.length - 1].trim() === "") {
+            rawLines.pop();
+        }
+        var stack = [];
+        var processedLines = [];
+
+        for (var i = 0; i < rawLines.length; i++) {
+            var line = rawLines[i];
+            var prefix = stack.join("");
+            var tagRegex = /<\/?([a-zA-Z0-9]+)(?:\s+[^>]*?)?>/g;
+            var match;
+            while ((match = tagRegex.exec(line)) !== null) {
+                var fullTag = match[0];
+                var isClosing = fullTag.indexOf("</") === 0;
+                if (isClosing) {
+                    stack.pop();
+                } else if (fullTag.lastIndexOf("/>") !== fullTag.length - 2) {
+                    stack.push(fullTag);
+                }
+            }
+            var suffix = "";
+            for (var s = stack.length - 1; s >= 0; s--) {
+                var tagName = stack[s].match(/<([a-zA-Z0-9]+)/)[1];
+                suffix += "</" + tagName + ">";
+            }
+            processedLines.push(prefix + line + suffix);
+        }
+        return processedLines;
+    }
+
+    // Function to apply syntax highlighting AND line numbers to all pre code blocks
+    function applySyntaxHighlightingAndLineNumbers() {
+        if (!window.hljs) return;
+
+        // Ensure IDE window header buttons exist in all pre blocks
+        document.querySelectorAll(".code-block pre").forEach(function(pre) {
+            if (!pre.querySelector(".code-header")) {
+                var header = document.createElement("div");
+                header.className = "code-header";
+                header.innerHTML = '<span class="code-btn code-btn-close" title="Close"></span>' +
+                                   '<span class="code-btn code-btn-minimize" title="Minimize"></span>' +
+                                   '<span class="code-btn code-btn-maximize" title="Maximize"></span>' +
+                                   '<span class="code-title">rust</span>';
+                pre.insertBefore(header, pre.firstChild);
+            }
+        });
+
+        document.querySelectorAll("pre code").forEach(function(block) {
+            // Check if already numbered to avoid double-processing
+            if (block.dataset.numbered === "true") return;
+
+            // Highlight syntax
+            if (!block.classList.contains("rust") && !block.className.includes("language-")) {
+                block.classList.add("language-rust");
+            }
+            hljs.highlightElement(block);
+
+            // Add line numbers with gutter
+            var lines = splitHighlightedLines(block.innerHTML);
+            var numberedHtml = lines.map(function(lineHtml, idx) {
+                var lineNum = idx + 1;
+                var content = lineHtml || "&nbsp;";
+                return '<span class="code-line">' +
+                       '<span class="line-number" data-line="' + lineNum + '">' + lineNum + '</span>' +
+                       '<span class="line-content">' + content + '</span>' +
+                       '</span>';
+            }).join("");
+
+            block.innerHTML = numberedHtml;
+            block.dataset.numbered = "true";
+        });
+    }
+
+    // Run on page load
+    applySyntaxHighlightingAndLineNumbers();
+
+    // Re-check on impress navigation to ensure any dynamic/rendered slide is properly styled
+    document.addEventListener("impress:stepenter", function(event) {
+        applySyntaxHighlightingAndLineNumbers();
+    });
+
+    impress().init();
+</script>
+</body>
+</html>

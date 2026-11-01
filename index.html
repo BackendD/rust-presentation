@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Rust</title>
+    <title>Rust — معرفی و مبانی پایه</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -9,256 +9,28 @@
 
     <link href="css/impress-common.css" rel="stylesheet"/>
     <link href="css/presentation.css" rel="stylesheet"/>
-
-    <style>
-        /* ── Professional Light IDE Code Block Styling (VS Code Light+ Inspired) ── */
-        .code-block {
-            direction: ltr;
-            text-align: left;
-            position: relative;
-        }
-        .code-block pre {
-            background: #ffffff;
-            color: #000000;
-            border-radius: 14px;
-            padding: 20px 24px;
-            margin: 12px 0;
-            overflow-x: auto;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.05);
-            border: 1px solid #d4d4d8;
-            position: relative;
-        }
-        /* IDE Window Header (macOS / VS Code light style) */
-        .code-header {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 14px;
-            padding-bottom: 8px;
-            border-bottom: 1px solid #f0f0f2;
-            user-select: none;
-            -webkit-user-select: none;
-        }
-        /* Code block control buttons: strictly circular, aspect-ratio 1/1 */
-        .code-btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 14px;
-            height: 14px;
-            min-width: 14px;
-            min-height: 14px;
-            max-width: 14px;
-            max-height: 14px;
-            aspect-ratio: 1 / 1;
-            flex-shrink: 0;
-            border-radius: 50%;
-            box-sizing: border-box;
-            border: none;
-            padding: 0;
-            margin: 0;
-            cursor: pointer;
-            transition: transform 0.15s ease, filter 0.15s ease;
-        }
-        .code-btn:hover {
-            filter: brightness(0.92);
-            transform: scale(1.08);
-        }
-        .code-btn-close {
-            background-color: #ff5f56;
-            box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.2);
-        }
-        .code-btn-minimize {
-            background-color: #ffbd2e;
-            box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.2);
-        }
-        .code-btn-maximize {
-            background-color: #27c93f;
-            box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.2);
-        }
-        .code-title {
-            margin-left: 8px;
-            font-size: 14px;
-            font-weight: 600;
-            color: #64748b;
-            font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-        }
-        .code-block pre code,
-        pre code.hljs {
-            font-family: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', 'Consolas', 'Courier New', monospace;
-            font-size: 21px;
-            line-height: 1.55;
-            letter-spacing: 0;
-            background: transparent !important;
-            padding: 0 !important;
-            display: table !important;
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        /* ── IDE Line Numbers & Light-Gray Gutter ── */
-        .code-line {
-            display: table-row;
-            line-height: 1.55;
-        }
-        .code-line:hover {
-            background-color: #f8fafc;
-        }
-        .line-number {
-            display: table-cell;
-            user-select: none;
-            -webkit-user-select: none;
-            text-align: right;
-            padding-right: 20px;
-            padding-left: 4px;
-            color: #8da0b3; /* Professional soft muted gray */
-            font-size: 19px;
-            font-weight: 500;
-            vertical-align: top;
-            width: 1%;
-            white-space: nowrap;
-            border-right: 1.5px solid #e2e8f0;
-            background-color: #fbfcfe;
-        }
-        .line-content {
-            display: table-cell;
-            padding-left: 20px;
-            vertical-align: top;
-            white-space: pre;
-            color: #0f172a; /* High-contrast crisp dark text */
-        }
-
-        /* ── Professional Light IDE Syntax Highlighting (VS Code Light+) ── */
-        .hljs {
-            color: #0f172a;
-            background: transparent;
-        }
-        /* Keywords (fn, let, mut, struct, impl, trait, pub, return, match, if, else, loop, for, in, move) */
-        .hljs-keyword,
-        .hljs-selector-tag {
-            color: #0000ff !important; /* Classic VS Code Light royal blue */
-            font-weight: 600;
-        }
-        /* Types & Built-ins (i32, u64, String, Vec, Option, Result, bool, &str, Box, Arc, Mutex) */
-        .hljs-type,
-        .hljs-built_in,
-        .hljs-class .hljs-title,
-        .hljs-title.class_ {
-            color: #267f99 !important; /* Deep ocean teal */
-            font-weight: 600;
-        }
-        /* Function & Method definitions & calls */
-        .hljs-function,
-        .hljs-title.function_,
-        .hljs-title {
-            color: #795e26 !important; /* Deep amber gold */
-            font-weight: 600;
-        }
-        /* Strings */
-        .hljs-string {
-            color: #a31515 !important; /* Warm crimson red */
-        }
-        /* Numbers */
-        .hljs-number {
-            color: #098658 !important; /* Vibrant forest green */
-            font-weight: 500;
-        }
-        /* Lifetimes & Symbols ('a, &mut, ::) */
-        .hljs-symbol {
-            color: #001080 !important;
-            font-style: italic;
-            font-weight: 600;
-        }
-        /* Comments */
-        .hljs-comment,
-        .hljs-quote {
-            color: #008000 !important; /* Crisp emerald comment green */
-            font-style: italic;
-        }
-        /* Macros & Attributes (#[derive], #[tokio::main], println!, format!) */
-        .hljs-meta,
-        .hljs-meta .hljs-keyword,
-        .hljs-meta .hljs-string {
-            color: #811f3f !important; /* Rich wine berry */
-            font-weight: 500;
-        }
-        /* Variables, parameters & properties */
-        .hljs-variable,
-        .hljs-params,
-        .hljs-attr {
-            color: #001080 !important; /* Deep navy */
-        }
-        /* Literals (true, false, None, Some, Ok, Err) */
-        .hljs-literal {
-            color: #0000ff !important;
-            font-weight: 600;
-        }
-        /* Operators & punctuation */
-        .hljs-operator,
-        .hljs-punctuation {
-            color: #000000 !important;
-        }
-
-        /* Two-column layout helper */
-        .two-col {
-            display: flex;
-            gap: 20px;
-        }
-        .two-col > * { flex: 1 1 0; }
-
-        /* Comparison table */
-        .cmp-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 34px;
-            direction: rtl;
-        }
-        .cmp-table th {
-            background: #5e2d91;
-            color: white;
-            padding: 8px 14px;
-        }
-        .cmp-table td {
-            border: 1px solid #ccc;
-            padding: 7px 14px;
-            vertical-align: top;
-        }
-        .cmp-table tr:nth-child(even) td { background: #f5f0ff; }
-
-        /* Bullet list font-size override for dense slides */
-        .dense ul { font-size: 36px; line-height: 1.4; }
-        .dense li { margin: 0.1em 0; }
-
-        /* Info box */
-        .info-box {
-            background: #e8f4fd;
-            border-right: 6px solid #2196F3;
-            border-radius: 10px;
-            padding: 14px 20px;
-            margin: 12px 0;
-            font-size: 36px;
-        }
-        .warn-box {
-            background: #fff3e0;
-            border-right: 6px solid #FF9800;
-            border-radius: 10px;
-            padding: 14px 20px;
-            margin: 12px 0;
-            font-size: 36px;
-        }
-    </style>
+    <link href="css/presentation-shared.css" rel="stylesheet"/>
+    
 </head>
 <body class="impress-not-supported">
 
-<!-- Some images that are fixed to background in the css -->
+<!-- Top Global Section Navigation -->
+<nav class="presentation-nav">
+    <a href="index.html" class="active">مبانی و تاریخچه</a>
+    <a href="advanced/index.html">مفاهیم پیشرفته و OOP</a>
+    <a href="web/index.html">توسعه وب</a>
+    <a href="sideline/index.html">مقایسه و حواشی</a>
+    <a href="patterns/index.html">الگوهای طراحی</a>
+    <a href="advanced/index.html" class="nav-prev-next" title="مفاهیم پیشرفته و OOP">بعدی ›</a>
+</nav>
+
+<!-- Fixed background images -->
 <img id="rust-logo" src="image/rust-logo.png">
 <img id="rust-robot" src="image/rust-robot.png">
 
 <div id="impress">
 
-    <div id="preview"
+<div id="preview"
          data-x="10000"
          data-y="5400"
          data-z="13500"
@@ -271,7 +43,9 @@
          COVER + AGENDA
     ═══════════════════════════════════════════════════════════ -->
 
-    <div id="cover"
+    
+
+<div id="cover"
          data-x="0"
          data-y="0"
          data-z="0"
@@ -284,7 +58,9 @@
         <div class="notes">خوش‌آمدگویی و معرفی ارائه: زبان برنامه‌نویسی راست، اهداف طراحی، ایمنی حافظه بدون زباله‌روب و همزمانی بدون ترس.</div>
     </div>
 
-    <div id="agenda"
+    
+
+<div id="agenda"
          data-x="2000"
          class="step slide rtl">
         <div class="top-header">لیست مباحث</div>
@@ -306,7 +82,9 @@
          STORY SECTION  (PRESERVED EXACTLY)
     ═══════════════════════════════════════════════════════════ -->
 
-    <div id="story"
+    
+
+<div id="story"
          data-x="4000"
          class="step slide rtl">
         <img id="sheldon-train-conductor" src="image/sheldon-train-conductor.png">
@@ -315,7 +93,9 @@
         <div class="notes">شروع با یک تمثیل تاریخی: داستان اختراع ترمز هوایی قطار و مقایسه آن با انقلاب ایمنی در برنامه‌نویسی سیستم‌ها.</div>
     </div>
 
-    <div id="railroad-mileage"
+    
+
+<div id="railroad-mileage"
          data-y="1100"
          class="step slide">
         <canvas id="usRailroadMileage"></canvas>
@@ -323,7 +103,9 @@
         <div class="notes">رشد انفجاری خطوط آهن آمریکا در قرن نوزدهم و افزایش چشمگیر حوادث مرگبار ناشی از سرعت و فقدان ترمز ایمن.</div>
     </div>
 
-    <div id="train"
+    
+
+<div id="train"
          data-y="2200"
          class="step slide rtl">
         <img id="brakeman" src="image/brakeman.jpg">
@@ -332,7 +114,9 @@
         <div class="notes">ترمزبان‌ها در شرایط خطرناک دستی واگن‌ها را متوقف می‌کردند که به مرگ‌ومیر فراوان منجر می‌شد.</div>
     </div>
 
-    <div id="westinghouse"
+    
+
+<div id="westinghouse"
          data-y="3300"
          class="step slide rtl">
         <img id="george-westinghouse" src="image/george-westinghouse.png">
@@ -345,7 +129,9 @@
         <div class="notes">معرفی جورج وستینگ‌هاوس: مخترع ترمز بادی در سال ۱۸۶۹ که ایمنی را سیستمی و خودکار کرد.</div>
     </div>
 
-    <div id="airbrake"
+    
+
+<div id="airbrake"
          data-y="4400"
          class="step slide rtl">
         <img id="air-brake" src="image/air-brake.jpg">
@@ -361,7 +147,9 @@
         <div class="notes">مکانیزم طراحی fail-safe: اگر لوله‌ای بشکند، هوا تخلیه شده و قطار خودکار متوقف می‌شود. مشابه ایمنی زمان کامپایل در راست.</div>
     </div>
 
-    <div id="vanderbilt"
+    
+
+<div id="vanderbilt"
          data-y="5500"
          class="step slide rtl">
         <h1>«می‌گی که با باد می‌تونی قطار رو نگه داری؟»</h1>
@@ -370,7 +158,9 @@
         <div class="notes">مقاومت اولیه صنعتگران در برابر فناوری جدید: وندربیلت ابتدا ایده ترمز با هوا را به تمسخر گرفت.</div>
     </div>
 
-    <div id="railroad-ad"
+    
+
+<div id="railroad-ad"
          data-y="6600"
          class="step slide rtl">
         <img id="railroad-advertise" src="image/railroad-ad.jpg">
@@ -381,7 +171,9 @@
         <div class="notes">تبلیغات قطارهای ایمن؛ ترمز وستینگ‌هاوس به یک استاندارد غیرقابل چشم‌پوشی تبدیل شد.</div>
     </div>
 
-    <div id="coffin"
+    
+
+<div id="coffin"
          data-y="7700"
          class="step slide rtl">
         <h1>«آنها [کمسیون راه‌آهن] فکر می کردند که این به نوعی یک امر ضروریه، که به طور طبیعی اتفاق می‌افتد و برخی از
@@ -391,7 +183,9 @@
         <div class="notes">دیدگاه رایج پیشین: مرگ ترمزبانان امری اجتناب‌ناپذیر پنداشته می‌شد، درست مانند پذیرش باگ‌های حافظه در C و C++.</div>
     </div>
 
-    <div id="appliance"
+    
+
+<div id="appliance"
          data-y="8800"
          class="step slide rtl">
         <h1>1893</h1>
@@ -400,7 +194,9 @@
         <div class="notes">قانون ۱۸۹۳: تصویب اجباری شدن اسباب ایمنی و ترمزهای خودکار در سطح فدرال.</div>
     </div>
 
-    <div id="enforced"
+    
+
+<div id="enforced"
          data-y="9900"
          class="step slide rtl">
         <h1>1900</h1>
@@ -413,7 +209,9 @@
          BASIC SECTION  (x=6000)
     ═══════════════════════════════════════════════════════════ -->
 
-    <div id="basic"
+    
+
+<div id="basic"
          data-x="6000"
          data-y="0"
          class="step slide">
@@ -424,7 +222,9 @@
     </div>
 
     <!-- Fundamental Types -->
-    <div id="fundamental-types"
+    
+
+<div id="fundamental-types"
          data-y="1100"
          class="step slide rtl dense">
         <div class="top-header">انواع پایه در Rust</div>
@@ -459,7 +259,9 @@ let tup: (i32, bool) = (10, true);</code></pre>
     </div>
 
     <!-- Ownership -->
-    <div id="ownership"
+    
+
+<div id="ownership"
          data-y="2200"
          class="step slide rtl">
         <div class="top-header">مالکیت (Ownership)</div>
@@ -488,7 +290,9 @@ println!("{} {}", s3, s4); // ✅</code></pre>
     </div>
 
     <!-- References -->
-    <div id="references"
+    
+
+<div id="references"
          data-y="3300"
          class="step slide rtl">
         <div class="top-header">ارجاع‌ها (References)</div>
@@ -516,7 +320,9 @@ fn main() {
     </div>
 
     <!-- Borrowing -->
-    <div id="borrowing"
+    
+
+<div id="borrowing"
          data-y="4400"
          class="step slide rtl">
         <div class="top-header">قوانین وام‌گیری (Borrowing)</div>
@@ -553,7 +359,9 @@ r3.push(4);
     </div>
 
     <!-- Lifetime -->
-    <div id="lifetime"
+    
+
+<div id="lifetime"
          data-y="5500"
          class="step slide rtl">
         <div class="top-header">طول عمر (Lifetime)</div>
@@ -583,7 +391,9 @@ fn main() {
     </div>
 
     <!-- Expression Language -->
-    <div id="expression"
+    
+
+<div id="expression"
          data-y="6600"
          class="step slide rtl">
         <div class="top-header">زبان مبتنی بر عبارت (Expression-Based)</div>
@@ -618,1347 +428,9 @@ println!("{}", grade);</code></pre>
          ADVANCED SECTION  (x=8000)
     ═══════════════════════════════════════════════════════════ -->
 
-    <div id="advanced"
-         data-x="8000"
-         data-y="0"
-         class="step slide">
-        <h1>Rust Advanced</h1>
-        <img id="rust-advanced" src="image/rust-advanced.webp">
     
-        <div class="notes">ورود به بخش مفاهیم پیشرفته: مدیریت خطا، پکیج منیجر Cargo، تریت‌ها، جنریک‌ها، همزمانی و کد ناایمن.</div>
-    </div>
 
-    <!-- Error Handling -->
-    <div id="error-handling"
-         data-y="1100"
-         class="step slide rtl">
-        <div class="top-header">مدیریت خطا (Error Handling)</div>
-        <div class="two-col" style="margin-top:10px;">
-            <ul style="font-size:34px;">
-                <li><code>Result&lt;T, E&gt;</code> — برای خطاهای قابل بازیابی</li>
-                <li><code>Option&lt;T&gt;</code> — برای مقادیر اختیاری</li>
-                <li>عملگر <code>?</code> — انتشار خطا به caller</li>
-                <li><code>panic!</code> — برای خطاهای غیرقابل بازیابی</li>
-                <li>بدون exception — همه چیز صریح است</li>
-            </ul>
-            <div class="code-block">
-<pre><code class="rust">fn divide(a: f64, b: f64)
-    -&gt; Result&lt;f64, String&gt;
-{
-    if b == 0.0 {
-        Err(String::from("تقسیم بر صفر"))
-    } else {
-        Ok(a / b)
-    }
-}
-
-fn main() -&gt; Result&lt;(),
-    Box&lt;dyn std::error::Error&gt;&gt;
-{
-    let res = divide(10.0, 2.0)?;
-    println!("نتیجه: {}", res);
-    Ok(())
-}</code></pre>
-            </div>
-        </div>
-    
-        <div class="notes">مدیریت خطای صریح با Result و Option؛ عدم وجود null و exception سنتی، و کارایی عملگر علامت سوال.</div>
-    </div>
-
-    <!-- Crates & Modules -->
-    <div id="crates-modules"
-         data-y="2200"
-         class="step slide rtl">
-        <div class="top-header">Crate ها و ماژول‌ها</div>
-        <div class="two-col" style="margin-top:14px;">
-            <ul style="font-size:34px;">
-                <li><strong>Cargo</strong> — ابزار ساخت و مدیریت وابستگی‌ها</li>
-                <li><strong>crates.io</strong> — مخزن مرکزی کتابخانه‌ها</li>
-                <li><strong>Crate</strong> — واحد کامپایل (binary یا library)</li>
-                <li><strong>Module</strong> — فضای نام با کلیدواژه <code>mod</code></li>
-                <li><strong>pub</strong> — دید عمومی</li>
-                <li><strong>use</strong> — وارد کردن به scope</li>
-            </ul>
-            <div class="code-block">
-<pre><code class="rust">// Cargo.toml
-// [dependencies]
-// serde = { version = "1", features = ["derive"] }
-// tokio = { version = "1", features = ["full"] }
-
-mod math {
-    pub fn add(a: i32, b: i32) -&gt; i32 {
-        a + b
-    }
-    fn secret() -&gt; i32 { 42 } // خصوصی
-}
-
-use math::add;
-fn main() {
-    println!("{}", add(2, 3)); // 5
-}</code></pre>
-            </div>
-        </div>
-    
-        <div class="notes">اکوسیستم ماژول‌ها و کریت‌ها در زبان راست و نقش محوری ابزار Cargo در مدیریت بسته‌ها و تست‌ها.</div>
-    </div>
-
-    <!-- Traits -->
-    <div id="traits"
-         data-y="3300"
-         class="step slide rtl">
-        <div class="top-header">Trait ها</div>
-        <div class="info-box" style="margin-top:10px; font-size:34px;">
-            Trait مجموعه‌ای از متدها را تعریف می‌کند که تایپ‌ها باید پیاده‌سازی کنند — شبیه interface.
-        </div>
-        <div class="code-block">
-<pre><code class="rust">trait Animal {
-    fn name(&amp;self) -&gt; &amp;str;
-    fn speak(&amp;self) -&gt; String;
-    fn description(&amp;self) -&gt; String { // متد پیش‌فرض
-        format!("{} می‌گوید: {}", self.name(), self.speak())
-    }
-}
-
-struct Dog;
-impl Animal for Dog {
-    fn name(&amp;self) -&gt; &amp;str { "سگ" }
-    fn speak(&amp;self) -&gt; String { String::from("هاو هاو") }
-}
-
-fn make_sound(a: &amp;dyn Animal) {  // trait object
-    println!("{}", a.description());
-}
-
-fn main() {
-    let dog = Dog;
-    make_sound(&amp;dog); // سگ می‌گوید: هاو هاو
-}</code></pre>
-        </div>
-    
-        <div class="notes">تریت‌ها به عنوان قراردادهای رفتاری در راست؛ نقش آن‌ها به جای رابط‌ها (interfaces) و پیاده‌سازی متدهای پیش‌فرض.</div>
-    </div>
-
-    <!-- Generics -->
-    <div id="generics"
-         data-y="4400"
-         class="step slide rtl">
-        <div class="top-header">جنریک‌ها (Generics)</div>
-        <div class="info-box" style="margin-top:10px; font-size:34px;">
-            جنریک‌ها بدون هزینه زمان اجرا — کامپایلر برای هر تایپ کد اختصاصی تولید می‌کند (monomorphization).
-        </div>
-        <div class="code-block">
-<pre><code class="rust">// تابع جنریک با قید Trait
-fn largest&lt;T: PartialOrd&gt;(list: &amp;[T]) -&gt; &amp;T {
-    let mut max = &amp;list[0];
-    for item in list {
-        if item &gt; max { max = item; }
-    }
-    max
-}
-
-// ساختار جنریک
-struct Pair&lt;T&gt; {
-    first: T,
-    second: T,
-}
-
-impl&lt;T: std::fmt::Display&gt; Pair&lt;T&gt; {
-    fn show(&amp;self) {
-        println!("({}, {})", self.first, self.second);
-    }
-}
-
-fn main() {
-    let nums = vec![34, 50, 25, 100, 65];
-    println!("بزرگترین: {}", largest(&amp;nums));
-}</code></pre>
-        </div>
-    
-        <div class="notes">جنریک‌ها برای انتزاع نوع بدون افت کارایی با تکیه بر Monomorphization در زمان کامپایل (Zero-cost abstraction).</div>
-    </div>
-
-    <!-- Closures -->
-    <div id="closures"
-         data-y="5500"
-         class="step slide rtl">
-        <div class="top-header">بستارها (Closures)</div>
-        <div class="info-box" style="margin-top:10px; font-size:34px;">
-            Closure توابع ناشناسی هستند که می‌توانند متغیرهای محیط اطراف خود را <em>capture</em> کنند.
-        </div>
-        <div class="code-block">
-<pre><code class="rust">fn apply&lt;F: Fn(i32) -&gt; i32&gt;(f: F, x: i32) -&gt; i32 {
-    f(x)
-}
-
-fn main() {
-    let factor = 3;
-    let multiply = |n| n * factor; // capture by reference
-
-    println!("{}", apply(multiply, 5)); // 15
-
-    // تبدیل با iterator + closure
-    let nums = vec![1, 2, 3, 4, 5];
-    let evens: Vec&lt;i32&gt; = nums.iter()
-        .filter(|&amp;&amp;x| x % 2 == 0)
-        .map(|&amp;x| x * x)
-        .collect();
-    println!("{:?}", evens); // [4, 16]
-}
-
-// سه نوع Closure Trait:
-// Fn     — capture by reference (چندین بار قابل فراخوانی)
-// FnMut  — capture by mutable reference
-// FnOnce — capture by value (یک بار قابل فراخوانی)</code></pre>
-        </div>
-    
-        <div class="notes">کلوزرهای راست و سه تریت Fn، FnMut و FnOnce برای مدیریت نحوه کپچر متغیرها از محیط اطراف.</div>
-    </div>
-
-    <!-- Concurrency -->
-    <div id="concurrency"
-         data-y="6600"
-         class="step slide rtl">
-        <div class="top-header">همزمانی (Concurrency)</div>
-        <div class="info-box" style="margin-top:8px; font-size:33px;">
-            Rust با ضمانت‌های کامپایلی از <strong>data race</strong> جلوگیری می‌کند — <em>fearless concurrency</em>.
-        </div>
-        <div class="code-block">
-<pre><code class="rust">use std::sync::{Arc, Mutex};
-use std::thread;
-
-fn main() {
-    let counter = Arc::new(Mutex::new(0));
-    let mut handles = vec![];
-
-    for _ in 0..10 {
-        let c = Arc::clone(&amp;counter);
-        handles.push(thread::spawn(move || {
-            *c.lock().unwrap() += 1;
-        }));
-    }
-    for h in handles { h.join().unwrap(); }
-    println!("نتیجه: {}", *counter.lock().unwrap()); // 10
-}
-
-// channel برای ارسال پیام بین thread‌ها
-use std::sync::mpsc;
-let (tx, rx) = mpsc::channel();
-thread::spawn(move || { tx.send("سلام").unwrap(); });
-println!("{}", rx.recv().unwrap());</code></pre>
-        </div>
-    
-        <div class="notes">همزمانی بدون ترس (Fearless Concurrency)؛ استفاده از Arc و Mutex به همراه چک‌های کامپایلر Send و Sync.</div>
-    </div>
-
-    <!-- Async -->
-    <div id="async"
-         data-y="7700"
-         class="step slide rtl">
-        <div class="top-header">برنامه‌نویسی ناهمزمان (Async / Await)</div>
-        <div class="info-box" style="margin-top:8px; font-size:33px;">
-            <code>async</code>/<code>await</code> برنامه‌نویسی ناهمزمان را به سبک sync می‌نویسد. <strong>Tokio</strong> پرکاربردترین async runtime است.
-        </div>
-        <div class="code-block">
-<pre><code class="rust">use std::time::Duration;
-use tokio::time::sleep;
-
-#[tokio::main]
-async fn main() {
-    let result = fetch_data().await;
-    println!("{}", result);
-    
-    // اجرای موازی چند Future
-    let (a, b) = tokio::join!(
-        fetch_data(),
-        fetch_data()
-    );
-    println!("{} — {}", a, b);
-}
-
-async fn fetch_data() -&gt; String {
-    sleep(Duration::from_millis(100)).await;
-    String::from("داده دریافت شد")
-}</code></pre>
-        </div>
-    
-        <div class="notes">برنامه‌نویسی ناهمزمان و مدل غیرفعال (lazy) در راست با تکیه بر فیوچرها و رانتایم قدرتمند Tokio.</div>
-    </div>
-
-    <!-- Pin -->
-    <div id="pin"
-         data-x="9000"
-         data-z="-1000"
-         data-rotate-y="90"
-         class="step slide rtl">
-        <div class="top-header">Pin&lt;P&gt;</div>
-        <div class="info-box" style="margin-top:14px; font-size:34px;">
-            <code>Pin&lt;P&gt;</code> تضمین می‌کند که مقداری که pointer به آن اشاره می‌کند در حافظه <strong>جابه‌جا نمی‌شود</strong>.
-            این برای self-referential structure‌ها در async/await ضروری است.
-        </div>
-        <ul style="margin-top:16px; font-size:36px;">
-            <li><code>Unpin</code> — تایپ‌هایی که جابه‌جایی آن‌ها ایمن است (اکثر تایپ‌ها)</li>
-            <li><code>!Unpin</code> — تایپ‌هایی که نباید جابه‌جا شوند (مثل <code>Future</code>های پیچیده)</li>
-            <li><code>Pin::new()</code> — برای تایپ‌های <code>Unpin</code></li>
-            <li><code>Box::pin()</code> — برای pin کردن روی heap</li>
-        </ul>
-        <div class="code-block">
-<pre><code class="rust">use std::pin::Pin;
-// async fn خودکار Future ای تولید می‌کند که !Unpin است
-// executor باید آن را pin کند قبل از poll
-async fn example() { /* ... */ }
-let fut = Box::pin(example());</code></pre>
-        </div>
-    
-        <div class="notes">مفهوم Pinning برای جلوگیری از جابه‌جایی مقادیر خودارجاع‌دهنده در حافظه که در استیت‌ماشین‌های async الزامی است.</div>
-    </div>
-
-    <!-- Macros -->
-    <div id="macros"
-         data-x="8000"
-         data-y="8800"
-         data-z="0"
-         class="step slide rtl">
-        <div class="top-header">ماکروها (Macros)</div>
-        <div class="two-col" style="margin-top:10px;">
-            <div>
-                <p style="font-size:36px;"><strong>ماکروهای اعلانی (macro_rules!)</strong></p>
-                <div class="code-block">
-<pre><code class="rust">macro_rules! say_hello {
-    () =&gt; {
-        println!("سلام Rust!");
-    };
-    ($name:expr) =&gt; {
-        println!("سلام {}!", $name);
-    };
-}
-
-say_hello!();          // سلام Rust!
-say_hello!("دنیا");   // سلام دنیا!</code></pre>
-                </div>
-            </div>
-            <div>
-                <p style="font-size:36px;"><strong>ماکروهای رویه‌ای (Procedural)</strong></p>
-                <ul style="font-size:32px;">
-                    <li><code>#[derive(...)]</code> — تولید خودکار کد</li>
-                    <li><code>derive(Debug, Clone, Serialize)</code></li>
-                    <li>Attribute macros — تغییر آیتم</li>
-                    <li>Function-like macros — مثل <code>vec![]</code></li>
-                </ul>
-                <div class="code-block">
-<pre><code class="rust">#[derive(Debug, Clone)]
-struct Point {
-    x: f64,
-    y: f64,
-}
-let p = Point { x:1.0, y:2.0 };
-println!("{:?}", p);</code></pre>
-                </div>
-            </div>
-        </div>
-    
-        <div class="notes">سیستم متامارکتینگ راست: تفاوت ماکروهای اعلانی (macro_rules!) با ماکروهای رویه‌ای (Procedural Macros).</div>
-    </div>
-
-    <!-- Unsafe -->
-    <div id="unsafe"
-         data-y="9900"
-         class="step slide rtl">
-        <div class="top-header">کد ناایمن (Unsafe)</div>
-        <div class="warn-box" style="margin-top:12px; font-size:34px;">
-            <code>unsafe</code> مسئولیت ایمنی حافظه را به برنامه‌نویس می‌سپارد — با احتیاط استفاده کنید.
-        </div>
-        <div class="two-col" style="margin-top:10px;">
-            <div>
-                <p style="font-size:34px;"><strong>در unsafe می‌توانید:</strong></p>
-                <ul style="font-size:30px;">
-                    <li>dereference raw pointer</li>
-                    <li>فراخوانی تابع unsafe</li>
-                    <li>دسترسی/تغییر متغیر static قابل تغییر</li>
-                    <li>پیاده‌سازی unsafe trait</li>
-                    <li>دسترسی به فیلد union</li>
-                </ul>
-            </div>
-            <div class="code-block">
-<pre><code class="rust">fn main() {
-    let mut num = 5;
-    // raw pointer ساختن
-    let r1 = &amp;num as *const i32;
-    let r2 = &amp;mut num as *mut i32;
-
-    unsafe {
-        println!("r1: {}", *r1);
-        *r2 = 10;
-        println!("r2: {}", *r2);
-    }
-}
-
-unsafe fn dangerous() {
-    println!("این تابع ناایمن است");
-}</code></pre>
-            </div>
-        </div>
-    
-        <div class="notes">مرز ایمنی راست: ۵ قدرت خاص در بلاک unsafe و مسئولیت خطیر توسعه‌دهنده در حفظ تغییرناپذیرهای حافظه.</div>
-    </div>
-
-    <!-- FFI -->
-    <div id="ffi"
-         data-y="11000"
-         class="step slide rtl">
-        <div class="top-header">رابط توابع خارجی (FFI)</div>
-        <div class="info-box" style="margin-top:10px; font-size:34px;">
-            FFI امکان فراخوانی کد C از Rust و بالعکس را فراهم می‌کند.
-        </div>
-        <div class="two-col" style="margin-top:10px;">
-            <div class="code-block">
-<pre><code class="rust">// فراخوانی C از Rust
-extern "C" {
-    fn abs(x: i32) -&gt; i32;
-    fn strlen(s: *const i8) -&gt; usize;
-}
-
-fn main() {
-    unsafe {
-        println!("abs(-5) = {}", abs(-5));
-    }
-}
-
-// صادر کردن به C
-#[no_mangle]
-pub extern "C" fn add(a: i32, b: i32) -&gt; i32 {
-    a + b
-}</code></pre>
-            </div>
-            <div>
-                <ul style="font-size:33px; margin-top:10px;">
-                    <li><strong>cbindgen</strong> — تولید header C از Rust</li>
-                    <li><strong>bindgen</strong> — تولید binding Rust از C header</li>
-                    <li>استفاده در: kernel modules، WebAssembly، Python extensions</li>
-                    <li>ابزار <code>cargo build --release</code> → کتابخانه <code>.so</code> / <code>.dll</code></li>
-                </ul>
-            </div>
-        </div>
-    
-        <div class="notes">تعامل دوطرفه با کتابخانه‌های زبان C بدون سرریز کارایی و امکان استفاده از راست در سیستم‌های قدیمی.</div>
-    </div>
-
-    <!-- ═══════════════════════════════════════════════════════════
-         OOP SECTION  (x=10000)
-    ═══════════════════════════════════════════════════════════ -->
-
-    <div id="oop"
-         data-x="10000"
-         data-y="0"
-         class="step slide rtl">
-        <div class="top-header">شی‌گرایی در Rust</div>
-        <div class="info-box" style="margin-top:20px;">
-            Rust به‌طور کامل شی‌گرا نیست اما از بسیاری مفاهیم آن پشتیبانی می‌کند.
-        </div>
-        <ul style="margin-top:20px; font-size:38px;">
-            <li>✅ <strong>Encapsulation</strong> — با <code>pub</code>/private و module</li>
-            <li>⚠️ <strong>Inheritance</strong> — پشتیبانی ندارد، جایگزین: Trait</li>
-            <li>✅ <strong>Polymorphism</strong> — با Generics و Trait object</li>
-            <li>✅ <strong>Methods</strong> — با <code>impl</code> بلوک‌ها</li>
-        </ul>
-        <div class="warn-box" style="margin-top:20px; font-size:34px;">
-            در Rust نگاه ترکیب (Composition) بر وراثت ارجحیت دارد.
-        </div>
-    
-        <div class="notes">راست چگونه بدون وراثت سنتی، اصول شی‌گرایی (کپسوله‌سازی و چندریختی) را با ترکیب struct و trait پیاده می‌کند.</div>
-    </div>
-
-    <!-- Object -->
-    <div id="object"
-         data-y="1100"
-         class="step slide rtl">
-        <div class="top-header">ساختار به‌عنوان شی (struct + impl)</div>
-        <div class="code-block" style="margin-top:14px;">
-<pre><code class="rust">struct Rectangle {
-    width: f64,
-    height: f64,
-}
-
-impl Rectangle {
-    // سازنده (constructor)
-    pub fn new(width: f64, height: f64) -&gt; Self {
-        Rectangle { width, height }
-    }
-
-    // متد نمونه
-    pub fn area(&amp;self) -&gt; f64 {
-        self.width * self.height
-    }
-
-    pub fn perimeter(&amp;self) -&gt; f64 {
-        2.0 * (self.width + self.height)
-    }
-
-    pub fn is_square(&amp;self) -&gt; bool {
-        self.width == self.height
-    }
-}
-
-fn main() {
-    let rect = Rectangle::new(10.0, 5.0);
-    println!("مساحت: {}", rect.area());
-    println!("محیط: {}", rect.perimeter());
-}</code></pre>
-        </div>
-    
-        <div class="notes">تعریف شی در راست: تجمیع داده‌ها در struct و انتساب رفتارها از طریق بلاک‌های impl.</div>
-    </div>
-
-    <!-- Encapsulation -->
-    <div id="encapsulation"
-         data-y="2200"
-         class="step slide rtl">
-        <div class="top-header">کپسوله‌سازی (Encapsulation)</div>
-        <div class="two-col" style="margin-top:12px;">
-            <div>
-                <ul style="font-size:34px;">
-                    <li><code>pub</code> — قابل دسترسی از همه جا</li>
-                    <li>بدون <code>pub</code> — خصوصی به ماژول</li>
-                    <li><code>pub(crate)</code> — فقط داخل کتابخانه</li>
-                    <li><code>pub(super)</code> — فقط ماژول پدر</li>
-                    <li>ماژول‌ها مرز کپسوله‌سازی هستند</li>
-                </ul>
-            </div>
-            <div class="code-block">
-<pre><code class="rust">mod bank {
-    pub struct Account {
-        owner: String, // خصوصی
-        balance: f64,  // خصوصی
-    }
-
-    impl Account {
-        pub fn new(owner: &amp;str) -&gt; Self {
-            Account {
-                owner: owner.to_string(),
-                balance: 0.0,
-            }
-        }
-        pub fn deposit(&amp;mut self, amount: f64) {
-            if amount &gt; 0.0 {
-                self.balance += amount;
-            }
-        }
-        pub fn balance(&amp;self) -&gt; f64 {
-            self.balance
-        }
-    }
-}
-
-use bank::Account;
-let mut acc = Account::new("علی");
-acc.deposit(1000.0);
-println!("{}", acc.balance()); // ✅
-// acc.balance = 999.0; // ❌ خطا</code></pre>
-            </div>
-        </div>
-    
-        <div class="notes">کپسوله‌سازی با کلیدواژه pub در سطح ماژول‌ها؛ فیلدهای مخفی و تضمین یکپارچگی حالت درونی اشیاء.</div>
-    </div>
-
-    <!-- Inheritance -->
-    <div id="inheritance"
-         data-y="3300"
-         class="step slide markdown rtl">
-        # وراثت را پشتیبانی نمی‌کند
-        ### دلایل استفاده از وراثت
-        - استفاده مجدد از کد
-        - پولیمورفیسم (چندریختی)
-    
-        <div class="notes">چرایی عدم پشتیبانی از وراثت کلاسیک؛ ترجیح ترکیب بر وراثت و حل نیازها با traitها و trait objectها.</div>
-    </div>
-
-    <!-- Reuse -->
-    <div id="reuse"
-         data-x="11000"
-         data-y="3300"
-         data-z="-1000"
-         data-rotate-y="90"
-         class="step slide rtl">
-        <div class="top-header">استفاده مجدد از کد — Default Trait Methods</div>
-        <div class="info-box" style="margin-top:12px; font-size:34px;">
-            جایگزین وراثت در Rust: پیاده‌سازی پیش‌فرض در Trait
-        </div>
-        <div class="code-block" style="margin-top:10px;">
-<pre><code class="rust">trait Greet {
-    fn name(&amp;self) -&gt; &amp;str;
-    // متد پیش‌فرض — نیاز به override ندارد
-    fn greeting(&amp;self) -&gt; String {
-        format!("سلام، {}!", self.name())
-    }
-}
-
-struct Person { name: String }
-impl Greet for Person {
-    fn name(&amp;self) -&gt; &amp;str { &amp;self.name }
-    // greeting() از پیش‌فرض استفاده می‌کند
-}
-
-struct Robot { id: u32 }
-impl Greet for Robot {
-    fn name(&amp;self) -&gt; &amp;str { "ربات" }
-    fn greeting(&amp;self) -&gt; String { // override
-        format!("BEEP BOOP — Robot #{}", self.id)
-    }
-}
-
-fn main() {
-    let p = Person { name: "علی".to_string() };
-    let r = Robot { id: 42 };
-    println!("{}", p.greeting()); // سلام، علی!
-    println!("{}", r.greeting()); // BEEP BOOP — Robot #42
-}</code></pre>
-        </div>
-    
-        <div class="notes">استفاده مجدد از کد از طریق پیاده‌سازی پیش‌فرض متدها در تریت‌ها و امکان بازنویسی در صورت نیاز.</div>
-    </div>
-
-    <!-- Polymorphism -->
-    <div id="polymorphism"
-         data-z="-3000"
-         data-rotate-y="90"
-         class="step slide rtl">
-        <div class="top-header">پولیمورفیسم (Polymorphism)</div>
-        <p style="font-size:34px; margin-top:10px;">
-            جایگذینی آبجکت‌ها به‌جای یکدیگر در زمان اجرا چنانچه مشترکا ویژگی خاصی دارند.
-        </p>
-        <div class="two-col">
-            <div>
-                <p style="font-size:32px;"><strong>Static dispatch (Generic):</strong> بدون هزینه زمان اجرا</p>
-                <div class="code-block">
-<pre><code class="rust">fn print_area&lt;T: Shape&gt;(s: &amp;T) {
-    println!("{}", s.area());
-}</code></pre>
-                </div>
-            </div>
-            <div>
-                <p style="font-size:32px;"><strong>Dynamic dispatch (dyn Trait):</strong> vtable در زمان اجرا</p>
-                <div class="code-block">
-<pre><code class="rust">fn print_area(s: &amp;dyn Shape) {
-    println!("{}", s.area());
-}
-
-let shapes: Vec&lt;Box&lt;dyn Shape&gt;&gt; = vec![
-    Box::new(Circle { r: 1.0 }),
-    Box::new(Rect { w: 2.0, h: 3.0 }),
-];
-for s in &amp;shapes { print_area(s.as_ref()); }</code></pre>
-                </div>
-            </div>
-        </div>
-    
-        <div class="notes">چندریختی ایستا با جنریک‌ها (بدون هزینه زمان اجرا) در برابر چندریختی پویا با dyn Trait (vtable).</div>
-    </div>
-
-    <!-- ═══════════════════════════════════════════════════════════
-         WEB SECTION  (x=12000)
-    ═══════════════════════════════════════════════════════════ -->
-
-    <div id="web"
-         data-x="12000"
-         data-y="0"
-         data-z="0"
-         class="step slide rtl">
-        <div class="top-header">توسعه وب با Rust</div>
-        <div class="info-box" style="margin-top:18px;">
-            Rust یکی از سریع‌ترین فریمورک‌های وب را دارد — <strong>بدون Garbage Collector</strong>.
-        </div>
-        <ul style="margin-top:16px; font-size:38px;">
-            <li><strong>Actix-web</strong> — پرفرمنس بسیار بالا، Actor model</li>
-            <li><strong>Axum</strong> — ساخته شده روی Tokio، ergonomic API</li>
-            <li><strong>Rocket</strong> — ساده و type-safe، compile-time routing</li>
-            <li><strong>Warp</strong> — Composable filter-based</li>
-            <li><strong>Leptos</strong> / <strong>Yew</strong> — Full-stack / Frontend با WASM</li>
-        </ul>
-        <div class="warn-box" style="margin-top:14px; font-size:34px;">
-            در TechEmpower Benchmark، Actix-web معمولاً در رتبه‌های اول جهان قرار دارد.
-        </div>
-    
-        <div class="notes">مرور اکوسیستم توسعه وب سریع و ایمن در راست؛ فریمورک‌های مطرح و مزیت مصرف ناچیز رم و عدم وجود GC pause.</div>
-    </div>
-
-    <!-- Actix -->
-    <div id="actix"
-         data-y="1100"
-         data-z="0"
-         class="step slide rtl">
-        <div class="top-header">Actix-web</div>
-        <div class="code-block" style="margin-top:14px;">
-<pre><code class="rust">use actix_web::{web, App, HttpServer, HttpResponse, Responder};
-use serde::{Deserialize, Serialize};
-
-#[derive(Serialize)]
-struct User { id: u32, name: String }
-
-#[derive(Deserialize)]
-struct Query { name: String }
-
-async fn hello(query: web::Query&lt;Query&gt;) -&gt; impl Responder {
-    HttpResponse::Ok().json(User {
-        id: 1,
-        name: query.name.clone(),
-    })
-}
-
-async fn health() -&gt; impl Responder {
-    HttpResponse::Ok().body("سرور سالم است ✅")
-}
-
-#[actix_web::main]
-async fn main() -&gt; std::io::Result&lt;()&gt; {
-    HttpServer::new(|| {
-        App::new()
-            .route("/hello", web::get().to(hello))
-            .route("/health", web::get().to(health))
-    })
-    .bind("127.0.0.1:8080")?
-    .run()
-    .await
-}</code></pre>
-        </div>
-    
-        <div class="notes">معرفی فریمورک بسیار سریع Actix-web و ساختار route handling و تزریق وابستگی در آن.</div>
-    </div>
-
-    <!-- Axum -->
-    <div id="axum"
-         data-x="12000"
-         data-y="2200"
-         data-z="0"
-         class="step slide rtl">
-        <div class="top-header">Axum</div>
-        <div class="info-box" style="margin-top:10px; font-size:33px;">
-            Axum توسط تیم Tokio ساخته شده و از Tower middleware ecosystem استفاده می‌کند.
-        </div>
-        <div class="code-block" style="margin-top:10px;">
-<pre><code class="rust">use axum::{routing::get, Router, Json};
-use serde::Serialize;
-
-#[derive(Serialize)]
-struct Message { text: String }
-
-async fn root() -&gt; Json&lt;Message&gt; {
-    Json(Message { text: "سلام از Axum!".to_string() })
-}
-
-async fn user(
-    axum::extract::Path(id): axum::extract::Path&lt;u32&gt;
-) -&gt; Json&lt;Message&gt; {
-    Json(Message { text: format!("کاربر شماره {}", id) })
-}
-
-#[tokio::main]
-async fn main() {
-    let app = Router::new()
-        .route("/", get(root))
-        .route("/user/:id", get(user));
-
-    let listener =
-        tokio::net::TcpListener::bind("0.0.0.0:3000").await.unwrap();
-    axum::serve(listener, app).await.unwrap();
-}</code></pre>
-        </div>
-    
-        <div class="notes">معرفی فریمورک مدرن و محبوب Axum بر بستر اکوسیستم Tokio و Tower برای وب‌سرویس‌های مقیاس‌پذیر.</div>
-    </div>
-
-    <!-- ═══════════════════════════════════════════════════════════
-         COMPARISONS SECTION  (x=14000)
-    ═══════════════════════════════════════════════════════════ -->
-
-    <div id="rust-vs-java"
-         data-x="14000"
-         data-y="0"
-         data-z="0"
-         class="step slide rtl">
-        <div class="top-header">Rust در مقابل Java</div>
-        <table class="cmp-table" style="margin-top:14px; font-size:30px;">
-            <thead>
-                <tr>
-                    <th>ویژگی</th>
-                    <th>Java</th>
-                    <th>Rust</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>مدیریت حافظه</td>
-                    <td>Garbage Collector (GC)</td>
-                    <td>Ownership — بدون GC</td>
-                </tr>
-                <tr>
-                    <td>سرعت اجرا</td>
-                    <td>سریع (JIT)</td>
-                    <td>بسیار سریع (AOT، بدون pause)</td>
-                </tr>
-                <tr>
-                    <td>مصرف حافظه</td>
-                    <td>بالا (JVM overhead)</td>
-                    <td>بسیار کم</td>
-                </tr>
-                <tr>
-                    <td>Null safety</td>
-                    <td>NullPointerException!</td>
-                    <td>Option&lt;T&gt; — بدون null</td>
-                </tr>
-                <tr>
-                    <td>خطاها</td>
-                    <td>Exception</td>
-                    <td>Result&lt;T,E&gt; — صریح</td>
-                </tr>
-                <tr>
-                    <td>همزمانی</td>
-                    <td>Thread + lock (runtime)</td>
-                    <td>Fearless — تضمین compile-time</td>
-                </tr>
-                <tr>
-                    <td>منحنی یادگیری</td>
-                    <td>متوسط</td>
-                    <td>چالش‌برانگیز در ابتدا</td>
-                </tr>
-                <tr>
-                    <td>اکوسیستم</td>
-                    <td>بسیار بالغ</td>
-                    <td>رو به رشد (crates.io)</td>
-                </tr>
-            </tbody>
-        </table>
-    
-        <div class="notes">مقایسه جامع راست و جاوا: مدیریت حافظه، ردپای رم، سرعت اجرا، زمان بالا آمدن و سیستم خطایابی.</div>
-    </div>
-
-    <!-- Rust vs Go -->
-    <div id="rust-vs-go"
-         data-y="1100"
-         class="step slide rtl">
-        <h3 dir="ltr">Rust vs Go</h3>
-        <a id="discord-blog" href="https://discord.com/blog/why-discord-is-switching-from-go-to-rust">
-            https://discord.com/blog/why-discord-is-switching-from-go-to-rust
-        </a>
-        <img id="discord-read-state-overview" src="image/discord-read-state-overview.png">
-
-        <img id="discord-logo" src="image/discord-logo.png">
-    
-        <div class="notes">مقایسه راست و گو: بررسی تجربه واقعی دیسکورد و تاثیر توقف‌های Garbage Collector بر روی تاخیر ۹۹ درصدی.</div>
-    </div>
-
-    <div id="discord-go-result"
-         data-x="15000"
-         data-z="-1000"
-         data-rotate-y="90"
-         class="step slide rtl">
-        <h3>نتایج Go</h3>
-        <div>
-            <ul>
-                <li>
-                    ساخت یک endpoint برای تنظیم GCPercent در حین اجرا
-                    <ul>
-                        <li>
-                            بدون اثر
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-            <ul>
-                <li>پایین آوردن سایز cache</li>
-                <li>
-                    تغییر ساختار cache
-                    <ul>
-                        <li>پایین آمدن تایم اسکن</li>
-                        <li>بالا رفتن تایم latency روی 99th</li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
-
-        <img id="discord-graph-1" src="image/discord-graph-1.png">
-
-        <a href="https://github.com/golang/go/blob/2c02b4a/src/runtime/proc.go#L6070-L6075">
-            <img id="go-gc-force" src="image/go-gc-force.png">
-        </a>
-    
-        <div class="notes">مشکلات دیسکورد با سرویس Read States در گو؛ نوسانات دوره‌ای تاخیر ناشی از GC و شکست راهکارهای میانی.</div>
-    </div>
-
-    <div id="discord-rust-result"
-         data-z="-3000"
-         data-rotate-y="90"
-         class="step slide rtl">
-        <h3>انتقال از Go به Rust</h3>
-        <div id="go-to-rust">
-            <ul>
-                <li>حذف برخی از کدها بدلیل فقدان جنریک (در نسخه‌های پایین‌تر از 1.18 - اوایل بهار 2020)</li>
-                <li>حذف کدهای دستی محافظت از حافظه در cross-goroutine</li>
-                <li>حذف لایبرری initial metric بخاطر استفاده از همزمانی Rust</li>
-                <li>کم کردن تعداد کپی از حافظه</li>
-            </ul>
-        </div>
-        <img id="discord-graph-2" src="image/discord-graph-2.png">
-
-        <div id="improve-code">
-            <ul>
-                <li>افزایش ظرفیت کش LRU تا 8 * 1e6</li>
-                <li>بهینه کردن ساختار ReadState برای استفاده کمتر از حافظه</li>
-            </ul>
-        </div>
-        <img id="discord-graph-3" src="image/discord-graph-3.png">
-
-        <div id="update-dependency">
-            <ul>
-                <li>استفاده از ورژن 0.2 لایبرری tokio (رانتایم Async - ورژن فعلی 1.4)</li>
-            </ul>
-        </div>
-        <img id="discord-graph-4" src="image/discord-graph-4.png">
-    
-        <div class="notes">بازنویسی به راست؛ حذف جهش‌های تاخیر، کاهش چشمگیر مصرف CPU و افزایش چشمگیر ظرفیت کش.</div>
-    </div>
-
-    <!-- Rust vs C/C++ -->
-    <div id="rust-vs-c-and-cpp"
-         data-x="14000"
-         data-y="2200"
-         data-z="0"
-         class="step slide rtl">
-        <div class="top-header">Rust در مقابل C و C++</div>
-        <div class="info-box" style="margin-top:12px; font-size:34px;">
-            C/C++ کنترل دقیق روی سخت‌افزار می‌دهند اما مدیریت دستی حافظه منبع اصلی باگ‌های امنیتی است.
-        </div>
-        <table class="cmp-table" style="margin-top:10px; font-size:30px;">
-            <thead>
-                <tr><th>ویژگی</th><th>C / C++</th><th>Rust</th></tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>ایمنی حافظه</td>
-                    <td>❌ دستی — use-after-free، buffer overflow</td>
-                    <td>✅ تضمین compile-time</td>
-                </tr>
-                <tr>
-                    <td>سرعت</td>
-                    <td>✅ بسیار سریع</td>
-                    <td>✅ برابر یا سریع‌تر</td>
-                </tr>
-                <tr>
-                    <td>Data race</td>
-                    <td>❌ ممکن است رخ دهد</td>
-                    <td>✅ غیرممکن در safe Rust</td>
-                </tr>
-                <tr>
-                    <td>Null pointer</td>
-                    <td>❌ undefined behavior</td>
-                    <td>✅ Option&lt;T&gt;</td>
-                </tr>
-                <tr>
-                    <td>Build system</td>
-                    <td>Make/CMake — پیچیده</td>
-                    <td>Cargo — ساده و یکپارچه</td>
-                </tr>
-                <tr>
-                    <td>بلوغ اکوسیستم</td>
-                    <td>چند دهه</td>
-                    <td>۱۰ ساله — رو به رشد</td>
-                </tr>
-            </tbody>
-        </table>
-        <div class="warn-box" style="font-size:30px; margin-top:8px;">
-            طبق تحقیقات Microsoft: ~۷۰٪ آسیب‌پذیری‌های امنیتی ناشی از خطاهای حافظه در C/C++ است.
-        </div>
-    
-        <div class="notes">مقایسه مستقیم با C و C++؛ ایمنی حافظه در زمان کامپایل بدون قربانی کردن سرعت و کنترل سخت‌افزاری.</div>
-    </div>
-
-    <!-- ═══════════════════════════════════════════════════════════
-         SIDELINE SECTION  (x=16000)
-    ═══════════════════════════════════════════════════════════ -->
-
-    <div id="sideline"
-         data-x="16000"
-         data-y="0"
-         data-z="0"
-         class="step slide rtl">
-        <div class="top-header" style="font-size:55px; margin-top:280px;">حواشی Rust</div>
-        <ul style="font-size:42px; margin-top:30px; text-align:center; list-style:none;">
-            <li>🐧 لینوکس</li>
-            <li>🛡️ توصیه NSA</li>
-            <li>📈 منحنی یادگیری</li>
-            <li>🔤 پیچیدگی syntax</li>
-        </ul>
-    
-        <div class="notes">بررسی بازتاب‌ها و رویدادهای مهم پیرامون زبان راست در صنعت نرم‌افزار و سازمان‌های بزرگ.</div>
-    </div>
-
-    <!-- Linux -->
-    <div id="linux"
-         data-y="1100"
-         class="step slide rtl">
-        <div class="top-header">Rust در هسته لینوکس</div>
-        <div class="info-box" style="margin-top:14px;">
-            از <strong>لینوکس نسخه ۶.۱ (دسامبر ۲۰۲۲)</strong> Rust رسماً زبان دوم هسته لینوکس شد.
-        </div>
-        <ul style="margin-top:14px; font-size:36px;">
-            <li>لینوس توروالدز: «این یکی از بزرگ‌ترین تغییرات در تاریخ لینوکس است»</li>
-            <li>هدف: نوشتن <strong>device driver</strong>های ایمن‌تر بدون از دست دادن کارایی</li>
-            <li>ماژول‌های Rust دسترسی کامل به kernel API دارند</li>
-            <li>آندروید: استفاده از Rust در لایه <strong>HAL</strong> و سرویس‌های سیستمی</li>
-            <li>Google: هزاران خط کد Rust در Android AOSP</li>
-            <li>Microsoft: بازنویسی بخش‌هایی از Windows kernel با Rust</li>
-        </ul>
-        <div class="warn-box" style="font-size:33px; margin-top:10px;">
-            هنوز مقاومت‌هایی در جامعه توسعه‌دهندگان C هسته لینوکس وجود دارد.
-        </div>
-    
-        <div class="notes">ورود تاریخی راست به عنوان دومین زبان رسمی هسته لینوکس از نسخه ۶.۱ به رهبری لینوس توروالدز.</div>
-    </div>
-
-    <!-- NSA -->
-    <div id="nsa"
-         data-y="2200"
-         class="step slide rtl">
-        <div class="top-header">توصیه NSA — ایمنی حافظه</div>
-        <div class="warn-box" style="margin-top:14px; font-size:34px;">
-            در <strong>نوامبر ۲۰۲۲</strong>، آژانس امنیت ملی آمریکا (NSA) رسماً توصیه کرد از زبان‌های memory-safe استفاده شود.
-        </div>
-        <ul style="margin-top:16px; font-size:36px;">
-            <li>NSA، CISA و چندین آژانس اطلاعاتی متحد این بیانیه را امضا کردند</li>
-            <li>زبان‌های توصیه‌شده: <strong>Rust، Go، Swift، Java، C#، Python</strong></li>
-            <li>زبان‌های پرریسک: C و C++ (بدون قید memory-safe)</li>
-            <li>دلیل: ~۷۰٪ آسیب‌پذیری‌های امنیتی ناشی از باگ‌های حافظه</li>
-            <li>هدف: کاهش سطح حملات سایبری در نرم‌افزارهای critical</li>
-        </ul>
-        <div class="info-box" style="font-size:33px; margin-top:10px;">
-            White House ONCD (2024): «انتقال به زبان‌های memory-safe باید اولویت صنعت نرم‌افزار باشد.»
-        </div>
-    
-        <div class="notes">بیانیه و توصیه‌نامه رسمی آژانس امنیت ملی آمریکا (NSA) برای حذف زبان‌های با حافظه ناایمن نظیر C/C++.</div>
-    </div>
-
-    <!-- Learning Curve -->
-    <div id="learning-curve"
-         data-y="3300"
-         class="step slide rtl">
-        <div class="top-header">منحنی یادگیری Rust</div>
-        <div class="warn-box" style="margin-top:12px;">
-            Rust یکی از سخت‌ترین زبان‌ها برای یادگیری اولیه است — اما ارزش آن را دارد.
-        </div>
-        <div class="two-col" style="margin-top:14px;">
-            <div>
-                <p style="font-size:34px;"><strong>چالش‌ها:</strong></p>
-                <ul style="font-size:32px;">
-                    <li>سیستم Ownership جدید و متفاوت</li>
-                    <li>borrow checker — پیام‌های خطای طولانی</li>
-                    <li>Lifetime annotations</li>
-                    <li>تفاوت <code>&amp;str</code> و <code>String</code></li>
-                    <li>async/await و Pin</li>
-                </ul>
-            </div>
-            <div>
-                <p style="font-size:34px;"><strong>مزایای بعد از یادگیری:</strong></p>
-                <ul style="font-size:32px;">
-                    <li>کد صحیح‌تر از اول</li>
-                    <li>باگ‌های حافظه وجود ندارند</li>
-                    <li>ریفکتور با اطمینان</li>
-                    <li>بهترین کامپایلر راهنمایی می‌کند</li>
-                    <li>محبوب‌ترین زبان Stack Overflow — ۹ سال متوالی!</li>
-                </ul>
-            </div>
-        </div>
-        <div class="info-box" style="font-size:32px; margin-top:10px;">
-            کتاب رسمی «The Rust Programming Language» (aka The Book) رایگان آنلاین است.
-        </div>
-    
-        <div class="notes">بررسی شیب تند یادگیری راست و کلنجار رفتن با Borrow Checker و چگونگی جبران آن با قابلیت اطمینان سیستم نهایی.</div>
-    </div>
-
-    <!-- Syntax Complexity -->
-    <div id="syntax"
-         data-y="4400"
-         class="step slide rtl">
-        <h2>پیچیدگی syntax</h2>
-        <img id="syntax-complexity" src="image/rust-syntax-complexity.png">
-    
-        <div class="notes">بررسی ساختار نحوی و ترکیبات زبانی راست و چگونگی افزایش خوانایی با عبور از مراحل مقدماتی.</div>
-    </div>
-
-    <!-- ═══════════════════════════════════════════════════════════
-         PATTERNS SECTION  (x=18000)
-    ═══════════════════════════════════════════════════════════ -->
-
-    <div id="patterns"
-         data-x="18000"
-         data-y="0"
-         data-z="0"
-         class="step slide rtl">
-        <div class="top-header">الگوهای طراحی در Rust</div>
-        <div class="info-box" style="margin-top:18px;">
-            الگوهای طراحی GoF در Rust به شکل اصیل‌تری پیاده‌سازی می‌شوند — اغلب ایمن‌تر و بدون overhead.
-        </div>
-        <ul style="margin-top:16px; font-size:38px;">
-            <li>🏗️ <strong>Creational</strong> — Builder، Factory</li>
-            <li>🏛️ <strong>Structural</strong> — Newtype، Decorator</li>
-            <li>⚙️ <strong>Behavioral</strong> — Strategy، Observer</li>
-            <li>🏗️ <strong>Architectural</strong> — RAII، Command</li>
-            <li>λ <strong>Functional</strong> — Iterator، Map/Filter/Fold</li>
-        </ul>
-    
-        <div class="notes">الگوهای طراحی متداول در راست؛ جایگزینی رویکردهای کلاسیک شی‌گرایی با رویکردهای اصیل و نوع‌محور.</div>
-    </div>
-
-    <!-- Anti-Patterns -->
-    <div id="anti-patterns"
-         data-y="1100"
-         class="step slide rtl">
-        <div class="top-header">الگوهای ضد (Anti-Patterns)</div>
-        <div class="warn-box" style="margin-top:12px; font-size:34px;">
-            از این الگوها در Rust اجتناب کنید:
-        </div>
-        <div class="two-col" style="margin-top:14px;">
-            <ul style="font-size:33px;">
-                <li><strong>.unwrap() بی‌ملاحظه</strong> — باعث panic در production</li>
-                <li><strong>clone() اضافه</strong> — به‌جای استفاده صحیح از reference</li>
-                <li><strong>Rc&lt;RefCell&lt;T&gt;&gt; همه‌جا</strong> — وقتی نیاز واقعی نیست</li>
-                <li><strong>Arc&lt;Mutex&lt;T&gt;&gt; همه‌جا</strong> — وقتی channel کافی است</li>
-            </ul>
-            <ul style="font-size:33px;">
-                <li><strong>String ownership اشتباه</strong> — String به‌جای &amp;str در argument</li>
-                <li><strong>نادیده گرفتن Result</strong> — let _ = func();</li>
-                <li><strong>طراحی God struct</strong> — ساختار خیلی بزرگ</li>
-                <li><strong>unsafe بدون ضرورت</strong> — زیاد از حد استفاده</li>
-            </ul>
-        </div>
-        <div class="code-block" style="margin-top:8px;">
-<pre><code class="rust">// ❌ بد
-let val = some_option.unwrap(); // panic اگر None
-
-// ✅ خوب
-let val = some_option.unwrap_or_default();
-let val = some_option.expect("توضیح منطقی");
-if let Some(v) = some_option { /* ... */ }</code></pre>
-        </div>
-    
-        <div class="notes">الگوهای ضد متداول در راست نظیر استفاده بی‌رویه از clone، unwrap و بازگرداندن ارجاع به داده محلی.</div>
-    </div>
-
-    <!-- Creational Patterns -->
-    <div id="creational"
-         data-y="2200"
-         class="step slide rtl">
-        <div class="top-header">الگوهای سازنده — Builder Pattern</div>
-        <div class="code-block" style="margin-top:14px;">
-<pre><code class="rust">#[derive(Debug)]
-struct Request {
-    url: String,
-    method: String,
-    timeout: u32,
-    headers: Vec&lt;(String, String)&gt;,
-}
-
-struct RequestBuilder {
-    url: String,
-    method: String,
-    timeout: u32,
-    headers: Vec&lt;(String, String)&gt;,
-}
-
-impl RequestBuilder {
-    fn new(url: &amp;str) -&gt; Self {
-        RequestBuilder {
-            url: url.to_string(),
-            method: "GET".to_string(),
-            timeout: 30,
-            headers: vec![],
-        }
-    }
-    fn method(mut self, m: &amp;str) -&gt; Self { self.method = m.to_string(); self }
-    fn timeout(mut self, t: u32) -&gt; Self { self.timeout = t; self }
-    fn header(mut self, k: &amp;str, v: &amp;str) -&gt; Self {
-        self.headers.push((k.to_string(), v.to_string())); self
-    }
-    fn build(self) -&gt; Request {
-        Request { url: self.url, method: self.method,
-                  timeout: self.timeout, headers: self.headers }
-    }
-}
-
-fn main() {
-    let req = RequestBuilder::new("https://api.example.com/data")
-        .method("POST")
-        .timeout(60)
-        .header("Content-Type", "application/json")
-        .build();
-    println!("{:?}", req);
-}</code></pre>
-        </div>
-    
-        <div class="notes">الگوی سازنده (Builder Pattern) برای ساخت ایمن و ارگونومیک اشیای پیچیده با امکان اعتبارسنجی.</div>
-    </div>
-
-    <!-- Structural Patterns -->
-    <div id="structural"
-         data-y="3300"
-         class="step slide rtl">
-        <div class="top-header">الگوهای ساختاری — Newtype Pattern</div>
-        <div class="info-box" style="margin-top:10px; font-size:33px;">
-            Newtype یک wrapper تایپ می‌سازد که type safety می‌دهد بدون overhead.
-        </div>
-        <div class="code-block" style="margin-top:10px;">
-<pre><code class="rust">// Newtype — جلوگیری از اشتباه واحدها
-struct Meters(f64);
-struct Kilograms(f64);
-
-fn calculate_bmi(weight: Kilograms, height: Meters) -&gt; f64 {
-    weight.0 / (height.0 * height.0)
-}
-
-// ❌ این کامپایل نمی‌شود:
-// calculate_bmi(Meters(1.75), Kilograms(70.0));
-// ✅ ترتیب صحیح:
-let bmi = calculate_bmi(Kilograms(70.0), Meters(1.75));
-
-// Decorator Pattern با Trait
-trait Logger { fn log(&amp;self, msg: &amp;str); }
-struct ConsoleLogger;
-impl Logger for ConsoleLogger {
-    fn log(&amp;self, msg: &amp;str) { println!("[LOG] {}", msg); }
-}
-struct TimestampLogger&lt;L: Logger&gt; { inner: L }
-impl&lt;L: Logger&gt; Logger for TimestampLogger&lt;L&gt; {
-    fn log(&amp;self, msg: &amp;str) {
-        self.inner.log(&amp;format!("[2024] {}", msg));
-    }
-}</code></pre>
-        </div>
-    
-        <div class="notes">الگوی Newtype برای ایمنی در سطح نوع (Type Safety)، جداسازی شناسه‌ها و جلوگیری از خطای جابه‌جایی مقادیر هم‌جنس.</div>
-    </div>
-
-    <!-- Behavioral Patterns -->
-    <div id="behavioral"
-         data-y="4400"
-         class="step slide rtl">
-        <div class="top-header">الگوهای رفتاری — Strategy Pattern</div>
-        <div class="code-block" style="margin-top:14px;">
-<pre><code class="rust">// Strategy Pattern با Trait
-trait SortStrategy {
-    fn sort(&amp;self, data: &amp;mut Vec&lt;i32&gt;);
-}
-
-struct BubbleSort;
-impl SortStrategy for BubbleSort {
-    fn sort(&amp;self, data: &amp;mut Vec&lt;i32&gt;) {
-        // bubble sort ساده
-        let n = data.len();
-        for i in 0..n {
-            for j in 0..n-i-1 {
-                if data[j] &gt; data[j+1] { data.swap(j, j+1); }
-            }
-        }
-    }
-}
-
-struct Sorter { strategy: Box&lt;dyn SortStrategy&gt; }
-impl Sorter {
-    fn new(strategy: Box&lt;dyn SortStrategy&gt;) -&gt; Self { Sorter { strategy } }
-    fn sort(&amp;self, data: &amp;mut Vec&lt;i32&gt;) { self.strategy.sort(data); }
-}
-
-fn main() {
-    let mut data = vec![5, 2, 8, 1, 9];
-    let sorter = Sorter::new(Box::new(BubbleSort));
-    sorter.sort(&amp;mut data);
-    println!("{:?}", data); // [1, 2, 5, 8, 9]
-}</code></pre>
-        </div>
-    
-        <div class="notes">الگوی استراتژی (Strategy Pattern) با بهره‌گیری از تریت‌ها برای تزریق رفتارهای مختلف در زمان کامپایل یا اجرا.</div>
-    </div>
-
-    <!-- Architectural Patterns -->
-    <div id="architectural"
-         data-y="5500"
-         class="step slide rtl">
-        <div class="top-header">الگوهای معماری — RAII</div>
-        <div class="info-box" style="margin-top:10px; font-size:34px;">
-            RAII (Resource Acquisition Is Initialization) — منابع با شی tied هستند و با drop آزاد می‌شوند.
-        </div>
-        <div class="code-block" style="margin-top:10px;">
-<pre><code class="rust">use std::fs::File;
-use std::io::Write;
-
-struct TempFile { path: String }
-
-impl TempFile {
-    fn new(path: &amp;str) -&gt; std::io::Result&lt;Self&gt; {
-        File::create(path)?; // ایجاد فایل
-        Ok(TempFile { path: path.to_string() })
-    }
-    fn write(&amp;self, data: &amp;str) -&gt; std::io::Result&lt;()&gt; {
-        let mut f = File::options().append(true).open(&amp;self.path)?;
-        f.write_all(data.as_bytes())
-    }
-}
-
-impl Drop for TempFile {
-    fn drop(&amp;mut self) {
-        // وقتی TempFile از scope خارج می‌شود، فایل پاک می‌شود
-        let _ = std::fs::remove_file(&amp;self.path);
-        println!("فایل {} حذف شد", self.path);
-    }
-}
-
-fn main() {
-    {
-        let tmp = TempFile::new("/tmp/test.txt").unwrap();
-        tmp.write("داده آزمایشی").unwrap();
-    } // ← اینجا drop() صدا زده می‌شود
-    // فایل دیگر وجود ندارد
-}</code></pre>
-        </div>
-    
-        <div class="notes">الگوی RAII و مدیریت خودکار منابع (فایل‌ها، سوکت‌ها، قفل‌ها) با پیاده‌سازی تریت Drop.</div>
-    </div>
-
-    <!-- Functional Patterns -->
-    <div id="functional"
-         data-y="6600"
-         class="step slide rtl">
-        <div class="top-header">الگوهای تابعی (Functional Style)</div>
-        <div class="info-box" style="margin-top:10px; font-size:33px;">
-            Rust از سبک تابعی پشتیبانی قوی می‌کند — iterator، map، filter، fold بدون هزینه اضافه.
-        </div>
-        <div class="code-block" style="margin-top:10px;">
-<pre><code class="rust">fn main() {
-    let numbers = vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-
-    // زنجیره iterator — lazy evaluation
-    let result: Vec&lt;String&gt; = numbers.iter()
-        .filter(|&amp;&amp;x| x % 2 == 0)   // فقط زوج‌ها
-        .map(|&amp;x| x * x)             // مجذور
-        .filter(|&amp;x| x &gt; 10)         // بزرگتر از ۱۰
-        .map(|x| format!("{}²", (x as f64).sqrt() as i32))
-        .collect();
-
-    println!("{:?}", result); // ["4²", "6²", "8²", "10²"]
-
-    // fold — مشابه reduce
-    let sum: i32 = numbers.iter().fold(0, |acc, &amp;x| acc + x);
-    println!("مجموع: {}", sum); // 55
-
-    // flat_map
-    let words = vec!["سلام دنیا", "Rust زیباست"];
-    let chars: Vec&lt;&amp;str&gt; = words.iter()
-        .flat_map(|s| s.split_whitespace())
-        .collect();
-    println!("{:?}", chars);
-}</code></pre>
-        </div>
-    </div>
-
-
-        <div class="notes">سبک برنامه‌نویسی تابعی در راست: زنجیره ایتراتورها، ارزیابی تنبل (lazy)، map، filter و fold با کارایی بالا.</div>
-    </div>
+</div>
 
 <div id="impress-toolbar"></div>
 
@@ -1970,10 +442,10 @@ fn main() {
 <div id="impress-help"></div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="js/us-railroad-mileage.js"></script>
 <script src="js/markdown.js"></script>
 <script src="js/highlight.min.js"></script>
 <script src="js/impress.js"></script>
-<script src="js/us-railroad-mileage.js"></script>
 
 <script>
     // Helper to split highlighted HTML into balanced lines without breaking tags

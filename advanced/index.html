@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Rust — مفاهیم پیشرفته و شی‌گرایی</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100..900&display=swap" rel="stylesheet">
+
+    <link href="../css/impress-common.css" rel="stylesheet"/>
+    <link href="../css/presentation.css" rel="stylesheet"/>
+    <link href="../css/presentation-shared.css" rel="stylesheet"/>
+    
+</head>
+<body class="impress-not-supported">
+
+<!-- Top Global Section Navigation -->
+<nav class="presentation-nav">
+    <a href="../index.html" class="nav-prev-next" title="مبانی و تاریخچه">‹ قبلی</a><a href="../index.html">مبانی و تاریخچه</a><a href="../advanced/index.html" class="active">مفاهیم پیشرفته و OOP</a><a href="../web/index.html">توسعه وب</a><a href="../sideline/index.html">مقایسه و حواشی</a><a href="../patterns/index.html">الگوهای طراحی</a><a href="../web/index.html" class="nav-prev-next" title="توسعه وب">بعدی ›</a>
+</nav>
+
+<!-- Fixed background images -->
+<img id="rust-logo" src="../image/rust-logo.png">
+<img id="rust-robot" src="../image/rust-robot.png">
+
+<div id="impress">
+
+    <div id="preview"
+         data-x="1000"
+         data-y="4500"
+         data-z="8000"
+         class="step">
+    </div>
+
+<div id="advanced"
+         data-x="0"
+         data-y="0"
+         class="step slide">
+        <h1>Rust Advanced</h1>
+        <img id="rust-advanced" src="../image/rust-advanced.webp">
+    
+        <div class="notes">ورود به بخش مفاهیم پیشرفته: مدیریت خطا، پکیج منیجر Cargo، تریت‌ها، جنریک‌ها، همزمانی و کد ناایمن.</div>
+    </div>
+
+    <!-- Error Handling -->
+    
+
+<div id="error-handling"
+         data-y="1100"
+         class="step slide rtl">
+        <div class="top-header">مدیریت خطا (Error Handling)</div>
+        <div class="two-col" style="margin-top:10px;">
+            <ul style="font-size:34px;">
+                <li><code>Result&lt;T, E&gt;</code> — برای خطاهای قابل بازیابی</li>
+                <li><code>Option&lt;T&gt;</code> — برای مقادیر اختیاری</li>
+                <li>عملگر <code>?</code> — انتشار خطا به caller</li>
+                <li><code>panic!</code> — برای خطاهای غیرقابل بازیابی</li>
+                <li>بدون exception — همه چیز صریح است</li>
+            </ul>
+            <div class="code-block">
+<pre><code class="rust">fn divide(a: f64, b: f64)
+    -&gt; Result&lt;f64, String&gt;
+{
+    if b == 0.0 {
+        Err(String::from("تقسیم بر صفر"))
+    } else {
+        Ok(a / b)
+    }
+}
+
+fn main() -&gt; Result&lt;(),
+    Box&lt;dyn std::error::Error&gt;&gt;
+{
+    let res = divide(10.0, 2.0)?;
+    println!("نتیجه: {}", res);
+    Ok(())
+}</code></pre>
+            </div>
+        </div>
+    
+        <div class="notes">مدیریت خطای صریح با Result و Option؛ عدم وجود null و exception سنتی، و کارایی عملگر علامت سوال.</div>
+    </div>
+
+    <!-- Crates & Modules -->
+    
+
+<div id="crates-modules"
+         data-y="2200"
+         class="step slide rtl">
+        <div class="top-header">Crate ها و ماژول‌ها</div>
+        <div class="two-col" style="margin-top:14px;">
+            <ul style="font-size:34px;">
+                <li><strong>Cargo</strong> — ابزار ساخت و مدیریت وابستگی‌ها</li>
+                <li><strong>crates.io</strong> — مخزن مرکزی کتابخانه‌ها</li>
+                <li><strong>Crate</strong> — واحد کامپایل (binary یا library)</li>
+                <li><strong>Module</strong> — فضای نام با کلیدواژه <code>mod</code></li>
+                <li><strong>pub</strong> — دید عمومی</li>
+                <li><strong>use</strong> — وارد کردن به scope</li>
+            </ul>
+            <div class="code-block">
+<pre><code class="rust">// Cargo.toml
+// [dependencies]
+// serde = { version = "1", features = ["derive"] }
+// tokio = { version = "1", features = ["full"] }
+
+mod math {
+    pub fn add(a: i32, b: i32) -&gt; i32 {
+        a + b
+    }
+    fn secret() -&gt; i32 { 42 } // خصوصی
+}
+
+use math::add;
+fn main() {
+    println!("{}", add(2, 3)); // 5
+}</code></pre>
+            </div>
+        </div>
+    
+        <div class="notes">اکوسیستم ماژول‌ها و کریت‌ها در زبان راست و نقش محوری ابزار Cargo در مدیریت بسته‌ها و تست‌ها.</div>
+    </div>
+
+    <!-- Traits -->
+    
+
+<div id="traits"
+         data-y="3300"
+         class="step slide rtl">
+        <div class="top-header">Trait ها</div>
+        <div class="info-box" style="margin-top:10px; font-size:34px;">
+            Trait مجموعه‌ای از متدها را تعریف می‌کند که تایپ‌ها باید پیاده‌سازی کنند — شبیه interface.
+        </div>
+        <div class="code-block">
+<pre><code class="rust">trait Animal {
+    fn name(&amp;self) -&gt; &amp;str;
+    fn speak(&amp;self) -&gt; String;
+    fn description(&amp;self) -&gt; String { // متد پیش‌فرض
+        format!("{} می‌گوید: {}", self.name(), self.speak())
+    }
+}
+
+struct Dog;
+impl Animal for Dog {
+    fn name(&amp;self) -&gt; &amp;str { "سگ" }
+    fn speak(&amp;self) -&gt; String { String::from("هاو هاو") }
+}
+
+fn make_sound(a: &amp;dyn Animal) {  // trait object
+    println!("{}", a.description());
+}
+
+fn main() {
+    let dog = Dog;
+    make_sound(&amp;dog); // سگ می‌گوید: هاو هاو
+}</code></pre>
+        </div>
+    
+        <div class="notes">تریت‌ها به عنوان قراردادهای رفتاری در راست؛ نقش آن‌ها به جای رابط‌ها (interfaces) و پیاده‌سازی متدهای پیش‌فرض.</div>
+    </div>
+
+    <!-- Generics -->
+    
+
+<div id="generics"
+         data-y="4400"
+         class="step slide rtl">
+        <div class="top-header">جنریک‌ها (Generics)</div>
+        <div class="info-box" style="margin-top:10px; font-size:34px;">
+            جنریک‌ها بدون هزینه زمان اجرا — کامپایلر برای هر تایپ کد اختصاصی تولید می‌کند (monomorphization).
+        </div>
+        <div class="code-block">
+<pre><code class="rust">// تابع جنریک با قید Trait
+fn largest&lt;T: PartialOrd&gt;(list: &amp;[T]) -&gt; &amp;T {
+    let mut max = &amp;list[0];
+    for item in list {
+        if item &gt; max { max = item; }
+    }
+    max
+}
+
+// ساختار جنریک
+struct Pair&lt;T&gt; {
+    first: T,
+    second: T,
+}
+
+impl&lt;T: std::fmt::Display&gt; Pair&lt;T&gt; {
+    fn show(&amp;self) {
+        println!("({}, {})", self.first, self.second);
+    }
+}
+
+fn main() {
+    let nums = vec![34, 50, 25, 100, 65];
+    println!("بزرگترین: {}", largest(&amp;nums));
+}</code></pre>
+        </div>
+    
+        <div class="notes">جنریک‌ها برای انتزاع نوع بدون افت کارایی با تکیه بر Monomorphization در زمان کامپایل (Zero-cost abstraction).</div>
+    </div>
+
+    <!-- Closures -->
+    
+
+<div id="closures"
+         data-y="5500"
+         class="step slide rtl">
+        <div class="top-header">بستارها (Closures)</div>
+        <div class="info-box" style="margin-top:10px; font-size:34px;">
+            Closure توابع ناشناسی هستند که می‌توانند متغیرهای محیط اطراف خود را <em>capture</em> کنند.
+        </div>
+        <div class="code-block">
+<pre><code class="rust">fn apply&lt;F: Fn(i32) -&gt; i32&gt;(f: F, x: i32) -&gt; i32 {
+    f(x)
+}
+
+fn main() {
+    let factor = 3;
+    let multiply = |n| n * factor; // capture by reference
+
+    println!("{}", apply(multiply, 5)); // 15
+
+    // تبدیل با iterator + closure
+    let nums = vec![1, 2, 3, 4, 5];
+    let evens: Vec&lt;i32&gt; = nums.iter()
+        .filter(|&amp;&amp;x| x % 2 == 0)
+        .map(|&amp;x| x * x)
+        .collect();
+    println!("{:?}", evens); // [4, 16]
+}
+
+// سه نوع Closure Trait:
+// Fn     — capture by reference (چندین بار قابل فراخوانی)
+// FnMut  — capture by mutable reference
+// FnOnce — capture by value (یک بار قابل فراخوانی)</code></pre>
+        </div>
+    
+        <div class="notes">کلوزرهای راست و سه تریت Fn، FnMut و FnOnce برای مدیریت نحوه کپچر متغیرها از محیط اطراف.</div>
+    </div>
+
+    <!-- Concurrency -->
+    
+
+<div id="concurrency"
+         data-y="6600"
+         class="step slide rtl">
+        <div class="top-header">همزمانی (Concurrency)</div>
+        <div class="info-box" style="margin-top:8px; font-size:33px;">
+            Rust با ضمانت‌های کامپایلی از <strong>data race</strong> جلوگیری می‌کند — <em>fearless concurrency</em>.
+        </div>
+        <div class="code-block">
+<pre><code class="rust">use std::sync::{Arc, Mutex};
+use std::thread;
+
+fn main() {
+    let counter = Arc::new(Mutex::new(0));
+    let mut handles = vec![];
+
+    for _ in 0..10 {
+        let c = Arc::clone(&amp;counter);
+        handles.push(thread::spawn(move || {
+            *c.lock().unwrap() += 1;
+        }));
+    }
+    for h in handles { h.join().unwrap(); }
+    println!("نتیجه: {}", *counter.lock().unwrap()); // 10
+}
+
+// channel برای ارسال پیام بین thread‌ها
+use std::sync::mpsc;
+let (tx, rx) = mpsc::channel();
+thread::spawn(move || { tx.send("سلام").unwrap(); });
+println!("{}", rx.recv().unwrap());</code></pre>
+        </div>
+    
+        <div class="notes">همزمانی بدون ترس (Fearless Concurrency)؛ استفاده از Arc و Mutex به همراه چک‌های کامپایلر Send و Sync.</div>
+    </div>
+
+    <!-- Async -->
+    
+
+<div id="async"
+         data-y="7700"
+         class="step slide rtl">
+        <div class="top-header">برنامه‌نویسی ناهمزمان (Async / Await)</div>
+        <div class="info-box" style="margin-top:8px; font-size:33px;">
+            <code>async</code>/<code>await</code> برنامه‌نویسی ناهمزمان را به سبک sync می‌نویسد. <strong>Tokio</strong> پرکاربردترین async runtime است.
+        </div>
+        <div class="code-block">
+<pre><code class="rust">use std::time::Duration;
+use tokio::time::sleep;
+
+#[tokio::main]
+async fn main() {
+    let result = fetch_data().await;
+    println!("{}", result);
+    
+    // اجرای موازی چند Future
+    let (a, b) = tokio::join!(
+        fetch_data(),
+        fetch_data()
+    );
+    println!("{} — {}", a, b);
+}
+
+async fn fetch_data() -&gt; String {
+    sleep(Duration::from_millis(100)).await;
+    String::from("داده دریافت شد")
+}</code></pre>
+        </div>
+    
+        <div class="notes">برنامه‌نویسی ناهمزمان و مدل غیرفعال (lazy) در راست با تکیه بر فیوچرها و رانتایم قدرتمند Tokio.</div>
+    </div>
+
+    <!-- Pin -->
+    
+
+<div id="pin"
+         data-x="1000"
+         data-z="-1000"
+         data-rotate-y="90"
+         class="step slide rtl">
+        <div class="top-header">Pin&lt;P&gt;</div>
+        <div class="info-box" style="margin-top:14px; font-size:34px;">
+            <code>Pin&lt;P&gt;</code> تضمین می‌کند که مقداری که pointer به آن اشاره می‌کند در حافظه <strong>جابه‌جا نمی‌شود</strong>.
+            این برای self-referential structure‌ها در async/await ضروری است.
+        </div>
+        <ul style="margin-top:16px; font-size:36px;">
+            <li><code>Unpin</code> — تایپ‌هایی که جابه‌جایی آن‌ها ایمن است (اکثر تایپ‌ها)</li>
+            <li><code>!Unpin</code> — تایپ‌هایی که نباید جابه‌جا شوند (مثل <code>Future</code>های پیچیده)</li>
+            <li><code>Pin::new()</code> — برای تایپ‌های <code>Unpin</code></li>
+            <li><code>Box::pin()</code> — برای pin کردن روی heap</li>
+        </ul>
+        <div class="code-block">
+<pre><code class="rust">use std::pin::Pin;
+// async fn خودکار Future ای تولید می‌کند که !Unpin است
+// executor باید آن را pin کند قبل از poll
+async fn example() { /* ... */ }
+let fut = Box::pin(example());</code></pre>
+        </div>
+    
+        <div class="notes">مفهوم Pinning برای جلوگیری از جابه‌جایی مقادیر خودارجاع‌دهنده در حافظه که در استیت‌ماشین‌های async الزامی است.</div>
+    </div>
+
+    <!-- Macros -->
+    
+
+<div id="macros"
+         data-x="0"
+         data-y="8800"
+         data-z="0"
+         class="step slide rtl">
+        <div class="top-header">ماکروها (Macros)</div>
+        <div class="two-col" style="margin-top:10px;">
+            <div>
+                <p style="font-size:36px;"><strong>ماکروهای اعلانی (macro_rules!)</strong></p>
+                <div class="code-block">
+<pre><code class="rust">macro_rules! say_hello {
+    () =&gt; {
+        println!("سلام Rust!");
+    };
+    ($name:expr) =&gt; {
+        println!("سلام {}!", $name);
+    };
+}
+
+say_hello!();          // سلام Rust!
+say_hello!("دنیا");   // سلام دنیا!</code></pre>
+                </div>
+            </div>
+            <div>
+                <p style="font-size:36px;"><strong>ماکروهای رویه‌ای (Procedural)</strong></p>
+                <ul style="font-size:32px;">
+                    <li><code>#[derive(...)]</code> — تولید خودکار کد</li>
+                    <li><code>derive(Debug, Clone, Serialize)</code></li>
+                    <li>Attribute macros — تغییر آیتم</li>
+                    <li>Function-like macros — مثل <code>vec![]</code></li>
+                </ul>
+                <div class="code-block">
+<pre><code class="rust">#[derive(Debug, Clone)]
+struct Point {
+    x: f64,
+    y: f64,
+}
+let p = Point { x:1.0, y:2.0 };
+println!("{:?}", p);</code></pre>
+                </div>
+            </div>
+        </div>
+    
+        <div class="notes">سیستم متامارکتینگ راست: تفاوت ماکروهای اعلانی (macro_rules!) با ماکروهای رویه‌ای (Procedural Macros).</div>
+    </div>
+
+    <!-- Unsafe -->
+    
+
+<div id="unsafe"
+         data-y="9900"
+         class="step slide rtl">
+        <div class="top-header">کد ناایمن (Unsafe)</div>
+        <div class="warn-box" style="margin-top:12px; font-size:34px;">
+            <code>unsafe</code> مسئولیت ایمنی حافظه را به برنامه‌نویس می‌سپارد — با احتیاط استفاده کنید.
+        </div>
+        <div class="two-col" style="margin-top:10px;">
+            <div>
+                <p style="font-size:34px;"><strong>در unsafe می‌توانید:</strong></p>
+                <ul style="font-size:30px;">
+                    <li>dereference raw pointer</li>
+                    <li>فراخوانی تابع unsafe</li>
+                    <li>دسترسی/تغییر متغیر static قابل تغییر</li>
+                    <li>پیاده‌سازی unsafe trait</li>
+                    <li>دسترسی به فیلد union</li>
+                </ul>
+            </div>
+            <div class="code-block">
+<pre><code class="rust">fn main() {
+    let mut num = 5;
+    // raw pointer ساختن
+    let r1 = &amp;num as *const i32;
+    let r2 = &amp;mut num as *mut i32;
+
+    unsafe {
+        println!("r1: {}", *r1);
+        *r2 = 10;
+        println!("r2: {}", *r2);
+    }
+}
+
+unsafe fn dangerous() {
+    println!("این تابع ناایمن است");
+}</code></pre>
+            </div>
+        </div>
+    
+        <div class="notes">مرز ایمنی راست: ۵ قدرت خاص در بلاک unsafe و مسئولیت خطیر توسعه‌دهنده در حفظ تغییرناپذیرهای حافظه.</div>
+    </div>
+
+    <!-- FFI -->
+    
+
+<div id="ffi"
+         data-y="11000"
+         class="step slide rtl">
+        <div class="top-header">رابط توابع خارجی (FFI)</div>
+        <div class="info-box" style="margin-top:10px; font-size:34px;">
+            FFI امکان فراخوانی کد C از Rust و بالعکس را فراهم می‌کند.
+        </div>
+        <div class="two-col" style="margin-top:10px;">
+            <div class="code-block">
+<pre><code class="rust">// فراخوانی C از Rust
+extern "C" {
+    fn abs(x: i32) -&gt; i32;
+    fn strlen(s: *const i8) -&gt; usize;
+}
+
+fn main() {
+    unsafe {
+        println!("abs(-5) = {}", abs(-5));
+    }
+}
+
+// صادر کردن به C
+#[no_mangle]
+pub extern "C" fn add(a: i32, b: i32) -&gt; i32 {
+    a + b
+}</code></pre>
+            </div>
+            <div>
+                <ul style="font-size:33px; margin-top:10px;">
+                    <li><strong>cbindgen</strong> — تولید header C از Rust</li>
+                    <li><strong>bindgen</strong> — تولید binding Rust از C header</li>
+                    <li>استفاده در: kernel modules، WebAssembly، Python extensions</li>
+                    <li>ابزار <code>cargo build --release</code> → کتابخانه <code>.so</code> / <code>.dll</code></li>
+                </ul>
+            </div>
+        </div>
+    
+        <div class="notes">تعامل دوطرفه با کتابخانه‌های زبان C بدون سرریز کارایی و امکان استفاده از راست در سیستم‌های قدیمی.</div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         OOP SECTION  (x=10000)
+    ═══════════════════════════════════════════════════════════ -->
+
+    
+
+<div id="oop"
+         data-x="2000"
+         data-y="0"
+         class="step slide rtl">
+        <div class="top-header">شی‌گرایی در Rust</div>
+        <div class="info-box" style="margin-top:20px;">
+            Rust به‌طور کامل شی‌گرا نیست اما از بسیاری مفاهیم آن پشتیبانی می‌کند.
+        </div>
+        <ul style="margin-top:20px; font-size:38px;">
+            <li>✅ <strong>Encapsulation</strong> — با <code>pub</code>/private و module</li>
+            <li>⚠️ <strong>Inheritance</strong> — پشتیبانی ندارد، جایگزین: Trait</li>
+            <li>✅ <strong>Polymorphism</strong> — با Generics و Trait object</li>
+            <li>✅ <strong>Methods</strong> — با <code>impl</code> بلوک‌ها</li>
+        </ul>
+        <div class="warn-box" style="margin-top:20px; font-size:34px;">
+            در Rust نگاه ترکیب (Composition) بر وراثت ارجحیت دارد.
+        </div>
+    
+        <div class="notes">راست چگونه بدون وراثت سنتی، اصول شی‌گرایی (کپسوله‌سازی و چندریختی) را با ترکیب struct و trait پیاده می‌کند.</div>
+    </div>
+
+    <!-- Object -->
+    
+
+<div id="object"
+         data-y="1100"
+         class="step slide rtl">
+        <div class="top-header">ساختار به‌عنوان شی (struct + impl)</div>
+        <div class="code-block" style="margin-top:14px;">
+<pre><code class="rust">struct Rectangle {
+    width: f64,
+    height: f64,
+}
+
+impl Rectangle {
+    // سازنده (constructor)
+    pub fn new(width: f64, height: f64) -&gt; Self {
+        Rectangle { width, height }
+    }
+
+    // متد نمونه
+    pub fn area(&amp;self) -&gt; f64 {
+        self.width * self.height
+    }
+
+    pub fn perimeter(&amp;self) -&gt; f64 {
+        2.0 * (self.width + self.height)
+    }
+
+    pub fn is_square(&amp;self) -&gt; bool {
+        self.width == self.height
+    }
+}
+
+fn main() {
+    let rect = Rectangle::new(10.0, 5.0);
+    println!("مساحت: {}", rect.area());
+    println!("محیط: {}", rect.perimeter());
+}</code></pre>
+        </div>
+    
+        <div class="notes">تعریف شی در راست: تجمیع داده‌ها در struct و انتساب رفتارها از طریق بلاک‌های impl.</div>
+    </div>
+
+    <!-- Encapsulation -->
+    
+
+<div id="encapsulation"
+         data-y="2200"
+         class="step slide rtl">
+        <div class="top-header">کپسوله‌سازی (Encapsulation)</div>
+        <div class="two-col" style="margin-top:12px;">
+            <div>
+                <ul style="font-size:34px;">
+                    <li><code>pub</code> — قابل دسترسی از همه جا</li>
+                    <li>بدون <code>pub</code> — خصوصی به ماژول</li>
+                    <li><code>pub(crate)</code> — فقط داخل کتابخانه</li>
+                    <li><code>pub(super)</code> — فقط ماژول پدر</li>
+                    <li>ماژول‌ها مرز کپسوله‌سازی هستند</li>
+                </ul>
+            </div>
+            <div class="code-block">
+<pre><code class="rust">mod bank {
+    pub struct Account {
+        owner: String, // خصوصی
+        balance: f64,  // خصوصی
+    }
+
+    impl Account {
+        pub fn new(owner: &amp;str) -&gt; Self {
+            Account {
+                owner: owner.to_string(),
+                balance: 0.0,
+            }
+        }
+        pub fn deposit(&amp;mut self, amount: f64) {
+            if amount &gt; 0.0 {
+                self.balance += amount;
+            }
+        }
+        pub fn balance(&amp;self) -&gt; f64 {
+            self.balance
+        }
+    }
+}
+
+use bank::Account;
+let mut acc = Account::new("علی");
+acc.deposit(1000.0);
+println!("{}", acc.balance()); // ✅
+// acc.balance = 999.0; // ❌ خطا</code></pre>
+            </div>
+        </div>
+    
+        <div class="notes">کپسوله‌سازی با کلیدواژه pub در سطح ماژول‌ها؛ فیلدهای مخفی و تضمین یکپارچگی حالت درونی اشیاء.</div>
+    </div>
+
+    <!-- Inheritance -->
+    
+
+<div id="inheritance"
+         data-y="3300"
+         class="step slide markdown rtl">
+        # وراثت را پشتیبانی نمی‌کند
+        ### دلایل استفاده از وراثت
+        - استفاده مجدد از کد
+        - پولیمورفیسم (چندریختی)
+    
+        <div class="notes">چرایی عدم پشتیبانی از وراثت کلاسیک؛ ترجیح ترکیب بر وراثت و حل نیازها با traitها و trait objectها.</div>
+    </div>
+
+    <!-- Reuse -->
+    
+
+<div id="reuse"
+         data-x="3000"
+         data-y="3300"
+         data-z="-1000"
+         data-rotate-y="90"
+         class="step slide rtl">
+        <div class="top-header">استفاده مجدد از کد — Default Trait Methods</div>
+        <div class="info-box" style="margin-top:12px; font-size:34px;">
+            جایگزین وراثت در Rust: پیاده‌سازی پیش‌فرض در Trait
+        </div>
+        <div class="code-block" style="margin-top:10px;">
+<pre><code class="rust">trait Greet {
+    fn name(&amp;self) -&gt; &amp;str;
+    // متد پیش‌فرض — نیاز به override ندارد
+    fn greeting(&amp;self) -&gt; String {
+        format!("سلام، {}!", self.name())
+    }
+}
+
+struct Person { name: String }
+impl Greet for Person {
+    fn name(&amp;self) -&gt; &amp;str { &amp;self.name }
+    // greeting() از پیش‌فرض استفاده می‌کند
+}
+
+struct Robot { id: u32 }
+impl Greet for Robot {
+    fn name(&amp;self) -&gt; &amp;str { "ربات" }
+    fn greeting(&amp;self) -&gt; String { // override
+        format!("BEEP BOOP — Robot #{}", self.id)
+    }
+}
+
+fn main() {
+    let p = Person { name: "علی".to_string() };
+    let r = Robot { id: 42 };
+    println!("{}", p.greeting()); // سلام، علی!
+    println!("{}", r.greeting()); // BEEP BOOP — Robot #42
+}</code></pre>
+        </div>
+    
+        <div class="notes">استفاده مجدد از کد از طریق پیاده‌سازی پیش‌فرض متدها در تریت‌ها و امکان بازنویسی در صورت نیاز.</div>
+    </div>
+
+    <!-- Polymorphism -->
+    
+
+<div id="polymorphism"
+         data-z="-3000"
+         data-rotate-y="90"
+         class="step slide rtl">
+        <div class="top-header">پولیمورفیسم (Polymorphism)</div>
+        <p style="font-size:34px; margin-top:10px;">
+            جایگذینی آبجکت‌ها به‌جای یکدیگر در زمان اجرا چنانچه مشترکا ویژگی خاصی دارند.
+        </p>
+        <div class="two-col">
+            <div>
+                <p style="font-size:32px;"><strong>Static dispatch (Generic):</strong> بدون هزینه زمان اجرا</p>
+                <div class="code-block">
+<pre><code class="rust">fn print_area&lt;T: Shape&gt;(s: &amp;T) {
+    println!("{}", s.area());
+}</code></pre>
+                </div>
+            </div>
+            <div>
+                <p style="font-size:32px;"><strong>Dynamic dispatch (dyn Trait):</strong> vtable در زمان اجرا</p>
+                <div class="code-block">
+<pre><code class="rust">fn print_area(s: &amp;dyn Shape) {
+    println!("{}", s.area());
+}
+
+let shapes: Vec&lt;Box&lt;dyn Shape&gt;&gt; = vec![
+    Box::new(Circle { r: 1.0 }),
+    Box::new(Rect { w: 2.0, h: 3.0 }),
+];
+for s in &amp;shapes { print_area(s.as_ref()); }</code></pre>
+                </div>
+            </div>
+        </div>
+    
+        <div class="notes">چندریختی ایستا با جنریک‌ها (بدون هزینه زمان اجرا) در برابر چندریختی پویا با dyn Trait (vtable).</div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         WEB SECTION  (x=12000)
+    ═══════════════════════════════════════════════════════════ -->
+
+    
+
+</div>
+
+<div id="impress-toolbar"></div>
+
+<div class="impress-progressbar">
+    <div></div>
+</div>
+<div class="impress-progress"></div>
+
+<div id="impress-help"></div>
+
+
+<script src="../js/markdown.js"></script>
+<script src="../js/highlight.min.js"></script>
+<script src="../js/impress.js"></script>
+
+<script>
+    // Helper to split highlighted HTML into balanced lines without breaking tags
+    function splitHighlightedLines(html) {
+        var rawLines = html.split(/\r?\n/);
+        if (rawLines.length > 0 && rawLines[rawLines.length - 1].trim() === "") {
+            rawLines.pop();
+        }
+        var stack = [];
+        var processedLines = [];
+
+        for (var i = 0; i < rawLines.length; i++) {
+            var line = rawLines[i];
+            var prefix = stack.join("");
+            var tagRegex = /<\/?([a-zA-Z0-9]+)(?:\s+[^>]*?)?>/g;
+            var match;
+            while ((match = tagRegex.exec(line)) !== null) {
+                var fullTag = match[0];
+                var isClosing = fullTag.indexOf("</") === 0;
+                if (isClosing) {
+                    stack.pop();
+                } else if (fullTag.lastIndexOf("/>") !== fullTag.length - 2) {
+                    stack.push(fullTag);
+                }
+            }
+            var suffix = "";
+            for (var s = stack.length - 1; s >= 0; s--) {
+                var tagName = stack[s].match(/<([a-zA-Z0-9]+)/)[1];
+                suffix += "</" + tagName + ">";
+            }
+            processedLines.push(prefix + line + suffix);
+        }
+        return processedLines;
+    }
+
+    // Function to apply syntax highlighting AND line numbers to all pre code blocks
+    function applySyntaxHighlightingAndLineNumbers() {
+        if (!window.hljs) return;
+
+        // Ensure IDE window header buttons exist in all pre blocks
+        document.querySelectorAll(".code-block pre").forEach(function(pre) {
+            if (!pre.querySelector(".code-header")) {
+                var header = document.createElement("div");
+                header.className = "code-header";
+                header.innerHTML = '<span class="code-btn code-btn-close" title="Close"></span>' +
+                                   '<span class="code-btn code-btn-minimize" title="Minimize"></span>' +
+                                   '<span class="code-btn code-btn-maximize" title="Maximize"></span>' +
+                                   '<span class="code-title">rust</span>';
+                pre.insertBefore(header, pre.firstChild);
+            }
+        });
+
+        document.querySelectorAll("pre code").forEach(function(block) {
+            // Check if already numbered to avoid double-processing
+            if (block.dataset.numbered === "true") return;
+
+            // Highlight syntax
+            if (!block.classList.contains("rust") && !block.className.includes("language-")) {
+                block.classList.add("language-rust");
+            }
+            hljs.highlightElement(block);
+
+            // Add line numbers with gutter
+            var lines = splitHighlightedLines(block.innerHTML);
+            var numberedHtml = lines.map(function(lineHtml, idx) {
+                var lineNum = idx + 1;
+                var content = lineHtml || "&nbsp;";
+                return '<span class="code-line">' +
+                       '<span class="line-number" data-line="' + lineNum + '">' + lineNum + '</span>' +
+                       '<span class="line-content">' + content + '</span>' +
+                       '</span>';
+            }).join("");
+
+            block.innerHTML = numberedHtml;
+            block.dataset.numbered = "true";
+        });
+    }
+
+    // Run on page load
+    applySyntaxHighlightingAndLineNumbers();
+
+    // Re-check on impress navigation to ensure any dynamic/rendered slide is properly styled
+    document.addEventListener("impress:stepenter", function(event) {
+        applySyntaxHighlightingAndLineNumbers();
+    });
+
+    impress().init();
+</script>
+</body>
+</html>

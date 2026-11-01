@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Rust — مقایسه و حواشی</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100..900&display=swap" rel="stylesheet">
+
+    <link href="../css/impress-common.css" rel="stylesheet"/>
+    <link href="../css/presentation.css" rel="stylesheet"/>
+    <link href="../css/presentation-shared.css" rel="stylesheet"/>
+    
+</head>
+<body class="impress-not-supported">
+
+<!-- Top Global Section Navigation -->
+<nav class="presentation-nav">
+    <a href="../web/index.html" class="nav-prev-next" title="توسعه وب">‹ قبلی</a><a href="../index.html">مبانی و تاریخچه</a><a href="../advanced/index.html">مفاهیم پیشرفته و OOP</a><a href="../web/index.html">توسعه وب</a><a href="../sideline/index.html" class="active">مقایسه و حواشی</a><a href="../patterns/index.html">الگوهای طراحی</a><a href="../patterns/index.html" class="nav-prev-next" title="الگوهای طراحی">بعدی ›</a>
+</nav>
+
+<!-- Fixed background images -->
+<img id="rust-logo" src="../image/rust-logo.png">
+<img id="rust-robot" src="../image/rust-robot.png">
+
+<div id="impress">
+
+    <div id="preview"
+         data-x="1000"
+         data-y="2200"
+         data-z="6000"
+         class="step">
+    </div>
+
+<div id="sideline"
+         data-x="0"
+         data-y="0"
+         data-z="0"
+         class="step slide rtl">
+        <div class="top-header" style="font-size:55px; margin-top:280px;">حواشی Rust</div>
+        <ul style="font-size:42px; margin-top:30px; text-align:center; list-style:none;">
+            <li>🐧 لینوکس</li>
+            <li>🛡️ توصیه NSA</li>
+            <li>📈 منحنی یادگیری</li>
+            <li>🔤 پیچیدگی syntax</li>
+        </ul>
+    
+        <div class="notes">بررسی بازتاب‌ها و رویدادهای مهم پیرامون زبان راست در صنعت نرم‌افزار و سازمان‌های بزرگ.</div>
+    </div>
+
+    <!-- Linux -->
+    
+
+<div id="rust-vs-java"
+         data-x="2000"
+         data-y="0"
+         data-z="0"
+         class="step slide rtl">
+        <div class="top-header">Rust در مقابل Java</div>
+        <table class="cmp-table" style="margin-top:14px; font-size:30px;">
+            <thead>
+                <tr>
+                    <th>ویژگی</th>
+                    <th>Java</th>
+                    <th>Rust</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>مدیریت حافظه</td>
+                    <td>Garbage Collector (GC)</td>
+                    <td>Ownership — بدون GC</td>
+                </tr>
+                <tr>
+                    <td>سرعت اجرا</td>
+                    <td>سریع (JIT)</td>
+                    <td>بسیار سریع (AOT، بدون pause)</td>
+                </tr>
+                <tr>
+                    <td>مصرف حافظه</td>
+                    <td>بالا (JVM overhead)</td>
+                    <td>بسیار کم</td>
+                </tr>
+                <tr>
+                    <td>Null safety</td>
+                    <td>NullPointerException!</td>
+                    <td>Option&lt;T&gt; — بدون null</td>
+                </tr>
+                <tr>
+                    <td>خطاها</td>
+                    <td>Exception</td>
+                    <td>Result&lt;T,E&gt; — صریح</td>
+                </tr>
+                <tr>
+                    <td>همزمانی</td>
+                    <td>Thread + lock (runtime)</td>
+                    <td>Fearless — تضمین compile-time</td>
+                </tr>
+                <tr>
+                    <td>منحنی یادگیری</td>
+                    <td>متوسط</td>
+                    <td>چالش‌برانگیز در ابتدا</td>
+                </tr>
+                <tr>
+                    <td>اکوسیستم</td>
+                    <td>بسیار بالغ</td>
+                    <td>رو به رشد (crates.io)</td>
+                </tr>
+            </tbody>
+        </table>
+    
+        <div class="notes">مقایسه جامع راست و جاوا: مدیریت حافظه، ردپای رم، سرعت اجرا، زمان بالا آمدن و سیستم خطایابی.</div>
+    </div>
+
+    <!-- Rust vs Go -->
+    
+
+<div id="rust-vs-go"
+         data-y="1100"
+         class="step slide rtl">
+        <h3 dir="ltr">Rust vs Go</h3>
+        <a id="discord-blog" href="https://discord.com/blog/why-discord-is-switching-from-go-to-rust">
+            https://discord.com/blog/why-discord-is-switching-from-go-to-rust
+        </a>
+        <img id="discord-read-state-overview" src="../image/discord-read-state-overview.png">
+
+        <img id="discord-logo" src="../image/discord-logo.png">
+    
+        <div class="notes">مقایسه راست و گو: بررسی تجربه واقعی دیسکورد و تاثیر توقف‌های Garbage Collector بر روی تاخیر ۹۹ درصدی.</div>
+    </div>
+
+    
+
+<div id="discord-go-result"
+         data-x="3000"
+         data-z="-1000"
+         data-rotate-y="90"
+         class="step slide rtl">
+        <h3>نتایج Go</h3>
+        <div>
+            <ul>
+                <li>
+                    ساخت یک endpoint برای تنظیم GCPercent در حین اجرا
+                    <ul>
+                        <li>
+                            بدون اثر
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+            <ul>
+                <li>پایین آوردن سایز cache</li>
+                <li>
+                    تغییر ساختار cache
+                    <ul>
+                        <li>پایین آمدن تایم اسکن</li>
+                        <li>بالا رفتن تایم latency روی 99th</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <img id="discord-graph-1" src="../image/discord-graph-1.png">
+
+        <a href="https://github.com/golang/go/blob/2c02b4a/src/runtime/proc.go#L6070-L6075">
+            <img id="go-gc-force" src="../image/go-gc-force.png">
+        </a>
+    
+        <div class="notes">مشکلات دیسکورد با سرویس Read States در گو؛ نوسانات دوره‌ای تاخیر ناشی از GC و شکست راهکارهای میانی.</div>
+    </div>
+
+    
+
+<div id="discord-rust-result"
+         data-z="-3000"
+         data-rotate-y="90"
+         class="step slide rtl">
+        <h3>انتقال از Go به Rust</h3>
+        
+
+<div id="rust-vs-c-and-cpp"
+         data-x="2000"
+         data-y="2200"
+         data-z="0"
+         class="step slide rtl">
+        <div class="top-header">Rust در مقابل C و C++</div>
+        <div class="info-box" style="margin-top:12px; font-size:34px;">
+            C/C++ کنترل دقیق روی سخت‌افزار می‌دهند اما مدیریت دستی حافظه منبع اصلی باگ‌های امنیتی است.
+        </div>
+        <table class="cmp-table" style="margin-top:10px; font-size:30px;">
+            <thead>
+                <tr><th>ویژگی</th><th>C / C++</th><th>Rust</th></tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>ایمنی حافظه</td>
+                    <td>❌ دستی — use-after-free، buffer overflow</td>
+                    <td>✅ تضمین compile-time</td>
+                </tr>
+                <tr>
+                    <td>سرعت</td>
+                    <td>✅ بسیار سریع</td>
+                    <td>✅ برابر یا سریع‌تر</td>
+                </tr>
+                <tr>
+                    <td>Data race</td>
+                    <td>❌ ممکن است رخ دهد</td>
+                    <td>✅ غیرممکن در safe Rust</td>
+                </tr>
+                <tr>
+                    <td>Null pointer</td>
+                    <td>❌ undefined behavior</td>
+                    <td>✅ Option&lt;T&gt;</td>
+                </tr>
+                <tr>
+                    <td>Build system</td>
+                    <td>Make/CMake — پیچیده</td>
+                    <td>Cargo — ساده و یکپارچه</td>
+                </tr>
+                <tr>
+                    <td>بلوغ اکوسیستم</td>
+                    <td>چند دهه</td>
+                    <td>۱۰ ساله — رو به رشد</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="warn-box" style="font-size:30px; margin-top:8px;">
+            طبق تحقیقات Microsoft: ~۷۰٪ آسیب‌پذیری‌های امنیتی ناشی از خطاهای حافظه در C/C++ است.
+        </div>
+    
+        <div class="notes">مقایسه مستقیم با C و C++؛ ایمنی حافظه در زمان کامپایل بدون قربانی کردن سرعت و کنترل سخت‌افزاری.</div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         SIDELINE SECTION  (x=16000)
+    ═══════════════════════════════════════════════════════════ -->
+
+    
+
+<div id="linux" data-x="0" data-y="1100"
+         class="step slide rtl">
+        <div class="top-header">Rust در هسته لینوکس</div>
+        <div class="info-box" style="margin-top:14px;">
+            از <strong>لینوکس نسخه ۶.۱ (دسامبر ۲۰۲۲)</strong> Rust رسماً زبان دوم هسته لینوکس شد.
+        </div>
+        <ul style="margin-top:14px; font-size:36px;">
+            <li>لینوس توروالدز: «این یکی از بزرگ‌ترین تغییرات در تاریخ لینوکس است»</li>
+            <li>هدف: نوشتن <strong>device driver</strong>های ایمن‌تر بدون از دست دادن کارایی</li>
+            <li>ماژول‌های Rust دسترسی کامل به kernel API دارند</li>
+            <li>آندروید: استفاده از Rust در لایه <strong>HAL</strong> و سرویس‌های سیستمی</li>
+            <li>Google: هزاران خط کد Rust در Android AOSP</li>
+            <li>Microsoft: بازنویسی بخش‌هایی از Windows kernel با Rust</li>
+        </ul>
+        <div class="warn-box" style="font-size:33px; margin-top:10px;">
+            هنوز مقاومت‌هایی در جامعه توسعه‌دهندگان C هسته لینوکس وجود دارد.
+        </div>
+    
+        <div class="notes">ورود تاریخی راست به عنوان دومین زبان رسمی هسته لینوکس از نسخه ۶.۱ به رهبری لینوس توروالدز.</div>
+    </div>
+
+    <!-- NSA -->
+    
+
+<div id="nsa"
+         data-y="2200"
+         class="step slide rtl">
+        <div class="top-header">توصیه NSA — ایمنی حافظه</div>
+        <div class="warn-box" style="margin-top:14px; font-size:34px;">
+            در <strong>نوامبر ۲۰۲۲</strong>، آژانس امنیت ملی آمریکا (NSA) رسماً توصیه کرد از زبان‌های memory-safe استفاده شود.
+        </div>
+        <ul style="margin-top:16px; font-size:36px;">
+            <li>NSA، CISA و چندین آژانس اطلاعاتی متحد این بیانیه را امضا کردند</li>
+            <li>زبان‌های توصیه‌شده: <strong>Rust، Go، Swift، Java، C#، Python</strong></li>
+            <li>زبان‌های پرریسک: C و C++ (بدون قید memory-safe)</li>
+            <li>دلیل: ~۷۰٪ آسیب‌پذیری‌های امنیتی ناشی از باگ‌های حافظه</li>
+            <li>هدف: کاهش سطح حملات سایبری در نرم‌افزارهای critical</li>
+        </ul>
+        <div class="info-box" style="font-size:33px; margin-top:10px;">
+            White House ONCD (2024): «انتقال به زبان‌های memory-safe باید اولویت صنعت نرم‌افزار باشد.»
+        </div>
+    
+        <div class="notes">بیانیه و توصیه‌نامه رسمی آژانس امنیت ملی آمریکا (NSA) برای حذف زبان‌های با حافظه ناایمن نظیر C/C++.</div>
+    </div>
+
+    <!-- Learning Curve -->
+    
+
+<div id="learning-curve"
+         data-y="3300"
+         class="step slide rtl">
+        <div class="top-header">منحنی یادگیری Rust</div>
+        <div class="warn-box" style="margin-top:12px;">
+            Rust یکی از سخت‌ترین زبان‌ها برای یادگیری اولیه است — اما ارزش آن را دارد.
+        </div>
+        <div class="two-col" style="margin-top:14px;">
+            <div>
+                <p style="font-size:34px;"><strong>چالش‌ها:</strong></p>
+                <ul style="font-size:32px;">
+                    <li>سیستم Ownership جدید و متفاوت</li>
+                    <li>borrow checker — پیام‌های خطای طولانی</li>
+                    <li>Lifetime annotations</li>
+                    <li>تفاوت <code>&amp;str</code> و <code>String</code></li>
+                    <li>async/await و Pin</li>
+                </ul>
+            </div>
+            <div>
+                <p style="font-size:34px;"><strong>مزایای بعد از یادگیری:</strong></p>
+                <ul style="font-size:32px;">
+                    <li>کد صحیح‌تر از اول</li>
+                    <li>باگ‌های حافظه وجود ندارند</li>
+                    <li>ریفکتور با اطمینان</li>
+                    <li>بهترین کامپایلر راهنمایی می‌کند</li>
+                    <li>محبوب‌ترین زبان Stack Overflow — ۹ سال متوالی!</li>
+                </ul>
+            </div>
+        </div>
+        <div class="info-box" style="font-size:32px; margin-top:10px;">
+            کتاب رسمی «The Rust Programming Language» (aka The Book) رایگان آنلاین است.
+        </div>
+    
+        <div class="notes">بررسی شیب تند یادگیری راست و کلنجار رفتن با Borrow Checker و چگونگی جبران آن با قابلیت اطمینان سیستم نهایی.</div>
+    </div>
+
+    <!-- Syntax Complexity -->
+    
+
+<div id="syntax"
+         data-y="4400"
+         class="step slide rtl">
+        <h2>پیچیدگی syntax</h2>
+        <img id="syntax-complexity" src="../image/rust-syntax-complexity.png">
+    
+        <div class="notes">بررسی ساختار نحوی و ترکیبات زبانی راست و چگونگی افزایش خوانایی با عبور از مراحل مقدماتی.</div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         PATTERNS SECTION  (x=18000)
+    ═══════════════════════════════════════════════════════════ -->
+
+    
+
+</div>
+
+<div id="impress-toolbar"></div>
+
+<div class="impress-progressbar">
+    <div></div>
+</div>
+<div class="impress-progress"></div>
+
+<div id="impress-help"></div>
+
+
+<script src="../js/markdown.js"></script>
+<script src="../js/highlight.min.js"></script>
+<script src="../js/impress.js"></script>
+
+<script>
+    // Helper to split highlighted HTML into balanced lines without breaking tags
+    function splitHighlightedLines(html) {
+        var rawLines = html.split(/\r?\n/);
+        if (rawLines.length > 0 && rawLines[rawLines.length - 1].trim() === "") {
+            rawLines.pop();
+        }
+        var stack = [];
+        var processedLines = [];
+
+        for (var i = 0; i < rawLines.length; i++) {
+            var line = rawLines[i];
+            var prefix = stack.join("");
+            var tagRegex = /<\/?([a-zA-Z0-9]+)(?:\s+[^>]*?)?>/g;
+            var match;
+            while ((match = tagRegex.exec(line)) !== null) {
+                var fullTag = match[0];
+                var isClosing = fullTag.indexOf("</") === 0;
+                if (isClosing) {
+                    stack.pop();
+                } else if (fullTag.lastIndexOf("/>") !== fullTag.length - 2) {
+                    stack.push(fullTag);
+                }
+            }
+            var suffix = "";
+            for (var s = stack.length - 1; s >= 0; s--) {
+                var tagName = stack[s].match(/<([a-zA-Z0-9]+)/)[1];
+                suffix += "</" + tagName + ">";
+            }
+            processedLines.push(prefix + line + suffix);
+        }
+        return processedLines;
+    }
+
+    // Function to apply syntax highlighting AND line numbers to all pre code blocks
+    function applySyntaxHighlightingAndLineNumbers() {
+        if (!window.hljs) return;
+
+        // Ensure IDE window header buttons exist in all pre blocks
+        document.querySelectorAll(".code-block pre").forEach(function(pre) {
+            if (!pre.querySelector(".code-header")) {
+                var header = document.createElement("div");
+                header.className = "code-header";
+                header.innerHTML = '<span class="code-btn code-btn-close" title="Close"></span>' +
+                                   '<span class="code-btn code-btn-minimize" title="Minimize"></span>' +
+                                   '<span class="code-btn code-btn-maximize" title="Maximize"></span>' +
+                                   '<span class="code-title">rust</span>';
+                pre.insertBefore(header, pre.firstChild);
+            }
+        });
+
+        document.querySelectorAll("pre code").forEach(function(block) {
+            // Check if already numbered to avoid double-processing
+            if (block.dataset.numbered === "true") return;
+
+            // Highlight syntax
+            if (!block.classList.contains("rust") && !block.className.includes("language-")) {
+                block.classList.add("language-rust");
+            }
+            hljs.highlightElement(block);
+
+            // Add line numbers with gutter
+            var lines = splitHighlightedLines(block.innerHTML);
+            var numberedHtml = lines.map(function(lineHtml, idx) {
+                var lineNum = idx + 1;
+                var content = lineHtml || "&nbsp;";
+                return '<span class="code-line">' +
+                       '<span class="line-number" data-line="' + lineNum + '">' + lineNum + '</span>' +
+                       '<span class="line-content">' + content + '</span>' +
+                       '</span>';
+            }).join("");
+
+            block.innerHTML = numberedHtml;
+            block.dataset.numbered = "true";
+        });
+    }
+
+    // Run on page load
+    applySyntaxHighlightingAndLineNumbers();
+
+    // Re-check on impress navigation to ensure any dynamic/rendered slide is properly styled
+    document.addEventListener("impress:stepenter", function(event) {
+        applySyntaxHighlightingAndLineNumbers();
+    });
+
+    impress().init();
+</script>
+</body>
+</html>
