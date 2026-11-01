@@ -1,8 +1,14 @@
 
 body {
-    font-family: Vazirmatn, 'PT Sans', sans-serif;
+    font-family: 'Vazirmatn', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     min-height: 740px;
-    background-color: #ffd5c6;
+    background-color: #f1f5f9; /* Modern clean light slate background */
+    background-image: 
+        radial-gradient(at 100% 0%, rgba(226, 232, 240, 0.6) 0px, transparent 50%),
+        radial-gradient(at 0% 100%, rgba(241, 245, 249, 0.8) 0px, transparent 50%);
+    color: #0f172a;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 li {
@@ -67,12 +73,17 @@ img {
 }
 
 .top-header {
-    background-color: blueviolet;
-    color: white;
-    opacity: 0.9;
-    padding: 10px;
-    border-radius: 20px;
+    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    color: #ffffff;
+    padding: 12px 28px;
+    border-radius: 12px;
     text-align: center;
+    font-weight: 700;
+    font-size: 42px;
+    letter-spacing: -0.5px;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    margin-bottom: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 /*
@@ -104,20 +115,23 @@ img {
 
     width: 1850px;
     height: 1000px;
-    padding: 20px 30px;
+    padding: 36px 44px;
     margin: 20px auto;
 
-    background-color: white;
-    border: 2px solid rgba(0, 0, 0, .3);
-    border-radius: 30px;
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 20px;
     box-sizing: border-box;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, .1);
+    box-shadow: 
+        0 10px 25px -5px rgba(15, 23, 42, 0.08),
+        0 8px 10px -6px rgba(15, 23, 42, 0.04);
 
-    text-shadow: 0 3px 3px rgba(0, 0, 0, .2);
+    text-shadow: none;
 
-    font-size: 45px;
-    letter-spacing: -2px;
-    line-height: 1.5;
+    font-size: 40px;
+    letter-spacing: 0;
+    line-height: 1.6;
+    color: #1e293b;
 }
 
 #cover, #vanderbilt, #coffin, #appliance, #enforced {
