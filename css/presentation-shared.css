@@ -237,62 +237,195 @@
             font-size: 36px;
         }
     
-        /* ── Unified Multi-Presentation Navigation Bar ── */
-        .presentation-nav {
+        /* ── Professional IDE-Style Tab Navigation (Seamless Browser Tabs) ── */
+        :root {
+            --nav-height: 38px;
+            --tab-bg-active: #ffffff;
+            --tab-bg-inactive: transparent;
+            --tab-border-color: rgb(198 67 225 / 0);
+        }
+
+        body {
+            padding-top: var(--nav-height) !important;
+            margin: 0 !important;
+            box-sizing: border-box !important;
+        }
+
+        /* Shift the presentation viewport down so it centers perfectly in the remaining area */
+        .impress-enabled #impress {
+            top: calc(50% + (var(--nav-height) / 2)) !important;
+            pointer-events: auto !important;
+        }
+
+        .presentation-nav,
+        .impress-enabled .presentation-nav {
             position: fixed;
-            top: 15px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 1000;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: var(--nav-height);
+            z-index: 100;
+            pointer-events: auto !important;
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            padding: 0 12px;
+            background: rgb(229 231 235 / 0.38); /* Classic IDE/Browser tab bar background */
+            border-bottom: 1px solid var(--tab-border-color);
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+            font-family: Vazirmatn, -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, sans-serif;
+            direction: rtl;
+            box-sizing: border-box;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        .nav-sections {
+            display: flex;
+            align-items: flex-end;
+            gap: 2px;
+            height: 100%;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+        .nav-sections::-webkit-scrollbar {
+            display: none;
+        }
+
+        .nav-controls {
             display: flex;
             align-items: center;
-            gap: 8px;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            padding: 8px 16px;
-            border-radius: 30px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-            border: 1px solid rgba(0, 0, 0, 0.08);
-            font-family: Vazirmatn, 'Segoe UI', Tahoma, sans-serif;
-            direction: rtl;
+            gap: 4px;
+            height: 100%;
+            flex-shrink: 0;
+            padding-bottom: 4px;
+            box-sizing: border-box;
         }
-        .presentation-nav a {
+
+        /* Standard Tab Styling */
+        .presentation-nav a,
+        .impress-enabled .presentation-nav a {
+            pointer-events: auto !important;
+            cursor: pointer;
             display: inline-flex;
             align-items: center;
-            gap: 6px;
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 16px;
-            font-weight: 600;
-            color: #475569;
+            height: 32px;
+            padding: 0 14px;
+            border-radius: 4px 4px 0 0;
+            font-size: 13px;
+            font-weight: 500;
+            color: #4b5563;
             text-decoration: none;
-            transition: all 0.2s ease;
+            transition: all 0.12s ease;
             white-space: nowrap;
+            line-height: 1;
+            border: 1px solid transparent;
+            border-bottom: none;
+            background: var(--tab-bg-inactive);
+            position: relative;
+            margin-bottom: -1px; /* Seamless overlap onto tab-bar bottom border */
+            box-sizing: border-box;
         }
-        .presentation-nav a:hover {
-            color: #0f172a;
-            background: rgba(0, 0, 0, 0.05);
-            transform: translateY(-1px);
+
+        .presentation-nav a:hover:not(.active) {
+            color: #111827;
+            background: rgba(255, 255, 255, 0.5);
         }
+
+        /* Seamless Active Tab (Visual continuation into presentation area) */
         .presentation-nav a.active {
-            color: #ffffff;
-            background: linear-gradient(135deg, #e05638 0%, #c4381c 100%);
-            box-shadow: 0 2px 8px rgba(224, 86, 56, 0.4);
+            color: #c2410c !important; /* Rust warm orange/red */
+            font-weight: 700;
+            background: var(--tab-bg-active) !important;
+            border-color: var(--tab-border-color) !important;
+            border-bottom: 2px solid #ffffff !important; /* Bridges seamlessly over bottom border */
+            box-shadow: 0 -1px 3px rgba(0, 0, 0, 0.04);
+            z-index: 2;
         }
-        .nav-divider {
-            width: 1px;
-            height: 20px;
-            background: #cbd5e1;
-            margin: 0 2px;
+        .presentation-nav a.active::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: #ea580c;
+            border-radius: 4px 4px 0 0;
         }
+
+        /* Prev / Next Minimal Controls */
         .nav-prev-next {
-            font-size: 14px !important;
-            padding: 5px 10px !important;
-            color: #64748b !important;
-            background: #f1f5f9;
+            height: 26px !important;
+            padding: 0 10px !important;
+            font-size: 12px !important;
+            font-weight: 500 !important;
+            color: #4b5563 !important;
+            background: #ffffff !important;
+            border: 1px solid #d1d5db !important;
+            border-radius: 4px !important;
+            margin-bottom: 0 !important;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
         }
         .nav-prev-next:hover {
-            background: #e2e8f0 !important;
-            color: #1e293b !important;
+            background: #f9fafb !important;
+            color: #111827 !important;
+            border-color: #9ca3af !important;
+        }
+
+        /* ── Mobile Responsive Drawer (<820px) ── */
+        .nav-toggle-btn {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            height: 28px;
+            padding: 0 10px;
+            font-size: 13px;
+            font-family: inherit;
+            background: #ffffff;
+            border: 1px solid #d1d5db;
+            border-radius: 4px;
+            cursor: pointer;
+            color: #374151;
+            margin-bottom: 5px;
+            pointer-events: auto !important;
+        }
+
+        @media (max-width: 820px) {
+            .nav-toggle-btn {
+                display: inline-flex;
+            }
+            .nav-sections {
+                display: none;
+                position: absolute;
+                top: var(--nav-height);
+                left: 0;
+                right: 0;
+                height: auto;
+                background: #ffffff;
+                flex-direction: column;
+                align-items: stretch;
+                padding: 6px;
+                gap: 2px;
+                border-bottom: 1px solid var(--tab-border-color);
+                box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+                z-index: 101;
+            }
+            .nav-sections.open {
+                display: flex;
+            }
+            .presentation-nav a {
+                height: 36px;
+                padding: 0 12px;
+                border-radius: 4px;
+                border: 1px solid transparent;
+                margin-bottom: 0;
+            }
+            .presentation-nav a.active {
+                border-bottom: 1px solid #d1d5db !important;
+                border-right: 3px solid #ea580c !important;
+                background: #f3f4f6 !important;
+            }
+            .presentation-nav a.active::after {
+                display: none;
+            }
         }

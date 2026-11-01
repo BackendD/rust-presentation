@@ -160,6 +160,8 @@ body.impress-mouse-timeout {
 
 .impress-enabled #impress-toolbar         { pointer-events: auto }
 .impress-enabled #impress-console-button  { pointer-events: auto }
+.impress-enabled .presentation-nav        { pointer-events: auto }
+.impress-enabled .presentation-nav *      { pointer-events: auto }
 
 
 /*

@@ -14,9 +14,17 @@
 </head>
 <body class="impress-not-supported">
 
-<!-- Top Global Section Navigation -->
+<!-- Top Compact Global Navigation -->
 <nav class="presentation-nav">
-    <a href="../index.html" class="nav-prev-next" title="مبانی و تاریخچه">‹ قبلی</a><a href="../index.html">مبانی و تاریخچه</a><a href="../advanced/index.html" class="active">مفاهیم پیشرفته و OOP</a><a href="../web/index.html">توسعه وب</a><a href="../sideline/index.html">مقایسه و حواشی</a><a href="../patterns/index.html">الگوهای طراحی</a><a href="../web/index.html" class="nav-prev-next" title="توسعه وب">بعدی ›</a>
+    <div style="display: flex; align-items: center; gap: 8px;">
+        <button class="nav-toggle-btn" onclick="document.querySelector('.nav-sections').classList.toggle('open')" aria-label="منوی بخش‌ها">☰ بخش‌ها</button>
+        <div class="nav-sections">
+            <a href="../index.html">مبانی و تاریخچه</a><a href="../advanced/index.html" class="active">مفاهیم پیشرفته و OOP</a><a href="../web/index.html">توسعه وب</a><a href="../sideline/index.html">مقایسه و حواشی</a><a href="../patterns/index.html">الگوهای طراحی</a>
+        </div>
+    </div>
+    <div class="nav-controls">
+        <a href="../index.html" class="nav-prev-next" title="مبانی و تاریخچه">‹ قبلی</a><a href="../web/index.html" class="nav-prev-next" title="توسعه وب">بعدی ›</a>
+    </div>
 </nav>
 
 <!-- Fixed background images -->
@@ -26,15 +34,16 @@
 <div id="impress">
 
     <div id="preview"
-         data-x="1000"
-         data-y="4500"
-         data-z="8000"
+         data-x="10000"
+         data-y="5000"
+         data-z="13500"
          class="step">
     </div>
 
 <div id="advanced"
          data-x="0"
          data-y="0"
+         data-z="0"
          class="step slide">
         <h1>Rust Advanced</h1>
         <img id="rust-advanced" src="../image/rust-advanced.webp">
