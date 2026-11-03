@@ -10,16 +10,20 @@
     <link href="../css/impress-common.css" rel="stylesheet"/>
     <link href="../css/presentation.css" rel="stylesheet"/>
     <link href="../css/presentation-shared.css" rel="stylesheet"/>
-    
+
 </head>
 <body class="impress-not-supported">
 
 <!-- Top Compact Global Navigation -->
 <nav class="presentation-nav">
     <div style="display: flex; align-items: center; gap: 8px;">
-        <button class="nav-toggle-btn" onclick="document.querySelector('.nav-sections').classList.toggle('open')" aria-label="منوی بخش‌ها">☰ بخش‌ها</button>
+        <button class="nav-toggle-btn" onclick="document.querySelector('.nav-sections').classList.toggle('open')"
+                aria-label="منوی بخش‌ها">☰ بخش‌ها
+        </button>
         <div class="nav-sections">
-            <a href="../index.html">مبانی و تاریخچه</a><a href="../advanced/index.html">مفاهیم پیشرفته و OOP</a><a href="../web/index.html">توسعه وب</a><a href="../sideline/index.html">مقایسه و حواشی</a><a href="../patterns/index.html" class="active">الگوهای طراحی</a>
+            <a href="../index.html">مبانی و تاریخچه</a><a href="../advanced/index.html">مفاهیم پیشرفته و OOP</a><a
+                href="../web/index.html">توسعه وب</a><a href="../sideline/index.html">مقایسه و حواشی</a><a
+                href="../patterns/index.html" class="active">الگوهای طراحی</a>
         </div>
     </div>
     <div class="nav-controls">
@@ -34,13 +38,13 @@
 <div id="impress">
 
     <div id="preview"
-         data-x="10000"
+         data-x="7000"
          data-y="5000"
          data-z="13500"
          class="step">
     </div>
 
-<div id="patterns"
+    <div id="patterns"
          data-x="0"
          data-y="0"
          data-z="0"
@@ -56,108 +60,81 @@
             <li>🏗️ <strong>Architectural</strong> — RAII، Command</li>
             <li>λ <strong>Functional</strong> — Iterator، Map/Filter/Fold</li>
         </ul>
-    
-        <div class="notes">الگوهای طراحی متداول در راست؛ جایگزینی رویکردهای کلاسیک شی‌گرایی با رویکردهای اصیل و نوع‌محور.</div>
+
+        <div class="notes">الگوهای طراحی متداول در راست؛ جایگزینی رویکردهای کلاسیک شی‌گرایی با رویکردهای اصیل و
+            نوع‌محور.
+        </div>
     </div>
 
     <!-- Anti-Patterns -->
-    
 
-<div id="anti-patterns"
-         data-y="1100"
+    <div id="anti-patterns"
+         data-x="2000"
+         data-y="0"
+         data-z="0"
          class="step slide rtl">
-        <div class="top-header">الگوهای ضد (Anti-Patterns)</div>
-        <div class="warn-box" style="margin-top:12px; font-size:34px;">
-            از این الگوها در Rust اجتناب کنید:
-        </div>
-        <div class="two-col" style="margin-top:14px;">
-            <ul style="font-size:33px;">
-                <li><strong>.unwrap() بی‌ملاحظه</strong> — باعث panic در production</li>
-                <li><strong>clone() اضافه</strong> — به‌جای استفاده صحیح از reference</li>
-                <li><strong>Rc&lt;RefCell&lt;T&gt;&gt; همه‌جا</strong> — وقتی نیاز واقعی نیست</li>
-                <li><strong>Arc&lt;Mutex&lt;T&gt;&gt; همه‌جا</strong> — وقتی channel کافی است</li>
-            </ul>
-            <ul style="font-size:33px;">
-                <li><strong>String ownership اشتباه</strong> — String به‌جای &amp;str در argument</li>
-                <li><strong>نادیده گرفتن Result</strong> — let _ = func();</li>
-                <li><strong>طراحی God struct</strong> — ساختار خیلی بزرگ</li>
-                <li><strong>unsafe بدون ضرورت</strong> — زیاد از حد استفاده</li>
-            </ul>
-        </div>
-        <div class="code-block" style="margin-top:8px;">
-<pre><code class="rust">// ❌ بد
-let val = some_option.unwrap(); // panic اگر None
-
-// ✅ خوب
-let val = some_option.unwrap_or_default();
-let val = some_option.expect("توضیح منطقی");
-if let Some(v) = some_option { /* ... */ }</code></pre>
-        </div>
-    
-        <div class="notes">الگوهای ضد متداول در راست نظیر استفاده بی‌رویه از clone، unwrap و بازگرداندن ارجاع به داده محلی.</div>
     </div>
 
-    <!-- Creational Patterns -->
-    
+    <div id="not-oo"
+         data-y="1100"
+         class="step slide rtl">
+        Rust not an OO language
+    </div>
 
-<div id="creational"
+    <div id="misusing-traits"
          data-y="2200"
          class="step slide rtl">
+        Misusing traits
+    </div>
+
+    <div id="deref-inheritance"
+         data-y="3300"
+         class="step slide rtl">
+        Deref to simulate inheritance
+    </div>
+
+    <div id="generic-not-class"
+         data-y="4400"
+         class="step slide rtl">
+        Using generic types to act like classes
+    </div>
+
+    <div id="enum"
+         data-y="5500"
+         class="step slide rtl">
+        Using enums where they don't make sense
+    </div>
+
+    <div id="ownership"
+         data-y="6600"
+         class="step slide rtl">
+        Avoiding ownership concerns
+    </div>
+
+    <div id="cloning"
+         data-y="7700"
+         class="step slide rtl">
+        Cloning everything
+    </div>
+
+    <div id="rc"
+         data-y="8800"
+         class="step slide rtl">
+        Misusing Rc and RefCell
+    </div>
+
+    <div id="creational"
+         data-x="4000"
+         data-y="0"
+         class="step slide rtl">
         <div class="top-header">الگوهای سازنده — Builder Pattern</div>
-        <div class="code-block" style="margin-top:14px;">
-<pre><code class="rust">#[derive(Debug)]
-struct Request {
-    url: String,
-    method: String,
-    timeout: u32,
-    headers: Vec&lt;(String, String)&gt;,
-}
-
-struct RequestBuilder {
-    url: String,
-    method: String,
-    timeout: u32,
-    headers: Vec&lt;(String, String)&gt;,
-}
-
-impl RequestBuilder {
-    fn new(url: &amp;str) -&gt; Self {
-        RequestBuilder {
-            url: url.to_string(),
-            method: "GET".to_string(),
-            timeout: 30,
-            headers: vec![],
-        }
-    }
-    fn method(mut self, m: &amp;str) -&gt; Self { self.method = m.to_string(); self }
-    fn timeout(mut self, t: u32) -&gt; Self { self.timeout = t; self }
-    fn header(mut self, k: &amp;str, v: &amp;str) -&gt; Self {
-        self.headers.push((k.to_string(), v.to_string())); self
-    }
-    fn build(self) -&gt; Request {
-        Request { url: self.url, method: self.method,
-                  timeout: self.timeout, headers: self.headers }
-    }
-}
-
-fn main() {
-    let req = RequestBuilder::new("https://api.example.com/data")
-        .method("POST")
-        .timeout(60)
-        .header("Content-Type", "application/json")
-        .build();
-    println!("{:?}", req);
-}</code></pre>
-        </div>
-    
-        <div class="notes">الگوی سازنده (Builder Pattern) برای ساخت ایمن و ارگونومیک اشیای پیچیده با امکان اعتبارسنجی.</div>
     </div>
 
     <!-- Structural Patterns -->
-    
 
-<div id="structural"
-         data-y="3300"
+    <div id="structural"
+         data-x="6000"
+         data-y="0"
          class="step slide rtl">
         <div class="top-header">الگوهای ساختاری — Newtype Pattern</div>
         <div class="info-box" style="margin-top:10px; font-size:33px;">
@@ -190,15 +167,17 @@ impl&lt;L: Logger&gt; Logger for TimestampLogger&lt;L&gt; {
     }
 }</code></pre>
         </div>
-    
-        <div class="notes">الگوی Newtype برای ایمنی در سطح نوع (Type Safety)، جداسازی شناسه‌ها و جلوگیری از خطای جابه‌جایی مقادیر هم‌جنس.</div>
+
+        <div class="notes">الگوی Newtype برای ایمنی در سطح نوع (Type Safety)، جداسازی شناسه‌ها و جلوگیری از خطای
+            جابه‌جایی مقادیر هم‌جنس.
+        </div>
     </div>
 
     <!-- Behavioral Patterns -->
-    
 
-<div id="behavioral"
-         data-y="4400"
+    <div id="behavioral"
+         data-x="8000"
+         data-y="0"
          class="step slide rtl">
         <div class="top-header">الگوهای رفتاری — Strategy Pattern</div>
         <div class="code-block" style="margin-top:14px;">
@@ -233,15 +212,18 @@ fn main() {
     println!("{:?}", data); // [1, 2, 5, 8, 9]
 }</code></pre>
         </div>
-    
-        <div class="notes">الگوی استراتژی (Strategy Pattern) با بهره‌گیری از تریت‌ها برای تزریق رفتارهای مختلف در زمان کامپایل یا اجرا.</div>
+
+        <div class="notes">الگوی استراتژی (Strategy Pattern) با بهره‌گیری از تریت‌ها برای تزریق رفتارهای مختلف در زمان
+            کامپایل یا اجرا.
+        </div>
     </div>
 
     <!-- Architectural Patterns -->
-    
 
-<div id="architectural"
-         data-y="5500"
+
+    <div id="architectural"
+         data-x="10000"
+         data-y="0"
          class="step slide rtl">
         <div class="top-header">الگوهای معماری — RAII</div>
         <div class="info-box" style="margin-top:10px; font-size:34px;">
@@ -280,15 +262,16 @@ fn main() {
     // فایل دیگر وجود ندارد
 }</code></pre>
         </div>
-    
+
         <div class="notes">الگوی RAII و مدیریت خودکار منابع (فایل‌ها، سوکت‌ها، قفل‌ها) با پیاده‌سازی تریت Drop.</div>
     </div>
 
     <!-- Functional Patterns -->
-    
 
-<div id="functional"
-         data-y="6600"
+
+    <div id="functional"
+         data-x="12000"
+         data-y="0"
          class="step slide rtl">
         <div class="top-header">الگوهای تابعی (Functional Style)</div>
         <div class="info-box" style="margin-top:10px; font-size:33px;">
@@ -323,9 +306,10 @@ fn main() {
     </div>
 
 
-        <div class="notes">سبک برنامه‌نویسی تابعی در راست: زنجیره ایتراتورها، ارزیابی تنبل (lazy)، map، filter و fold با کارایی بالا.</div>
+    <div class="notes">سبک برنامه‌نویسی تابعی در راست: زنجیره ایتراتورها، ارزیابی تنبل (lazy)، map، filter و fold با
+        کارایی بالا.
     </div>
-
+</div>
 
 
 </div>
@@ -383,19 +367,19 @@ fn main() {
         if (!window.hljs) return;
 
         // Ensure IDE window header buttons exist in all pre blocks
-        document.querySelectorAll(".code-block pre").forEach(function(pre) {
+        document.querySelectorAll(".code-block pre").forEach(function (pre) {
             if (!pre.querySelector(".code-header")) {
                 var header = document.createElement("div");
                 header.className = "code-header";
                 header.innerHTML = '<span class="code-btn code-btn-close" title="Close"></span>' +
-                                   '<span class="code-btn code-btn-minimize" title="Minimize"></span>' +
-                                   '<span class="code-btn code-btn-maximize" title="Maximize"></span>' +
-                                   '<span class="code-title">rust</span>';
+                    '<span class="code-btn code-btn-minimize" title="Minimize"></span>' +
+                    '<span class="code-btn code-btn-maximize" title="Maximize"></span>' +
+                    '<span class="code-title">rust</span>';
                 pre.insertBefore(header, pre.firstChild);
             }
         });
 
-        document.querySelectorAll("pre code").forEach(function(block) {
+        document.querySelectorAll("pre code").forEach(function (block) {
             // Check if already numbered to avoid double-processing
             if (block.dataset.numbered === "true") return;
 
@@ -407,13 +391,13 @@ fn main() {
 
             // Add line numbers with gutter
             var lines = splitHighlightedLines(block.innerHTML);
-            var numberedHtml = lines.map(function(lineHtml, idx) {
+            var numberedHtml = lines.map(function (lineHtml, idx) {
                 var lineNum = idx + 1;
                 var content = lineHtml || "&nbsp;";
                 return '<span class="code-line">' +
-                       '<span class="line-number" data-line="' + lineNum + '">' + lineNum + '</span>' +
-                       '<span class="line-content">' + content + '</span>' +
-                       '</span>';
+                    '<span class="line-number" data-line="' + lineNum + '">' + lineNum + '</span>' +
+                    '<span class="line-content">' + content + '</span>' +
+                    '</span>';
             }).join("");
 
             block.innerHTML = numberedHtml;
@@ -425,7 +409,7 @@ fn main() {
     applySyntaxHighlightingAndLineNumbers();
 
     // Re-check on impress navigation to ensure any dynamic/rendered slide is properly styled
-    document.addEventListener("impress:stepenter", function(event) {
+    document.addEventListener("impress:stepenter", function (event) {
         applySyntaxHighlightingAndLineNumbers();
     });
 
