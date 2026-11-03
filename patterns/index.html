@@ -1,16 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Rust — الگوهای طراحی</title>
+    <title>Rust — الگوهای طراحی و الگوهای ضدطراحی</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100..900&display=swap" rel="stylesheet">
 
     <link href="../css/impress-common.css" rel="stylesheet"/>
     <link href="../css/presentation.css" rel="stylesheet"/>
     <link href="../css/presentation-shared.css" rel="stylesheet"/>
-
 </head>
 <body class="impress-not-supported">
 
@@ -44,273 +43,1005 @@
          class="step">
     </div>
 
+    <!-- ═══════════════════════════════════════════════════════════
+         COLUMN 1 (x=0): مقدمه و چشم‌انداز الگوها در Rust
+    ═══════════════════════════════════════════════════════════ -->
+
     <div id="patterns"
          data-x="0"
          data-y="0"
          data-z="0"
          class="step slide rtl">
-        <div class="top-header">الگوهای طراحی در Rust</div>
-        <div class="info-box" style="margin-top:18px;">
-            الگوهای طراحی GoF در Rust به شکل اصیل‌تری پیاده‌سازی می‌شوند — اغلب ایمن‌تر و بدون overhead.
+        <div class="top-header">الگوهای طراحی در زبان Rust (بازنگری ۲۰۲۶)</div>
+        <div class="info-box" style="margin-top:16px; font-size:32px;">
+            بر اساس کتاب <em>Design Patterns and Best Practices in Rust (2026)</em>، الگوهای سنتی شی‌گرایی (GoF) مستقیماً به Rust ترجمه نمی‌شوند؛ بلکه سیستم مالکیت، سیستم تایپ غنی و تفکر اصیل Rust (Idiomatic) نحوه بازطراحی آنها را بازتعریف می‌کنند.
         </div>
-        <ul style="margin-top:16px; font-size:38px;">
-            <li>🏗️ <strong>Creational</strong> — Builder، Factory</li>
-            <li>🏛️ <strong>Structural</strong> — Newtype، Decorator</li>
-            <li>⚙️ <strong>Behavioral</strong> — Strategy، Observer</li>
-            <li>🏗️ <strong>Architectural</strong> — RAII، Command</li>
-            <li>λ <strong>Functional</strong> — Iterator، Map/Filter/Fold</li>
-        </ul>
-
-        <div class="notes">الگوهای طراحی متداول در راست؛ جایگزینی رویکردهای کلاسیک شی‌گرایی با رویکردهای اصیل و
-            نوع‌محور.
+        <div class="two-col" style="margin-top:20px; font-size:31px;">
+            <div style="flex:1;">
+                <p><strong>🚫 الگوهای ضدطراحی (Anti-Patterns):</strong></p>
+                <ul style="line-height:1.7;">
+                    <li>تلاش برای تقلید کلاس و وراثت با <code>Deref</code> یا Traitهای توخالی</li>
+                    <li>فرار از مالکیت با زدن چکش <code>clone()</code> بر همه چیز</li>
+                    <li>سوءاستفاده از <code>Rc&lt;RefCell&lt;T&gt;&gt;</code> و شکستن قوانین کامپایلر</li>
+                    <li>مبارزه با Borrow Checker و پناه بردن به <code>unsafe</code> یا Global Mutables</li>
+                </ul>
+            </div>
+            <div style="flex:1;">
+                <p><strong>✨ الگوهای اصیل و مدرن (Idiomatic Patterns):</strong></p>
+                <ul style="line-height:1.7;">
+                    <li><strong>Creational:</strong> سازنده مطمئن (Builder) و متدهای کارخانه‌ای ایمن</li>
+                    <li><strong>Type-Driven:</strong> الگوهای TypeState، NewType و Sealed Traits</li>
+                    <li><strong>Structural & Behavioral:</strong> Decorator، Strategy و Command با Trait و Closure</li>
+                    <li><strong>Architectural:</strong> جریان داده رو‌به‌پایین، کپسوله‌سازی جهش‌پذیری و RAII</li>
+                </ul>
+            </div>
         </div>
+        <div class="notes">مقدمه بخش الگوهای طراحی: معرفی تغییر پارادایم از شی‌گرایی کلاسیک به تفکر نوع‌محور و اصیل در زبان راست.</div>
     </div>
 
-    <!-- Anti-Patterns -->
+    <!-- ═══════════════════════════════════════════════════════════
+         COLUMN 2 (x=2000): آنتی‌پترن‌ها و دام‌های تفکر شی‌گرایی (Part 1 Book)
+    ═══════════════════════════════════════════════════════════ -->
 
     <div id="anti-patterns"
          data-x="2000"
          data-y="0"
          data-z="0"
          class="step slide rtl">
+        <div class="top-header">الگوهای ضدطراحی (Anti-Patterns) در Rust</div>
+        <div class="warn-box" style="margin-top:16px; font-size:32px;">
+            بزرگ‌ترین مانع یادگیری و نوشتن کد باکیفیت در Rust، «تلاش برای نوشتن جاوا یا ++C در قالب سینتکس راست» است. این مسیر به مبارزه مداوم با کامپایلر می‌انجامد.
+        </div>
+        <table class="cmp-table" style="margin-top:20px; font-size:27px;">
+            <thead>
+                <tr style="background:#f8fafc; font-weight:bold;">
+                    <th style="padding:10px 14px;">ضدالگو (Anti-Pattern)</th>
+                    <th style="padding:10px 14px;">انگیزه اولیه برنامه‌نویس</th>
+                    <th style="padding:10px 14px;">پیامد و هزینه در Rust</th>
+                    <th style="padding:10px 14px;">رویکرد اصیل جایگزین (Idiomatic)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style="padding:10px 14px;"><strong>وراثت مصنوعی با Deref</strong></td>
+                    <td>دسترسی خودکار به متدهای ساختار داخلی</td>
+                    <td>ابهام در API، شکست کپسوله‌سازی، رفتارهای غافلگیرکننده</td>
+                    <td>ترکیب صریح (Composition) یا Delegation Trait</td>
+                </tr>
+                <tr>
+                    <td style="padding:10px 14px;"><strong>سوءاستفاده از Traitها</strong></td>
+                    <td>ساختن سلسله‌مراتب کلاس‌های پایه و فرزند</td>
+                    <td>پیچیدگی بیهوده، محدودیت در object safety و Box&lt;dyn&gt;</td>
+                    <td>جداسازی رفتارها به تریت‌های کوچک و تک‌منظوره</td>
+                </tr>
+                <tr>
+                    <td style="padding:10px 14px;"><strong>چکش Clone</strong></td>
+                    <td>فرار فوری از خطاهای Borrow Checker</td>
+                    <td>افت شدید کارایی و تخصیص‌های مکرر حافظه هیپ</td>
+                    <td>قرض‌گیری صحیح (&)، انتقال مالکیت یا اشتراک با Arc</td>
+                </tr>
+                <tr>
+                    <td style="padding:10px 14px;"><strong>سوءاستفاده از Rc/RefCell</strong></td>
+                    <td>ایجاد گراف‌های پیچیده دوطرفه شی‌گرا</td>
+                    <td>انتقال خطای کامپایل به Panic در زمان اجرا (Runtime Crash)</td>
+                    <td>جریان داده یک‌طرفه (Data flows downward)</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="notes">بررسی اجمالی چهار دسته اصلی خطاهای طراحی رایج در هنگام مهاجرت از زبان‌های شی‌گرا به راست.</div>
     </div>
 
     <div id="not-oo"
          data-y="1100"
          class="step slide rtl">
-        Rust not an OO language
+        <div class="top-header">چرا Rust زبان شی‌گرا به معنای سنتی نیست؟</div>
+        <div class="info-box" style="margin-top:14px; font-size:32px;">
+            در زبان‌های شی‌گرا کلاس هم داده (State) و هم رفتار (Behavior) و هم سلسله‌مراتب وراثت را ادغام می‌کند. اما در راست داده و رفتار کاملاً مستقل هستند.
+        </div>
+        <div class="two-col" style="margin-top:18px;">
+            <div style="flex:1;">
+                <p style="font-size:31px; font-weight:bold; color:#b91c1c;">❌ تلقی شی‌گرای اشتباه:</p>
+                <ul style="font-size:29px; line-height:1.7;">
+                    <li>دیدن <code>struct</code> به‌عنوان یک کلاس حاوی فیلدهای خصوصی و عمومی</li>
+                    <li>طراحی گراف‌های حلقوی از اشیا که اشاره‌گر مستقیم به هم دارند</li>
+                    <li>تعریف اینترفیس‌های بزرگ با ده‌ها متد شبیه کلاس‌های انتزاعی</li>
+                    <li>انتظار اینکه زیرکلاس بتواند رفتار والد را بازنویسی کند (Override)</li>
+                </ul>
+            </div>
+            <div style="flex:1;">
+                <p style="font-size:31px; font-weight:bold; color:#15803d;">✅ بینش Rust (طراحی اصیل):</p>
+                <ul style="font-size:29px; line-height:1.7;">
+                    <li><strong>انواع (Types) فقط داده خام هستند:</strong> چیدمان شفاف در حافظه بدون هزینه پنهان.</li>
+                    <li><strong>رفتار از طریق تریت‌ها پیاده می‌شود:</strong> تریت قرارداد قابلیت‌هاست نه هویت داده.</li>
+                    <li><strong>چندریختی ایستا (Static Polymorphism):</strong> مونو‌مورفایز شدن جنریک‌ها با کارایی صفر-هزینه.</li>
+                    <li><strong>تک‌مالکیتی (Single Ownership):</strong> مرزهای مشخص تغییرپذیری و طول‌عمرها.</li>
+                </ul>
+            </div>
+        </div>
+        <div class="warn-box" style="margin-top:18px; font-size:30px;">
+            قانون طلایی فصل دوم کتاب: <em>«انواع شیء نیستند؛ تلاش برای تبدیل struct به شیء شی‌گرا، شما را رو در روی Borrow Checker قرار می‌دهد!»</em>
+        </div>
+        <div class="notes">بررسی تفکیک داده و رفتار در راست، رد ادغام کلاس‌محور و تشریح برتری مدل ترکیبی نسبت به مدل وراثتی سنتی.</div>
     </div>
 
     <div id="misusing-traits"
          data-y="2200"
          class="step slide rtl">
-        Misusing traits
+        <div class="top-header">ضدالگو: سوءاستفاده از Traitها مانند وراثت کلاس</div>
+        <div class="warn-box" style="margin-top:12px; font-size:31px;">
+            وقتی برنامه‌نویسان تازه‌کار می‌خواهند درخت وراثت کلاس ایجاد کنند، شروع به ارث‌بری تریت از تریت با صدها متد و تبدیل اجباری به <code>Box&lt;dyn Trait&gt;</code> می‌کنند!
+        </div>
+        <div class="code-block" style="margin-top:12px;">
+<pre><code class="rust">// ❌ ضدالگو: تلاش برای شبیه‌سازی درخت وراثت کلاس با تریت‌های چندلایه
+trait Operand { fn evaluate(&self) -> f64; }
+trait Operator {
+    fn precedence(&self) -> u8;
+    fn push_operand(&mut self, op: Box<dyn Operand>);
+}
+trait BinaryOperator: Operator { /* متدهای اضافی شبیه کلاس فرزند */ }
+
+// ✅ راه‌حل اصیل Rust: استفاده از الگوی داده‌محور با Enum
+enum Expression {
+    Number(f64),
+    Binary { op: BinaryOp, left: Box<Expression>, right: Box<Expression> },
+    Variable(String),
+}
+
+impl Expression {
+    fn evaluate(&self, vars: &HashMap<String, f64>) -> Result<f64, String> {
+        match self {
+            Self::Number(n) => Ok(*n),
+            Self::Variable(v) => vars.get(v).copied().ok_or_else(|| format!("متغیر {v} یافت نشد")),
+            Self::Binary { op, left, right } => {
+                let l = left.evaluate(vars)?;
+                let r = right.evaluate(vars)?;
+                op.apply(l, r)
+            }
+        }
+    }
+}</code></pre>
+        </div>
+        <div class="notes">چگونه استفاده نابجا از Traitها برای شبیه‌سازی کلاس‌های انتزاعی به سردرگمی منجر می‌شود و چرا Enumها جایگزین مناسب‌تری برای دامنه‌های بسته هستند.</div>
     </div>
 
     <div id="deref-inheritance"
          data-y="3300"
          class="step slide rtl">
-        Deref to simulate inheritance
+        <div class="top-header">ضدالگو: پیاده‌سازی Deref برای شبیه‌سازی وراثت</div>
+        <div class="warn-box" style="margin-top:12px; font-size:31px;">
+            <strong>Deref Polymorphism:</strong> تریت <code>Deref</code> فقط و فقط برای اشاره‌گرهای هوشمند (Smart Pointers) است؛ نه میانبری برای دسترسی رایگان به فیلدهای یک Struct درونی!
+        </div>
+        <div class="code-block" style="margin-top:12px;">
+<pre><code class="rust">// ❌ ضدالگو: استفاده از Deref برای به ارث بردن فیلدها و متدهای Base
+struct BaseWidget { width: u32, height: u32 }
+struct Button { base: BaseWidget, label: String }
+
+impl std::ops::Deref for Button {
+    type Target = BaseWidget;
+    fn deref(&self) -> &Self::Target { &self.base } // ❌ شکستن معناشناسی Rust!
+}
+
+// ✅ راه‌حل اصیل: ترکیب صریح (Composition) یا پیاده‌سازی تریت واسط
+trait Widget {
+    fn dimensions(&self) -> (u32, u32);
+}
+
+struct ModernButton {
+    base: BaseWidget,
+    label: String,
+}
+
+impl Widget for ModernButton {
+    fn dimensions(&self) -> (u32, u32) { (self.base.width, self.base.height) }
+}
+impl ModernButton {
+    pub fn base(&self) -> &BaseWidget { &self.base } // دسترسی صریح و شفاف
+}</code></pre>
+        </div>
+        <div class="notes">چرا Deref Coercion نباید برای شبیه‌سازی وراثت فیلدها استفاده شود؛ خطرات نقض کپسوله‌سازی و تداخل متدها در آینده.</div>
     </div>
 
     <div id="generic-not-class"
          data-y="4400"
          class="step slide rtl">
-        Using generic types to act like classes
+        <div class="top-header">ضدالگو: جنریک‌های لجام‌گسیخته به جای کلاس‌ها</div>
+        <div class="info-box" style="margin-top:12px; font-size:31px;">
+            جنریک‌ها در Rust برای چندریختی ایستا (Compile-time Monomorphization) ساخته شده‌اند؛ افزودن پارامترهای بی‌پایان به Struct تنها برای تعمیم کاذب، کد را ناخوانا و زمان کامپایل را منفجر می‌کند.
+        </div>
+        <div class="code-block" style="margin-top:12px;">
+<pre><code class="rust">// ❌ ضدالگو: تورم پارامترهای تایپ جنریک برای پوشش هر حالت ممکن
+struct Engine<Fuel, Ignition, Cooling, Exhaust, Transmission> {
+    fuel: Fuel, ignition: Ignition, cooling: Cooling,
+    exhaust: Exhaust, transmission: Transmission,
+}
+
+// ✅ راه‌حل اصیل: پنهان‌سازی جزئیات در ماژول و استفاده از تریت‌های مهارشده
+pub trait FuelSystem {
+    fn inject_fuel(&mut self, amount: f32) -> Result<(), EngineError>;
+}
+
+pub struct EngineConfig {
+    pub fuel: Box<dyn FuelSystem>,
+    pub transmission: TransmissionType, // Enum به‌جای جنریک بیهوده
+}
+
+pub struct Engine {
+    config: EngineConfig,
+    state: EngineState,
+}
+// به توازن میان Static Dispatch (سرعت بالا) و Dynamic Dispatch (سادگی API) دقت کنید!</code></pre>
+        </div>
+        <div class="notes">مدیریت پیچیدگی پارامترهای جنریک، پرهیز از انفجار نوع در کد و درک توازن میان dispatch ایستا و پویا.</div>
     </div>
 
     <div id="enum"
          data-y="5500"
          class="step slide rtl">
-        Using enums where they don't make sense
+        <div class="top-header">ضدالگو: کاربرد نادرست Enums و Enumهای عظیم</div>
+        <div class="warn-box" style="margin-top:12px; font-size:31px;">
+            با اینکه <code>enum</code> در Rust فوق‌العاده قدرتمند است، اما قرار دادن واریانت‌های کاملاً ناهمگن و بزرگ در یک Enum واحد، باعث اتلاف حافظه و شکست توسعه‌پذیری (Open/Closed Principle) می‌شود.
+        </div>
+        <div class="code-block" style="margin-top:12px;">
+<pre><code class="rust">// ❌ ضدالگو: یک Enum غول‌آسا که تمام عملیات و ساختارهای ناهمگون را می‌بلعد
+enum BadCalculatorCommand {
+    Add(f64),
+    Subtract(f64),
+    PlotComplexGraph(Vec<f64>, Vec<f64>, [u8; 4096]), // حجم کل Enum به اندازه بزرگترین عضو می‌شود!
+}
+
+// ✅ رویکرد اصیل ۱: کوچک‌سازی سایز واریانت با Box
+enum OptimizedCommand {
+    Add(f64),
+    Subtract(f64),
+    PlotComplexGraph(Box<ComplexPlotData>), // اندازه حافظه در پشته یکسان و کوچک می‌ماند
+}
+
+// ✅ رویکرد اصیل ۲: وقتی دامنه دستورات باز و توسعه‌پذیر توسط کاربر است -> الگوی Trait Command
+pub trait CalculatorCommand {
+    fn execute(&mut self, calc: &mut Calculator) -> Result<f64, String>;
+    fn undo(&mut self, calc: &mut Calculator) -> Result<(), String>;
+}</code></pre>
+        </div>
+        <div class="notes">تحلیل اثر حافظه‌ای واریانت‌های بزرگ در Enum، چرایی استفاده از Box و زمان مهاجرت از Enum به تریت برای توسعه‌پذیری باز.</div>
     </div>
 
     <div id="ownership"
          data-y="6600"
          class="step slide rtl">
-        Avoiding ownership concerns
+        <div class="top-header">ضدالگو: فرار از دغدغه‌های سیستم مالکیت (Ownership)</div>
+        <div class="info-box" style="margin-top:12px; font-size:31px;">
+            سیستم مالکیت Rust مانعی برای عبور نیست، بلکه یک «مشاور رایگان معماری نرم‌افزار» است که مرزهای اشتراک داده، چرخه حیات و اثرات جانبی (Side Effects) را شفاف می‌کند.
+        </div>
+        <div class="two-col" style="margin-top:16px;">
+            <div style="flex:1;">
+                <div class="warn-box" style="font-size:28px;">
+                    <strong>فرار از مالکیت:</strong> برنامه‌نویس وقتی با خطای lifetime یا borrow مواجه می‌شود، ساختار خود را با رفرنس‌های چرخه‌ای، متغیرهای عمومی با Mutex یا پوینترهای ناامن پر می‌کند؛ این امر به بن‌بست معماری می‌انجامد.
+                </div>
+            </div>
+            <div style="flex:1;">
+                <div class="info-box" style="font-size:28px;">
+                    <strong>پذیرش مالکیت:</strong> بازآرایی ساختار به نحوی که هر موجودیت یک مالک منفرد و شفاف داشته باشد و داده‌ها رو به پایین جریان یابند (Downward Data Flow).
+                </div>
+            </div>
+        </div>
+        <div class="code-block" style="margin-top:12px;">
+<pre><code class="rust">// تفکر اصیل: مالکیت منبع، طول عمر آن را تضمین می‌کند
+struct SessionManager {
+    sessions: HashMap<SessionId, UserSession>, // مالک حقیقی سشن‌ها
+}
+impl SessionManager {
+    // فقط رفرنس کوتاه‌مدت یا نمایه امانت داده می‌شود، نه مالکیت اشتراکی نامحدود
+    pub fn get_session(&self, id: &SessionId) -> Option<&UserSession> {
+        self.sessions.get(id)
+    }
+}</code></pre>
+        </div>
+        <div class="notes">سیستم مالکیت راست به عنوان ابزار طراحی؛ چگونگی شفاف‌سازی مرزهای داده‌ها و چرخه حیات منابع در معماری سیستم.</div>
     </div>
 
     <div id="cloning"
          data-y="7700"
          class="step slide rtl">
-        Cloning everything
+        <div class="top-header">ضدالگو: چکش Clone — کپی‌کردن همه‌چیز!</div>
+        <div class="warn-box" style="margin-top:12px; font-size:31px;">
+            <strong>The Clone Hammer:</strong> حل خطاهای کامپایلر با افزودن <code>.clone()</code> در همه جا، بدهی فنی سنگین و افت کارایی شدیدی (پنهان در تخصیص‌های مکرر Heap) تولید می‌کند.
+        </div>
+        <div class="code-block" style="margin-top:12px;">
+<pre><code class="rust">// ❌ ضدالگو: کلون کردن تمام پیام‌ها و ساختارها برای فرار از borrow checker
+fn process_events(events: Vec<EventLog>, filter: &str) -> Vec<EventLog> {
+    let mut matched = Vec::new();
+    for ev in events.clone() { // ❌ کلون کردن بردار کامل و رشته‌ها!
+        if ev.message.clone().contains(filter) { // ❌ کلون رشته فقط برای جستجو!
+            matched.push(ev.clone());
+        }
+    }
+    matched
+}
+
+// ✅ راه‌حل اصیل: استفاده از رفرنس و امانت‌گرفتن بدون هزینه (Zero-Cost Borrowing)
+fn process_events_idiomatic<'a>(events: &'a [EventLog], filter: &str) -> Vec<&'a EventLog> {
+    events
+        .iter()
+        .filter(|ev| ev.message.contains(filter)) // رفرنس خواندنی بدون هیچ کپی
+        .collect() // فقط اشاره‌گرها جمع‌آوری می‌شوند، بدون کلون کردن بدنه رویدادها!
+}</code></pre>
+        </div>
+        <div class="notes">نقد الگوی ضدطراحی چکش کلون؛ بررسی تفاوت کارایی میان ایجاد کپی‌های عمیق در هیپ و قرض‌گیری خواندنی با طول‌عمر مشترک.</div>
     </div>
 
     <div id="rc"
          data-y="8800"
          class="step slide rtl">
-        Misusing Rc and RefCell
+        <div class="top-header">ضدالگو: سوءاستفاده از Rc و RefCell</div>
+        <div class="warn-box" style="margin-top:12px; font-size:31px;">
+            تبدیل تمام انواع به <code>Rc&lt;RefCell&lt;T&gt;&gt;</code> به منظور شبیه‌سازی مدل حافظه جاوا/پایتون، بررسی‌های ایمنی زمان کامپایل را خاموش کرده و منجر به Panic در زمان اجرا و نشت حافظه (Memory Leaks via Reference Cycles) می‌شود.
+        </div>
+        <div class="code-block" style="margin-top:12px;">
+<pre><code class="rust">// ❌ ضدالگو: ایجاد رفرنس‌های دوطرفه و پیچیده شبیه آبجکت‌های شی‌گرا
+struct BadNode {
+    parent: Option<Rc<RefCell<BadNode>>>,
+    children: Vec<Rc<RefCell<BadNode>>>, // ⚠️ خطر چرخه ارجاع و نشت دائمی حافظه!
+}
+
+// ✅ راه‌حل اصیل ۱: استفاده از Rc::downgrade و Weak برای فرزند به والد
+struct TreeChild {
+    parent: std::rc::Weak<RefCell<TreeNode>>, // عدم جلوگیری از آزادسازی حافظه
+}
+
+// ✅ راه‌حل اصیل ۲ (رویکرد مدرن در Rust): آرنا / شناسه برداری (SlotMap یا Index-based)
+struct ArenaTree {
+    nodes: Vec<NodeData>, // یک مالک واحد برای همه نودها
+}
+struct NodeId(usize);
+struct NodeData {
+    parent: Option<NodeId>,
+    children: Vec<NodeId>,
+} // صددرصد ایمن، بدون نیاز به RefCell و بدون کوچکترین خطر Memory Leak!</code></pre>
+        </div>
+        <div class="notes">بررسی خطرات چرخه ارجاعی با Rc/RefCell و معرفی الگوهای جایگزین اصیل مانند Weak pointers و Arena Allocations بر پایه اندیس‌ها.</div>
     </div>
+
+    <div id="dont-fight"
+         data-y="9900"
+         class="step slide rtl">
+        <div class="top-header">مبارزه با Borrow Checker، فرار به Unsafe و Globals</div>
+        <div class="warn-box" style="margin-top:12px; font-size:31px;">
+            وقتی طراحی سیستم نادرست باشد، برخی توسعه‌دهندگان به <code>static mut</code> یا بلوک‌های <code>unsafe</code> پناه می‌برند؛ کتاب نشان می‌دهد که این مسیر خطرناک‌ترین تله در Rust است.
+        </div>
+        <div class="two-col" style="margin-top:16px;">
+            <div style="flex:1;">
+                <div class="warn-box" style="font-size:27px; line-height:1.6;">
+                    <strong>خطرات میانبرهای نامطمئن:</strong>
+                    <ul>
+                        <li><code>static mut</code> ذاتاً ناامن است و در نسخه‌های جدید Rust به‌طور جدی منع شده است.</li>
+                        <li>استفاده از <code>unsafe</code> برای دور زدن رفرنس‌ها، گارانتی ایمنی حافظه را بی‌اثر و Undefined Behavior ایجاد می‌کند.</li>
+                        <li>مشکل از کامپایلر نیست؛ معماری داده نیاز به بازطراحی دارد!</li>
+                    </ul>
+                </div>
+            </div>
+            <div style="flex:1;">
+                <div class="code-block">
+<pre><code class="rust">// ✅ راه‌حل ایمن برای متغیرهای پیکربندی و وضعیت گلوبال:
+use std::sync::OnceLock;
+
+// مقداردهی تنبل و ایمن در سطح برنامه
+static CONFIG: OnceLock<AppConfig> = OnceLock::new();
+
+pub fn get_config() -> &'static AppConfig {
+    CONFIG.get_or_init(|| AppConfig::load_from_env())
+}
+// بدون نیاز به unsafe، بدون race condition و کاملاً سازگار با نخ‌ها (Thread-Safe)</code></pre>
+                </div>
+            </div>
+        </div>
+        <div class="notes">بررسی فصل چهارم کتاب: پرهیز از تله unsafe و وضعیت‌های متغیر سراسری، و جایگزینی آن با ساختارهای مدرنی مثل OnceLock.</div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         COLUMN 3 (x=4000): الگوهای سازنده (Creational Patterns)
+    ═══════════════════════════════════════════════════════════ -->
 
     <div id="creational"
          data-x="4000"
          data-y="0"
+         data-z="0"
          class="step slide rtl">
-        <div class="top-header">الگوهای سازنده — Builder Pattern</div>
+        <div class="top-header">الگوهای سازنده — تفسیری نو در زبان Rust</div>
+        <div class="info-box" style="margin-top:16px; font-size:32px;">
+            در زبان‌های شی‌گرا الگوهای سازنده برای پوشش کاستی‌های Constructorها و وراثت به وجود آمدند. در Rust با وجود <code>Default</code>، الگوهای ساخت با کنترل مالکیت (Ownership Transfer) غنی‌تر می‌شوند.
+        </div>
+        <table class="cmp-table" style="margin-top:24px; font-size:28px;">
+            <thead>
+                <tr style="background:#f8fafc; font-weight:bold;">
+                    <th style="padding:12px 16px;">الگو</th>
+                    <th style="padding:12px 16px;">رویکرد سنتی شی‌گرایی</th>
+                    <th style="padding:12px 16px;">معادل و نحوه تحقق در Rust</th>
+                    <th style="padding:12px 16px;">مزیت اصیل در Rust</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style="padding:12px 16px;"><strong>Factory Method</strong></td>
+                    <td>زیرکلاس‌ها متد ساخت شیء را override می‌کنند</td>
+                    <td>توابع ایستا مانند <code>Type::new()</code> یا <code>From / Into</code></td>
+                    <td>ساده، صریح و بدون نیاز به سربار وراثت و جدول مجازی</td>
+                </tr>
+                <tr>
+                    <td style="padding:12px 16px;"><strong>Abstract Factory</strong></td>
+                    <td>اینترفیس‌های درهم‌تنیده برای تولید خانواده اشیا</td>
+                    <td>تریت‌های کارخانه با Associated Types یا Generics</td>
+                    <td>بررسی سازگاری خانواده نوع در زمان کامپایل (Zero Cost)</td>
+                </tr>
+                <tr>
+                    <td style="padding:12px 16px;"><strong>Builder</strong></td>
+                    <td>کلاس‌های جداگانه با متدهای زنجیره‌ای با ارجاع</td>
+                    <td>الگوی Consuming Builder یا State-Machine Builder</td>
+                    <td>مصرف مالکیت ساختار ناقص و تولید نوع نهایی تغییرناپذیر</td>
+                </tr>
+                <tr>
+                    <td style="padding:12px 16px;"><strong>Prototype</strong></td>
+                    <td>متد <code>clone()</code> بر روی آبجکت‌های پویا</td>
+                    <td>تریت استاندارد <code>Clone</code> با Derive خودکار</td>
+                    <td>کپی عمیق صریح با تضمین عدم مداخله پنهان در اشاره‌گرها</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="notes">معرفی الگوهای ساخت در راست و مقایسه عملکرد آن‌ها با الگوهای کلاسیک شی‌گرایی.</div>
     </div>
 
-    <!-- Structural Patterns -->
-
-    <div id="structural"
-         data-x="6000"
-         data-y="0"
+    <div id="builder-pattern"
+         data-y="1100"
          class="step slide rtl">
-        <div class="top-header">الگوهای ساختاری — Newtype Pattern</div>
-        <div class="info-box" style="margin-top:10px; font-size:33px;">
-            Newtype یک wrapper تایپ می‌سازد که type safety می‌دهد بدون overhead.
+        <div class="top-header">الگوی سازنده اصیل: Consuming Builder</div>
+        <div class="info-box" style="margin-top:12px; font-size:31px;">
+            در Rust متدهای Builder معمولاً <code>mut self</code> را مصرف می‌کنند (Move)؛ این امر از ایجاد کپی غیرضروری جلوگیری کرده و شیء نیمه‌ساخته را پس از <code>build()</code> غیرقابل‌استفاده می‌سازد.
         </div>
-        <div class="code-block" style="margin-top:10px;">
-<pre><code class="rust">// Newtype — جلوگیری از اشتباه واحدها
-struct Meters(f64);
-struct Kilograms(f64);
-
-fn calculate_bmi(weight: Kilograms, height: Meters) -&gt; f64 {
-    weight.0 / (height.0 * height.0)
+        <div class="code-block" style="margin-top:12px;">
+<pre><code class="rust">#[derive(Debug)]
+pub struct ServerConfig {
+    host: String,
+    port: u16,
+    max_connections: usize,
+    tls_enabled: bool,
 }
 
-// ❌ این کامپایل نمی‌شود:
-// calculate_bmi(Meters(1.75), Kilograms(70.0));
-// ✅ ترتیب صحیح:
-let bmi = calculate_bmi(Kilograms(70.0), Meters(1.75));
-
-// Decorator Pattern با Trait
-trait Logger { fn log(&amp;self, msg: &amp;str); }
-struct ConsoleLogger;
-impl Logger for ConsoleLogger {
-    fn log(&amp;self, msg: &amp;str) { println!("[LOG] {}", msg); }
+#[derive(Default)]
+pub struct ServerConfigBuilder {
+    host: Option<String>,
+    port: Option<u16>,
+    max_connections: Option<usize>,
+    tls_enabled: bool,
 }
-struct TimestampLogger&lt;L: Logger&gt; { inner: L }
-impl&lt;L: Logger&gt; Logger for TimestampLogger&lt;L&gt; {
-    fn log(&amp;self, msg: &amp;str) {
-        self.inner.log(&amp;format!("[2024] {}", msg));
+
+impl ServerConfigBuilder {
+    pub fn new() -> Self { Self::default() }
+    pub fn host(mut self, host: impl Into<String>) -> Self {
+        self.host = Some(host.into());
+        self
+    }
+    pub fn port(mut self, port: u16) -> Self { self.port = Some(port); self }
+    pub fn enable_tls(mut self) -> Self { self.tls_enabled = true; self }
+
+    pub fn build(self) -> Result<ServerConfig, &'static str> {
+        Ok(ServerConfig {
+            host: self.host.ok_or("آدرس میزبان الزامی است")?,
+            port: self.port.unwrap_or(8080),
+            max_connections: self.max_connections.unwrap_or(1024),
+            tls_enabled: self.tls_enabled,
+        })
     }
 }</code></pre>
         </div>
-
-        <div class="notes">الگوی Newtype برای ایمنی در سطح نوع (Type Safety)، جداسازی شناسه‌ها و جلوگیری از خطای
-            جابه‌جایی مقادیر هم‌جنس.
-        </div>
+        <div class="notes">بررسی پیاده‌سازی گام‌به‌گام الگوی Builder به شکل مصرف‌کننده (Consuming) و ولیدیشن پارامترها در متد build.</div>
     </div>
 
-    <!-- Behavioral Patterns -->
-
-    <div id="behavioral"
-         data-x="8000"
-         data-y="0"
+    <div id="factory-idioms"
+         data-y="2200"
          class="step slide rtl">
-        <div class="top-header">الگوهای رفتاری — Strategy Pattern</div>
-        <div class="code-block" style="margin-top:14px;">
-<pre><code class="rust">// Strategy Pattern با Trait
-trait SortStrategy {
-    fn sort(&amp;self, data: &amp;mut Vec&lt;i32&gt;);
-}
+        <div class="top-header">کارخانه و تبدیل‌ها با تریت‌های استاندارد</div>
+        <div class="info-box" style="margin-top:12px; font-size:31px;">
+            به‌جای ایجاد کلاس‌های پیچیده Factory، زبان Rust از قراردادهای نام‌گذاری اصیل و تریت‌های توکار <code>From / TryFrom</code> برای ساخت و تبدیل شی‌ءها استفاده می‌کند.
+        </div>
+        <div class="code-block" style="margin-top:12px;">
+<pre><code class="rust">// الگوهای مرسوم نام‌گذاری کارخانه‌ای در Rust:
+// 1. `new(...)` -> سازنده استاندارد پیش‌فرض
+// 2. `with_capacity(n)` -> سازنده با پیکربندی اولیه بهینه
+// 3. `from_str(...)` -> تبدیل مبتنی بر تحلیل ورودی متنی
 
-struct BubbleSort;
-impl SortStrategy for BubbleSort {
-    fn sort(&amp;self, data: &amp;mut Vec&lt;i32&gt;) {
-        // bubble sort ساده
-        let n = data.len();
-        for i in 0..n {
-            for j in 0..n-i-1 {
-                if data[j] &gt; data[j+1] { data.swap(j, j+1); }
-            }
+#[derive(Debug, PartialEq)]
+pub struct Port(u16);
+
+// پیاده‌سازی تریت استاندارد TryFrom به عنوان Factory تبدیل ایمن
+impl TryFrom<u32> for Port {
+    type Error = &'static str;
+    fn try_from(value: u32) -> Result<Self, Self::Error> {
+        if value > 0 && value <= 65535 {
+            Ok(Port(value as u16))
+        } else {
+            Err("شماره پورت نامعتبر است (باید بین ۱ تا ۶۵۵۳۵ باشد)")
         }
     }
 }
 
-struct Sorter { strategy: Box&lt;dyn SortStrategy&gt; }
-impl Sorter {
-    fn new(strategy: Box&lt;dyn SortStrategy&gt;) -&gt; Self { Sorter { strategy } }
-    fn sort(&amp;self, data: &amp;mut Vec&lt;i32&gt;) { self.strategy.sort(data); }
+fn main() {
+    let p = Port::try_from(443).expect("پورت معتبر");
+    // تریت معکوس `TryInto` نیز به‌طور خودکار فعال است:
+    let p2: Result<Port, _> = 8080u32.try_into();
+}</code></pre>
+        </div>
+        <div class="notes">استفاده از تریت‌های هسته راست برای ساخت انواع معتبر؛ بهره‌گیری از From و TryFrom به‌جای فکتوری‌های زائد شی‌گرا.</div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         COLUMN 4 (x=6000): الگوهای ساختاری (Structural Patterns)
+    ═══════════════════════════════════════════════════════════ -->
+
+    <div id="structural"
+         data-x="6000"
+         data-y="0"
+         data-z="0"
+         class="step slide rtl">
+        <div class="top-header">الگوهای ساختاری — اتصال و ترکیب کامپوننت‌ها</div>
+        <div class="info-box" style="margin-top:12px; font-size:32px;">
+            الگوهای ساختاری در Rust به کمک تریت‌ها و سیستم ماژولار بدون نیاز به وراثت، ترکیب‌پذیری فوق‌العاده بالایی با عملکرد صفر-هزینه فراهم می‌سازند.
+        </div>
+        <ul style="margin-top:16px; font-size:32px; line-height:1.7;">
+            <li>🛡️ <strong>Newtype:</strong> بسته‌بندی یک تایپ موجود در یک Struct تک‌فیلدی برای تفکیک معنایی بدون Overhead در حافظه.</li>
+            <li>🎨 <strong>Decorator:</strong> تزئین رفتار یک اینترفیس (تریت) با یک پوشاننده دیگر بر روی همان تریت.</li>
+            <li>🔌 <strong>Adapter:</strong> منطبق‌سازی یک کتابخانه یا نوع ناسازگار با استفاده از تریت‌های مشترک.</li>
+            <li>🏛️ <strong>Facade:</strong> سازمان‌دهی ماژول‌ها و صدور مجدد (<code>pub use</code>) توابع ساده‌سازی‌شده برای مصرف‌کننده خارجی.</li>
+            <li>🌲 <strong>Composite:</strong> ایجاد ساختارهای درختی یا گره‌های مرکب از طریق ترکیب بازگشتی <code>enum</code> یا <code>Box&lt;dyn Trait&gt;</code>.</li>
+        </ul>
+        <div class="notes">مرور الگوهای ساختاری فصل ششم کتاب راست: Adapter، Decorator، Facade و Newtype.</div>
+    </div>
+
+    <div id="newtype-pattern"
+         data-y="1100"
+         class="step slide rtl">
+        <div class="top-header">الگوی Newtype — ایمنی نوع بدون هزینه حافظه</div>
+        <div class="info-box" style="margin-top:10px; font-size:31px;">
+            ویژگی <code>#[repr(transparent)]</code> تضمین می‌کند که در سطح ماشین و حافظه، هیچ تفاوت و سرباری بین نوع جدید و نوع درونی وجود ندارد.
+        </div>
+        <div class="code-block" style="margin-top:10px;">
+<pre><code class="rust">// جلوگیری قطعی از اشتباه در مقادیر هم‌جنس (مانند شناسه‌های عددی یا واحدها)
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+pub struct UserId(pub u64);
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+pub struct OrderId(pub u64);
+
+fn cancel_order(user: UserId, order: OrderId) {
+    println!("لغو سفارش {} متعلق به کاربر {}", order.0, user.0);
 }
 
 fn main() {
-    let mut data = vec![5, 2, 8, 1, 9];
-    let sorter = Sorter::new(Box::new(BubbleSort));
-    sorter.sort(&amp;mut data);
-    println!("{:?}", data); // [1, 2, 5, 8, 9]
+    let user = UserId(1001);
+    let order = OrderId(5005);
+
+    // cancel_order(order, user); // ❌ خطای زمان کامپایل! ترتیب اشتباه غیرممکن است
+    cancel_order(user, order);    // ✅ کاملاً امن و واضح
+
+    // همچنین دور زدن قانون یتیم (Orphan Rule) برای پیاده‌سازی تریت خارجی روی نوع خارجی:
+    struct CustomVec(Vec<String>);
+    impl std::fmt::Display for CustomVec {
+        fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+            write!(f, "[{}]", self.0.join(", "))
+        }
+    }
 }</code></pre>
         </div>
-
-        <div class="notes">الگوی استراتژی (Strategy Pattern) با بهره‌گیری از تریت‌ها برای تزریق رفتارهای مختلف در زمان
-            کامپایل یا اجرا.
-        </div>
+        <div class="notes">مزایای چندگانه Newtype: تضمین ایمنی تایپ بدون هزینه ران‌تایم، حل محدودیت Orphan Rule و تعریف رابط مشخص.</div>
     </div>
 
-    <!-- Architectural Patterns -->
+    <div id="decorator-pattern"
+         data-y="2200"
+         class="step slide rtl">
+        <div class="top-header">الگوی Decorator اصیل در Rust</div>
+        <div class="info-box" style="margin-top:10px; font-size:31px;">
+            تزئین پویا یا ایستا: می‌توان دکوراتور را با جنریک‌ها به صورت ایستا (Inlined) یا با <code>Box&lt;dyn Trait&gt;</code> به صورت پویا زنجیره کرد.
+        </div>
+        <div class="code-block" style="margin-top:10px;">
+<pre><code class="rust">pub trait Evaluator {
+    fn eval(&self, expr: &str) -> Result<f64, String>;
+}
 
+pub struct BasicCalculator;
+impl Evaluator for BasicCalculator {
+    fn eval(&self, expr: &str) -> Result<f64, String> {
+        // محاسبه فرضی
+        Ok(42.0)
+    }
+}
+
+// دکوراتور ثبت لاگ (Logging Decorator) به کمک جنریک و کامپایل ایستا (Zero Cost)
+pub struct LoggingEvaluator<E: Evaluator> {
+    inner: E,
+}
+impl<E: Evaluator> LoggingEvaluator<E> {
+    pub fn new(inner: E) -> Self { Self { inner } }
+}
+impl<E: Evaluator> Evaluator for LoggingEvaluator<E> {
+    fn eval(&self, expr: &str) -> Result<f64, String> {
+        println!("🚀 در حال محاسبه عبارت: {expr}");
+        let res = self.inner.eval(expr);
+        println!("🏁 نتیجه به دست آمده: {res:?}");
+        res
+    }
+}</code></pre>
+        </div>
+        <div class="notes">پیاده‌سازی Decorator در راست به شکل ایستا با جنریک‌ها بدون سربار vtable و قابلیت ترکیب تودرتو.</div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         COLUMN 5 (x=8000): الگوهای رفتاری (Behavioral Patterns)
+    ═══════════════════════════════════════════════════════════ -->
+
+    <div id="behavioral"
+         data-x="8000"
+         data-y="0"
+         data-z="0"
+         class="step slide rtl">
+        <div class="top-header">الگوهای رفتاری — هماهنگی عملیات و حالت</div>
+        <div class="info-box" style="margin-top:12px; font-size:32px;">
+            در Rust الگوهای رفتاری به دلیل انطباق کامل با کلوژرها، تریت‌های <code>Fn</code> و تطبیق الگو (Pattern Matching) بسیار موجزتر از پیاده‌سازی‌های کلاسیک هستند.
+        </div>
+        <div class="two-col" style="margin-top:20px; font-size:30px;">
+            <div style="flex:1;">
+                <p><strong>🎯 الگوی استراتژی (Strategy):</strong></p>
+                <p style="font-size:28px;">می‌تواند از طریق یک تریت اختصاصی، و یا به سادگی از طریق ارسال یک Closure با امضای <code>impl Fn(...)</code> به تابع پیاده شود؛ بدون تعریف کلاس‌های اضافی!</p>
+                <p style="margin-top:16px;"><strong>📜 الگوی دستور (Command):</strong></p>
+                <p style="font-size:28px;">کپسوله‌سازی یک عمل به همراه داده‌های لازم برای اجرای آن و پیاده‌سازی قابلیت Undo/Redo با مدیریت دقیق مالکیت پشته تاریخچه.</p>
+            </div>
+            <div style="flex:1;">
+                <p><strong>👁️ الگوی ناظر (Observer):</strong></p>
+                <p style="font-size:28px;">به دلیل قوانین قرض‌گیری و جلوگیری از ارجاعات چرخه‌ای، با کانال‌های ارتباطی (<code>mpsc::channel</code>) یا لیست کالبک‌های تریت به شکلی امن بازنویسی می‌شود.</p>
+                <p style="margin-top:16px;"><strong>🔄 الگوی پیمایشگر (Iterator):</strong></p>
+                <p style="font-size:28px;">شهروند درجه یک در زبان Rust؛ با متد <code>next()</code> و ده‌ها مبدل تنبل (Lazy Adapters) با کارایی معادل حلقه‌های دستی C.</p>
+            </div>
+        </div>
+        <div class="notes">معرفی الگوهای رفتاری مطرح در فصول ۷ و ۸ کتاب (Command، Strategy، Observer، Iterator).</div>
+    </div>
+
+    <div id="strategy-pattern"
+         data-y="1100"
+         class="step slide rtl">
+        <div class="top-header">الگوی Strategy — با تریت‌ها و بستارها (Closures)</div>
+        <div class="info-box" style="margin-top:10px; font-size:31px;">
+            انعطاف دوگانه در Rust: استفاده از تریت برای استراتژی‌های پیچیده سازمانی، یا کلوژرها برای پیاده‌سازی‌های جمع‌وجور و سبک.
+        </div>
+        <div class="code-block" style="margin-top:10px;">
+<pre><code class="rust">// رویکرد اول: استراتژی کلاسیک با تریت (Dynamic / Boxed Strategy)
+pub trait CompressionStrategy {
+    fn compress(&self, data: &[u8]) -> Vec<u8>;
+}
+
+// رویکرد دوم (رویکرد فوق‌العاده شیک با Closure در زبان Rust):
+pub struct DataProcessor<F>
+where
+    F: Fn(&[u8]) -> Vec<u8>,
+{
+    strategy: F,
+}
+
+impl<F> DataProcessor<F>
+where
+    F: Fn(&[u8]) -> Vec<u8>,
+{
+    pub fn new(strategy: F) -> Self { Self { strategy } }
+    pub fn process(&self, data: &[u8]) -> Vec<u8> {
+        (self.strategy)(data)
+    }
+}
+
+fn main() {
+    // تزریق استراتژی در محل بدون نیاز به تعریف نوع و استراکت جدید!
+    let gzip_processor = DataProcessor::new(|bytes| {
+        println!("فشرده‌سازی با الگوریتم دلخواه...");
+        bytes.to_vec()
+    });
+    let output = gzip_processor.process(b"سلام دنیا");
+}</code></pre>
+        </div>
+        <div class="notes">پیاده‌سازی استراتژی با کلوژرها در راست؛ حذف کد زائد (Boilerplate) کلاس‌ها به نفع چندریختی مرتبه بالا.</div>
+    </div>
+
+    <div id="command-pattern"
+         data-y="2200"
+         class="step slide rtl">
+        <div class="top-header">الگوی Command با قابلیت بازگشت (Undo / Redo)</div>
+        <div class="info-box" style="margin-top:10px; font-size:31px;">
+            دستورات حالت قبلی را در درون خود ذخیره می‌کنند و تاریخچه از طریق یک بردار از <code>Box&lt;dyn Command&gt;</code> مدیریت می‌شود.
+        </div>
+        <div class="code-block" style="margin-top:10px;">
+<pre><code class="rust">pub trait Command {
+    fn execute(&mut self, state: &mut f64) -> Result<(), &'static str>;
+    fn undo(&mut self, state: &mut f64) -> Result<(), &'static str>;
+}
+
+pub struct AddCommand {
+    amount: f64,
+}
+impl AddCommand {
+    pub fn new(amount: f64) -> Self { Self { amount } }
+}
+impl Command for AddCommand {
+    fn execute(&mut self, state: &mut f64) -> Result<(), &'static str> {
+        *state += self.amount;
+        Ok(())
+    }
+    fn undo(&mut self, state: &mut f64) -> Result<(), &'static str> {
+        *state -= self.amount; // برگرداندن تغییرات
+        Ok(())
+    }
+}
+
+pub struct CommandManager {
+    history: Vec<Box<dyn Command>>,
+}
+impl CommandManager {
+    pub fn run(&mut self, mut cmd: Box<dyn Command>, state: &mut f64) {
+        if cmd.execute(state).is_ok() {
+            self.history.push(cmd);
+        }
+    }
+}</code></pre>
+        </div>
+        <div class="notes">الگوی فرمان در راست؛ نگهداری پشته تاریخچه دستورات و مدیریت دقیق مالکیت آبجکت‌های تریت در وکتور.</div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         COLUMN 6 (x=10000): الگوهای معماری و سبک Rust (Part 3 Book)
+    ═══════════════════════════════════════════════════════════ -->
 
     <div id="architectural"
          data-x="10000"
          data-y="0"
+         data-z="0"
          class="step slide rtl">
-        <div class="top-header">الگوهای معماری — RAII</div>
-        <div class="info-box" style="margin-top:10px; font-size:34px;">
-            RAII (Resource Acquisition Is Initialization) — منابع با شی tied هستند و با drop آزاد می‌شوند.
+        <div class="top-header">الگوهای معماری در سیستم‌های کلان Rust (Samsa)</div>
+        <div class="info-box" style="margin-top:14px; font-size:32px;">
+            در فصل نهم کتاب بر اساس پیاده‌سازی میکروسرویس Samsa (سامانه پیام‌رسان توزیع‌شده مشابه کافکا)، چهار اصل معماری کلیدی معرفی می‌شود:
+        </div>
+        <div class="two-col" style="margin-top:20px; font-size:30px;">
+            <div style="flex:1;">
+                <div class="info-box" style="font-size:28px;">
+                    <strong>۱. جریان داده رو‌به‌پایین (Data Flows Downward):</strong>
+                    داده‌ها از بالا به پایین منتقل می‌شوند (تولیدکننده -> بروکر -> مصرف‌کننده). هیچ رفرنس بالادستی وجود ندارد و خطر نشت یا چرخه‌های نامعتبر صفر است.
+                </div>
+                <div class="info-box" style="font-size:28px; margin-top:14px;">
+                    <strong>۲. مهار جهش‌پذیری (Mutability Stays Contained):</strong>
+                    پیام‌ها ذاتا تغییرناپذیرند. تغییرات فقط در هسته بروکر کنترل می‌شود و به بیرون سرایت نمی‌کند.
+                </div>
+            </div>
+            <div style="flex:1;">
+                <div class="info-box" style="font-size:28px;">
+                    <strong>۳. ماژول‌ها به‌مثابه واسط‌ها (Modules as Interfaces):</strong>
+                    ماژول‌ها مرز کپسوله‌سازی هستند. فقط ساختارهای ضروری با <code>pub</code> آشکار می‌شوند.
+                </div>
+                <div class="info-box" style="font-size:28px; margin-top:14px;">
+                    <strong>۴. ساختارهای سبک‌بال (Pack Lightly & Zero-Copy):</strong>
+                    بهره‌گیری از اسلایس‌ها و نماهای بدون کپی (Zero-Copy Views) به‌جای بسته‌بندی داده‌های سنگین تکراری در حافظه.
+                </div>
+            </div>
+        </div>
+        <div class="notes">اصول معماری سامانه Samsa در کتاب: جهت جریان داده، محدود کردن mutability و طراحی کم‌مصرف حافظه.</div>
+    </div>
+
+    <div id="raii-pattern"
+         data-y="1100"
+         class="step slide rtl">
+        <div class="top-header">الگوی معماری RAII و پاکسازی خودکار منابع</div>
+        <div class="info-box" style="margin-top:10px; font-size:31px;">
+            <strong>Resource Acquisition Is Initialization:</strong> گارانتی قطعی آزادسازی منابع (سوکت، فایل، قفل، حافظه گرافیک) در زمان خروج از اسکوپ، بدون نیاز به بلوک‌های دست‌وپاگیر <code>try-finally</code>.
         </div>
         <div class="code-block" style="margin-top:10px;">
 <pre><code class="rust">use std::fs::File;
 use std::io::Write;
 
-struct TempFile { path: String }
+pub struct TempDirectory {
+    path: std::path::PathBuf,
+}
 
-impl TempFile {
-    fn new(path: &amp;str) -&gt; std::io::Result&lt;Self&gt; {
-        File::create(path)?; // ایجاد فایل
-        Ok(TempFile { path: path.to_string() })
-    }
-    fn write(&amp;self, data: &amp;str) -&gt; std::io::Result&lt;()&gt; {
-        let mut f = File::options().append(true).open(&amp;self.path)?;
-        f.write_all(data.as_bytes())
+impl TempDirectory {
+    pub fn new(name: &str) -> std::io::Result<Self> {
+        let path = std::env::temp_dir().join(name);
+        std::fs::create_dir_all(&path)?;
+        Ok(Self { path })
     }
 }
 
-impl Drop for TempFile {
-    fn drop(&amp;mut self) {
-        // وقتی TempFile از scope خارج می‌شود، فایل پاک می‌شود
-        let _ = std::fs::remove_file(&amp;self.path);
-        println!("فایل {} حذف شد", self.path);
+// پیاده‌سازی Drop ضامن حذف حتمی دایرکتوری در پایان عمر شیء است
+impl Drop for TempDirectory {
+    fn drop(&mut self) {
+        if self.path.exists() {
+            let _ = std::fs::remove_dir_all(&self.path);
+            println!("🧹 دایرکتوری موقت با موفقیت پاکسازی شد: {:?}", self.path);
+        }
+    }
+}
+
+fn process_job() -> Result<(), Box<dyn std::error::Error>> {
+    let tmp = TempDirectory::new("rust_task_123")?;
+    // انجام عملیات و حتی در صورت وقوع خطا یا panic پیش از اتمام تابع:
+    // مفسر به صورت تضمین‌شده متد drop() را صدا زده و دایرکتوری پاک می‌شود!
+    Ok(())
+}</code></pre>
+        </div>
+        <div class="notes">بررسی RAII به عنوان مهم‌ترین الگوی تضمین امنیت منابع در زبان راست از طریق تریت Drop.</div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         COLUMN 7 (x=12000): الگوهای نوع‌محور و تابعی (Type System & FP)
+    ═══════════════════════════════════════════════════════════ -->
+
+    <div id="typestate-pattern"
+         data-x="12000"
+         data-y="0"
+         data-z="0"
+         class="step slide rtl">
+        <div class="top-header">الگوی انقلابی TypeState — مدیریت وضعیت در کامپایل</div>
+        <div class="info-box" style="margin-top:10px; font-size:31px;">
+            الگوی TypeState وضعیت شیء را در نوع جنریک آن کدگذاری می‌کند؛ متدهایی که در یک وضعیت نامعتبر هستند اصلاً در زمان کامپایل وجود ندارند!
+        </div>
+        <div class="code-block" style="margin-top:10px;">
+<pre><code class="rust">use std::marker::PhantomData;
+
+// نشانگرهای وضعیت (Zero-Sized Types بدون هزینه حافظه)
+pub struct Disconnected;
+pub struct Connected;
+
+pub struct Consumer<State> {
+    topic: String,
+    _state: PhantomData<State>,
+}
+
+impl Consumer<Disconnected> {
+    pub fn new(topic: impl Into<String>) -> Self {
+        Self { topic: topic.into(), _state: PhantomData }
+    }
+    // تغییر وضعیت با مصرف شیء قبلی و بازگرداندن نوع در وضعیت جدید
+    pub fn connect(self) -> Consumer<Connected> {
+        println!("اتصال به بروکر برقرار شد.");
+        Consumer { topic: self.topic, _state: PhantomData }
+    }
+}
+
+impl Consumer<Connected> {
+    pub fn poll_message(&self) -> Option<String> {
+        Some(format!("پیام از موضوع {}", self.topic))
     }
 }
 
 fn main() {
-    {
-        let tmp = TempFile::new("/tmp/test.txt").unwrap();
-        tmp.write("داده آزمایشی").unwrap();
-    } // ← اینجا drop() صدا زده می‌شود
-    // فایل دیگر وجود ندارد
+    let consumer = Consumer::new("orders");
+    // consumer.poll_message(); // ❌ خطای کامپایلر! در حالت Disconnected متد وجود ندارد!
+    let active = consumer.connect();
+    println!("{:?}", active.poll_message()); // ✅ معتبر و مطمئن در زمان کامپایل!
 }</code></pre>
         </div>
-
-        <div class="notes">الگوی RAII و مدیریت خودکار منابع (فایل‌ها، سوکت‌ها، قفل‌ها) با پیاده‌سازی تریت Drop.</div>
+        <div class="notes">الگوی شگفت‌انگیز TypeState از فصل ۱۰ کتاب: انتقال چک‌های حالت ران‌تایم به خطا در زمان کامپایل با ZST و PhantomData.</div>
     </div>
 
-    <!-- Functional Patterns -->
+    <div id="parse-dont-validate"
+         data-y="1100"
+         class="step slide rtl">
+        <div class="top-header">اصل «Parse, Don't Validate» و Sealed Traits</div>
+        <div class="info-box" style="margin-top:10px; font-size:31px;">
+            به جای بررسی تکراری شرط‌ها در سراسر برنامه (Validate)، داده را هنگام ورود به یک نوع تضمین‌شده تبدیل کنید (Parse) تا سیستم تایپ ضامن درستی آن باشد.
+        </div>
+        <div class="two-col" style="margin-top:12px;">
+            <div style="flex:1;">
+                <p style="font-size:28px; font-weight:bold;">✅ ساخت انواع خود-معتبرساز:</p>
+                <div class="code-block">
+<pre><code class="rust">#[derive(Debug, Clone, Copy)]
+pub struct PositiveU32(u32);
 
+impl PositiveU32 {
+    pub fn parse(val: u32) -> Result<Self, &'static str> {
+        if val > 0 { Ok(Self(val)) }
+        else { Err("باید بزرگتر از صفر باشد") }
+    }
+    pub fn get(self) -> u32 { self.0 }
+}
+// هر تابعی که PositiveU32 می‌گیرد، 
+// نیازی به بررسی مجدد ندارد!</code></pre>
+                </div>
+            </div>
+            <div style="flex:1;">
+                <p style="font-size:28px; font-weight:bold;">🔒 تریت‌های مهروموم‌شده (Sealed Traits):</p>
+                <div class="code-block">
+<pre><code class="rust">// جلوگیری از پیاده‌سازی تریت در کریت‌های دیگر
+mod private {
+    pub trait Sealed {}
+}
+
+pub trait SafeSchema: private::Sealed {
+    fn serialize(&self) -> Vec<u8>;
+}
+
+pub struct CoreSchema;
+impl private::Sealed for CoreSchema {}
+impl SafeSchema for CoreSchema {
+    fn serialize(&self) -> Vec<u8> { vec![] }
+}
+// کنترل کامل و حفظ سازگاری کریت در ارتقاها!</code></pre>
+                </div>
+            </div>
+        </div>
+        <div class="notes">معرفی الگوهای پیشرفته سیستم نوع در راست: Parse Don't Validate بر اساس مقاله الکسیس کینگ و Sealed Traits برای کنترل پیاده‌سازی‌ها.</div>
+    </div>
 
     <div id="functional"
-         data-x="12000"
-         data-y="0"
+         data-y="2200"
          class="step slide rtl">
-        <div class="top-header">الگوهای تابعی (Functional Style)</div>
-        <div class="info-box" style="margin-top:10px; font-size:33px;">
-            Rust از سبک تابعی پشتیبانی قوی می‌کند — iterator، map، filter، fold بدون هزینه اضافه.
+        <div class="top-header">الگوهای تابعی — خطوط لوله، بستارها و ایتراتورها</div>
+        <div class="info-box" style="margin-top:10px; font-size:31px;">
+            خط لوله توابع (Pipelines) و ایتراتورهای ارزیابی‌تنبل (Lazy) به کامپایلر اجازه می‌دهند عملیات را یکپارچه کرده و به کدی بهینه و عاری از تخصیص حافظه تبدیل کند.
         </div>
         <div class="code-block" style="margin-top:10px;">
-<pre><code class="rust">fn main() {
-    let numbers = vec![1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+<pre><code class="rust">#[derive(Debug)]
+struct Transaction { id: u64, amount: f64, verified: bool }
 
-    // زنجیره iterator — lazy evaluation
-    let result: Vec&lt;String&gt; = numbers.iter()
-        .filter(|&amp;&amp;x| x % 2 == 0)   // فقط زوج‌ها
-        .map(|&amp;x| x * x)             // مجذور
-        .filter(|&amp;x| x &gt; 10)         // بزرگتر از ۱۰
-        .map(|x| format!("{}²", (x as f64).sqrt() as i32))
-        .collect();
+fn main() {
+    let txs = vec![
+        Transaction { id: 1, amount: 120.0, verified: true },
+        Transaction { id: 2, amount: -50.0, verified: false },
+        Transaction { id: 3, amount: 300.0, verified: true },
+    ];
 
-    println!("{:?}", result); // ["4²", "6²", "8²", "10²"]
+    // خط لوله تابعی (Pipeline) — بدون نیاز به ایجاد وکتورهای موقت:
+    let total_verified: f64 = txs.iter()
+        .filter(|t| t.verified && t.amount > 0.0) // فیلتر تراکنش‌های مثبت معتبر
+        .map(|t| t.amount * 1.09)                 // محاسبه با احتساب مالیات
+        .fold(0.0, |acc, val| acc + val);          // تجمیع مقادیر
 
-    // fold — مشابه reduce
-    let sum: i32 = numbers.iter().fold(0, |acc, &amp;x| acc + x);
-    println!("مجموع: {}", sum); // 55
+    println!("مجموع پرداختی: {:.2}", total_verified);
 
-    // flat_map
-    let words = vec!["سلام دنیا", "Rust زیباست"];
-    let chars: Vec&lt;&amp;str&gt; = words.iter()
-        .flat_map(|s| s.split_whitespace())
-        .collect();
-    println!("{:?}", chars);
+    // تلفیق با Pattern Matching و if let
+    if let Some(first_large) = txs.iter().find(|t| t.amount >= 200.0) {
+        println!("تراکنش عمده کشف شد: شماره {}", first_large.id);
+    }
 }</code></pre>
         </div>
+        <div class="notes">سبک تابعی در راست: خطوط پردازش داده با Iterator و ترکیب Closureها، دستیابی به سادگی و سرعت بیشینه بدون تخصیص زائد.</div>
     </div>
 
+    <!-- ═══════════════════════════════════════════════════════════
+         COLUMN 8 (x=14000): جمع‌بندی، تفکر در Rust و راهبردها (Chapter 13 Book)
+    ═══════════════════════════════════════════════════════════ -->
 
-    <div class="notes">سبک برنامه‌نویسی تابعی در راست: زنجیره ایتراتورها، ارزیابی تنبل (lazy)، map، filter و fold با
-        کارایی بالا.
+    <div id="thinking-in-rust"
+         data-x="14000"
+         data-y="0"
+         data-z="0"
+         class="step slide rtl">
+        <div class="top-header">جمع‌بندی: از کدنویسی تا تفکر در Rust (Think in Rust)</div>
+        <div class="info-box" style="margin-top:16px; font-size:32px;">
+            فصل سیزدهم کتاب نتیجه می‌گیرد: تسلط بر Rust زمانی رخ می‌دهد که دیگر تلاش نکنید الگوهای زبان‌های قبلی خود را پیاده کنید، بلکه به زبان اجازه دهید شما را به سمت طراحی اصیل هدایت کند.
+        </div>
+        <div class="two-col" style="margin-top:20px; font-size:31px;">
+            <div style="flex:1;">
+                <p><strong>💡 اصول بنیادین تفکر در Rust:</strong></p>
+                <ul style="line-height:1.7;">
+                    <li><strong>مالکیت به‌مثابه فلسفه طراحی:</strong> ساختار داده‌ها را بر مبنای طول‌عمر و مالکان حقیقی مدل کنید.</li>
+                    <li><strong>ترکیب بر وراثت به شکلی طبیعی:</strong> تریت‌های کوچک، Structهای متمرکز و Enumهای گویای دامنه مسئله.</li>
+                    <li><strong>انتزاع‌های صفر-هزینه (Zero-Cost):</strong> کد تمیزتر مساوی با افت کارایی نیست؛ کامپایلر آن را بهینه می‌کند.</li>
+                </ul>
+            </div>
+            <div style="flex:1;">
+                <p><strong>🎯 توسعه هدایت‌شده توسط کامپایلر (CDD):</strong></p>
+                <ul style="line-height:1.7;">
+                    <li><strong>Borrow Checker مشاور معماری شماست:</strong> هر خطای قرض‌گیری نشانه‌ای از یک ابهام بالقوه در مرزهای تغییرپذیری است.</li>
+                    <li><strong>صراحت (Explicitness):</strong> خطرات و مدیریت خطاها با <code>Result / Option</code> در امضای توابع فریاد زده می‌شوند.</li>
+                    <li><strong>تایپ‌ها ضامن امنیت هستند:</strong> با TypeState، وضعیت نامعتبر غیرقابل‌نمایندگی است.</li>
+                </ul>
+            </div>
+        </div>
+        <div class="warn-box" style="margin-top:20px; font-size:31px;">
+            <em>«Make illegal states unrepresentable — با کمک سیستم تایپ، امکان ایجاد وضعیت نامعتبر در برنامه را در زمان کامپایل از بین ببرید!»</em>
+        </div>
+        <div class="notes">جمع‌بندی نهایی بخش الگوهای طراحی: چکیده درس‌های کتاب Design Patterns and Best Practices in Rust برای دستیابی به کد پایدار، خوانا و فوق‌سریع.</div>
     </div>
-</div>
-
 
 </div>
 
@@ -322,7 +1053,6 @@ fn main() {
 <div class="impress-progress"></div>
 
 <div id="impress-help"></div>
-
 
 <script src="../js/markdown.js"></script>
 <script src="../js/highlight.min.js"></script>
