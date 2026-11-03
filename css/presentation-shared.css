@@ -1,5 +1,189 @@
+        /* ── Design Tokens & System CSS Variables (Light Theme default) ── */
+        :root {
+            --nav-height: 42px;
+            --tab-bg-active: #ffffff;
+            --tab-bg-inactive: transparent;
+            --tab-border-color: #cbd5e1;
+            --nav-bg: #f1f5f9;
+            --nav-text: #475569;
+            --nav-text-hover: #0f172a;
+            --nav-active-text: #c2410c;
+            --nav-active-accent: #ea580c;
+            --nav-active-bridge: #ffffff;
+            --nav-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 
-        /* ── Professional Light IDE Code Block Styling (VS Code Light+ Inspired) ── */
+            --page-bg: #f1f5f9;
+            --page-grad-1: radial-gradient(at 100% 0%, rgba(226, 232, 240, 0.6) 0px, transparent 50%);
+            --page-grad-2: radial-gradient(at 0% 100%, rgba(241, 245, 249, 0.8) 0px, transparent 50%);
+            --page-color: #0f172a;
+
+            --slide-bg: #ffffff;
+            --slide-border: #e2e8f0;
+            --slide-text: #1e293b;
+            --slide-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.08), 0 8px 10px -6px rgba(15, 23, 42, 0.04);
+            --step-inactive-bg: rgba(255, 255, 255, 0.6);
+
+            --header-bg: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            --header-text: #ffffff;
+            --header-border: rgba(255, 255, 255, 0.08);
+            --header-shadow: 0 4px 12px rgba(15, 23, 42, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+
+            --code-bg: #ffffff;
+            --code-border: #d4d4d8;
+            --code-text: #0f172a;
+            --code-header-border: #f0f0f2;
+            --code-title: #64748b;
+            --code-line-hover: #f8fafc;
+            --gutter-bg: #fbfcfe;
+            --gutter-border: #e2e8f0;
+            --gutter-number: #8da0b3;
+            --code-scrollbar-track: #f8fafc;
+            --code-scrollbar-thumb: #cbd5e1;
+            --code-scrollbar-thumb-hover: #94a3b8;
+            --code-fade-top: linear-gradient(to bottom, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0) 100%);
+            --code-fade-bottom: linear-gradient(to top, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0) 100%);
+            --code-fade-border: rgba(226, 232, 240, 0.4);
+
+            --info-box-bg: #f0fdf4;
+            --info-box-border: #16a34a;
+            --info-box-sub-border: #dcfce7;
+            --info-box-color: #14532d;
+            --info-box-shadow: 0 2px 4px rgba(22, 163, 74, 0.06);
+
+            --warn-box-bg: #fffbeb;
+            --warn-box-border: #d97706;
+            --warn-box-sub-border: #fef3c7;
+            --warn-box-color: #78350f;
+            --warn-box-shadow: 0 2px 4px rgba(217, 119, 6, 0.06);
+
+            --table-border: #e2e8f0;
+            --table-th-bg: #0f172a;
+            --table-th-text: #ffffff;
+            --table-th-border: #334155;
+            --table-td-color: #334155;
+            --table-td-border: #e2e8f0;
+            --table-td-left-border: #f1f5f9;
+            --table-tr-even: #f8fafc;
+            --table-tr-hover: #f1f5f9;
+
+            --btn-bg: #ffffff;
+            --btn-border: #d1d5db;
+            --btn-text: #374151;
+            --btn-hover-bg: #f9fafb;
+            --btn-hover-text: #0f172a;
+            --btn-hover-border: #9ca3af;
+            --btn-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+
+            --logo-opacity: 0.04;
+            --robot-opacity: 0.7;
+
+            /* Syntax highlighting tokens (VS Code Light+) */
+            --hl-keyword: #0000ff;
+            --hl-type: #267f99;
+            --hl-function: #795e26;
+            --hl-string: #a31515;
+            --hl-number: #098658;
+            --hl-symbol: #001080;
+            --hl-comment: #008000;
+            --hl-meta: #811f3f;
+            --hl-variable: #001080;
+            --hl-literal: #0000ff;
+            --hl-operator: #000000;
+        }
+
+        /* ── Dark Theme Variables (VS Code Dark+ & Modern IDE Dark Inspired) ── */
+        html.dark-theme {
+            --tab-bg-active: #1e1e24;
+            --tab-bg-inactive: transparent;
+            --tab-border-color: #2e3440;
+            --nav-bg: #121316;
+            --nav-text: #94a3b8;
+            --nav-text-hover: #f1f5f9;
+            --nav-active-text: #fb923c;
+            --nav-active-accent: #f97316;
+            --nav-active-bridge: #1e1e24;
+            --nav-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+
+            --page-bg: #0d1117;
+            --page-grad-1: radial-gradient(at 100% 0%, rgba(30, 41, 59, 0.45) 0px, transparent 50%);
+            --page-grad-2: radial-gradient(at 0% 100%, rgba(15, 23, 42, 0.6) 0px, transparent 50%);
+            --page-color: #f1f5f9;
+
+            --slide-bg: #161b22;
+            --slide-border: #30363d;
+            --slide-text: #e6edf3;
+            --slide-shadow: 0 16px 36px -8px rgba(0, 0, 0, 0.6), 0 8px 16px -6px rgba(0, 0, 0, 0.4);
+            --step-inactive-bg: rgba(22, 27, 34, 0.7);
+
+            --header-bg: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            --header-text: #f8fafc;
+            --header-border: rgba(255, 255, 255, 0.12);
+            --header-shadow: 0 4px 16px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+
+            --code-bg: #1e1e24;
+            --code-border: #333842;
+            --code-text: #d4d4d4;
+            --code-header-border: #282c34;
+            --code-title: #94a3b8;
+            --code-line-hover: #262933;
+            --gutter-bg: #18191f;
+            --gutter-border: #2e3440;
+            --gutter-number: #64748b;
+            --code-scrollbar-track: #18191f;
+            --code-scrollbar-thumb: #3e4451;
+            --code-scrollbar-thumb-hover: #5c6370;
+            --code-fade-top: linear-gradient(to bottom, rgba(30, 30, 36, 0.95) 0%, rgba(30, 30, 36, 0) 100%);
+            --code-fade-bottom: linear-gradient(to top, rgba(30, 30, 36, 0.95) 0%, rgba(30, 30, 36, 0) 100%);
+            --code-fade-border: rgba(51, 56, 66, 0.5);
+
+            --info-box-bg: rgba(16, 185, 129, 0.12);
+            --info-box-border: #10b981;
+            --info-box-sub-border: rgba(16, 185, 129, 0.25);
+            --info-box-color: #6ee7b7;
+            --info-box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+
+            --warn-box-bg: rgba(245, 158, 11, 0.12);
+            --warn-box-border: #f59e0b;
+            --warn-box-sub-border: rgba(245, 158, 11, 0.25);
+            --warn-box-color: #fde68a;
+            --warn-box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+
+            --table-border: #30363d;
+            --table-th-bg: #090d13;
+            --table-th-text: #f1f5f9;
+            --table-th-border: #3b434e;
+            --table-td-color: #cbd5e1;
+            --table-td-border: #21262d;
+            --table-td-left-border: #21262d;
+            --table-tr-even: #1b2129;
+            --table-tr-hover: #232a35;
+
+            --btn-bg: #21262d;
+            --btn-border: #363d47;
+            --btn-text: #e6edf3;
+            --btn-hover-bg: #30363d;
+            --btn-hover-text: #ffffff;
+            --btn-hover-border: #586069;
+            --btn-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+
+            --logo-opacity: 0.08;
+            --robot-opacity: 0.45;
+
+            /* Syntax highlighting tokens (VS Code Dark+) */
+            --hl-keyword: #569cd6;
+            --hl-type: #4ec9b0;
+            --hl-function: #dcdcaa;
+            --hl-string: #ce9178;
+            --hl-number: #b5cea8;
+            --hl-symbol: #4fc1ff;
+            --hl-comment: #6a9955;
+            --hl-meta: #c586c0;
+            --hl-variable: #9cdcfe;
+            --hl-literal: #569cd6;
+            --hl-operator: #d4d4d4;
+        }
+
+        /* ── Professional IDE Code Block Styling ── */
         .code-block {
             direction: ltr;
             text-align: left;
@@ -14,20 +198,21 @@
             min-height: 0;
         }
         .code-block pre {
-            background: #ffffff;
-            color: #000000;
+            background: var(--code-bg);
+            color: var(--code-text);
             border-radius: 14px;
             padding: 20px 24px;
             margin: 10px 0;
             overflow-x: auto;
             overflow-y: auto;
             max-height: 680px;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.05);
-            border: 1px solid #d4d4d8;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15), 0 1px 3px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--code-border);
             position: relative;
             box-sizing: border-box;
             scrollbar-width: thin;
-            scrollbar-color: #cbd5e1 #f8fafc;
+            scrollbar-color: var(--code-scrollbar-thumb) var(--code-scrollbar-track);
+            transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
         }
         /* Top and Bottom Scroll Fade Indicators */
         .code-block::before,
@@ -45,14 +230,14 @@
         /* Top fade positioned right below the IDE code-header inside the pre */
         .code-block::before {
             top: 55px;
-            border-top: 1px solid rgba(226, 232, 240, 0.4);
-            background: linear-gradient(to bottom, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0) 100%);
+            border-top: 1px solid var(--code-fade-border);
+            background: var(--code-fade-top);
         }
         /* Bottom fade positioned at bottom of the code container */
         .code-block::after {
             bottom: 11px;
             border-bottom-left-radius: 12px;
-            background: linear-gradient(to top, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0) 100%);
+            background: var(--code-fade-bottom);
         }
         .code-block.fade-top::before {
             opacity: 1;
@@ -65,24 +250,24 @@
             height: 8px;
         }
         .code-block pre::-webkit-scrollbar-track {
-            background: #f8fafc;
+            background: var(--code-scrollbar-track);
             border-radius: 4px;
         }
         .code-block pre::-webkit-scrollbar-thumb {
-            background-color: #cbd5e1;
+            background-color: var(--code-scrollbar-thumb);
             border-radius: 4px;
         }
         .code-block pre::-webkit-scrollbar-thumb:hover {
-            background-color: #94a3b8;
+            background-color: var(--code-scrollbar-thumb-hover);
         }
-        /* IDE Window Header (macOS / VS Code light style) */
+        /* IDE Window Header (macOS / VS Code light & dark style) */
         .code-header {
             display: flex;
             align-items: center;
             gap: 8px;
             margin-bottom: 14px;
             padding-bottom: 8px;
-            border-bottom: 1px solid #f0f0f2;
+            border-bottom: 1px solid var(--code-header-border);
             user-select: none;
             -webkit-user-select: none;
         }
@@ -127,7 +312,7 @@
             margin-left: 8px;
             font-size: 14px;
             font-weight: 600;
-            color: #64748b;
+            color: var(--code-title);
             font-family: 'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
             letter-spacing: 0.5px;
             text-transform: uppercase;
@@ -145,13 +330,13 @@
             border-collapse: collapse;
         }
 
-        /* ── IDE Line Numbers & Light-Gray Gutter ── */
+        /* ── IDE Line Numbers & Gutter ── */
         .code-line {
             display: table-row;
             line-height: 1.55;
         }
         .code-line:hover {
-            background-color: #f8fafc;
+            background-color: var(--code-line-hover);
         }
         .line-number {
             display: table-cell;
@@ -160,32 +345,33 @@
             text-align: right;
             padding-right: 20px;
             padding-left: 4px;
-            color: #8da0b3; /* Professional soft muted gray */
+            color: var(--gutter-number);
             font-size: 19px;
             font-weight: 500;
             vertical-align: top;
             width: 1%;
             white-space: nowrap;
-            border-right: 1.5px solid #e2e8f0;
-            background-color: #fbfcfe;
+            border-right: 1.5px solid var(--gutter-border);
+            background-color: var(--gutter-bg);
+            transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
         }
         .line-content {
             display: table-cell;
             padding-left: 20px;
             vertical-align: top;
             white-space: pre;
-            color: #0f172a; /* High-contrast crisp dark text */
+            color: var(--code-text);
         }
 
-        /* ── Professional Light IDE Syntax Highlighting (VS Code Light+) ── */
+        /* ── Professional IDE Syntax Highlighting ── */
         .hljs {
-            color: #0f172a;
+            color: var(--code-text);
             background: transparent;
         }
         /* Keywords (fn, let, mut, struct, impl, trait, pub, return, match, if, else, loop, for, in, move) */
         .hljs-keyword,
         .hljs-selector-tag {
-            color: #0000ff !important; /* Classic VS Code Light royal blue */
+            color: var(--hl-keyword) !important;
             font-weight: 600;
         }
         /* Types & Built-ins (i32, u64, String, Vec, Option, Result, bool, &str, Box, Arc, Mutex) */
@@ -193,59 +379,59 @@
         .hljs-built_in,
         .hljs-class .hljs-title,
         .hljs-title.class_ {
-            color: #267f99 !important; /* Deep ocean teal */
+            color: var(--hl-type) !important;
             font-weight: 600;
         }
         /* Function & Method definitions & calls */
         .hljs-function,
         .hljs-title.function_,
         .hljs-title {
-            color: #795e26 !important; /* Deep amber gold */
+            color: var(--hl-function) !important;
             font-weight: 600;
         }
         /* Strings */
         .hljs-string {
-            color: #a31515 !important; /* Warm crimson red */
+            color: var(--hl-string) !important;
         }
         /* Numbers */
         .hljs-number {
-            color: #098658 !important; /* Vibrant forest green */
+            color: var(--hl-number) !important;
             font-weight: 500;
         }
         /* Lifetimes & Symbols ('a, &mut, ::) */
         .hljs-symbol {
-            color: #001080 !important;
+            color: var(--hl-symbol) !important;
             font-style: italic;
             font-weight: 600;
         }
         /* Comments */
         .hljs-comment,
         .hljs-quote {
-            color: #008000 !important; /* Crisp emerald comment green */
+            color: var(--hl-comment) !important;
             font-style: italic;
         }
         /* Macros & Attributes (#[derive], #[tokio::main], println!, format!) */
         .hljs-meta,
         .hljs-meta .hljs-keyword,
         .hljs-meta .hljs-string {
-            color: #811f3f !important; /* Rich wine berry */
+            color: var(--hl-meta) !important;
             font-weight: 500;
         }
         /* Variables, parameters & properties */
         .hljs-variable,
         .hljs-params,
         .hljs-attr {
-            color: #001080 !important; /* Deep navy */
+            color: var(--hl-variable) !important;
         }
         /* Literals (true, false, None, Some, Ok, Err) */
         .hljs-literal {
-            color: #0000ff !important;
+            color: var(--hl-literal) !important;
             font-weight: 600;
         }
         /* Operators & punctuation */
         .hljs-operator,
         .hljs-punctuation {
-            color: #000000 !important;
+            color: var(--hl-operator) !important;
         }
 
         /* Two-column layout helper */
@@ -262,37 +448,41 @@
             border-spacing: 0;
             font-size: 28px;
             direction: rtl;
-            border: 1px solid #e2e8f0;
+            border: 1px solid var(--table-border);
             border-radius: 12px;
             overflow: hidden;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
             margin: 14px 0;
+            background: var(--slide-bg);
+            transition: border-color 0.2s ease, background 0.2s ease;
         }
         .cmp-table th {
-            background: #0f172a;
-            color: #ffffff;
+            background: var(--table-th-bg);
+            color: var(--table-th-text);
             font-weight: 600;
             padding: 12px 18px;
             text-align: right;
-            border-bottom: 2px solid #334155;
+            border-bottom: 2px solid var(--table-th-border);
             font-size: 30px;
+            transition: background 0.2s ease, color 0.2s ease;
         }
         .cmp-table td {
-            border-bottom: 1px solid #e2e8f0;
-            border-left: 1px solid #f1f5f9;
+            border-bottom: 1px solid var(--table-td-border);
+            border-left: 1px solid var(--table-td-left-border);
             padding: 10px 18px;
             vertical-align: middle;
-            color: #334155;
+            color: var(--table-td-color);
             line-height: 1.5;
+            transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
         }
         .cmp-table tr:last-child td {
             border-bottom: none;
         }
         .cmp-table tr:nth-child(even) td {
-            background: #f8fafc;
+            background: var(--table-tr-even);
         }
         .cmp-table tr:hover td {
-            background: #f1f5f9;
+            background: var(--table-tr-hover);
         }
 
         /* Bullet list font-size override for dense slides */
@@ -301,42 +491,37 @@
 
         /* ── Modern Polished Callout Boxes ── */
         .info-box {
-            background: #f0fdf4;
-            border-right: 5px solid #16a34a;
-            border-left: 1px solid #dcfce7;
-            border-top: 1px solid #dcfce7;
-            border-bottom: 1px solid #dcfce7;
+            background: var(--info-box-bg);
+            border-right: 5px solid var(--info-box-border);
+            border-left: 1px solid var(--info-box-sub-border);
+            border-top: 1px solid var(--info-box-sub-border);
+            border-bottom: 1px solid var(--info-box-sub-border);
             border-radius: 10px;
             padding: 14px 22px;
             margin: 14px 0;
             font-size: 33px;
-            color: #14532d;
-            box-shadow: 0 2px 4px rgba(22, 163, 74, 0.06);
+            color: var(--info-box-color);
+            box-shadow: var(--info-box-shadow);
             line-height: 1.55;
+            transition: all 0.2s ease;
         }
         .warn-box {
-            background: #fffbeb;
-            border-right: 5px solid #d97706;
-            border-left: 1px solid #fef3c7;
-            border-top: 1px solid #fef3c7;
-            border-bottom: 1px solid #fef3c7;
+            background: var(--warn-box-bg);
+            border-right: 5px solid var(--warn-box-border);
+            border-left: 1px solid var(--warn-box-sub-border);
+            border-top: 1px solid var(--warn-box-sub-border);
+            border-bottom: 1px solid var(--warn-box-sub-border);
             border-radius: 10px;
             padding: 14px 22px;
             margin: 14px 0;
             font-size: 33px;
-            color: #78350f;
-            box-shadow: 0 2px 4px rgba(217, 119, 6, 0.06);
+            color: var(--warn-box-color);
+            box-shadow: var(--warn-box-shadow);
             line-height: 1.55;
+            transition: all 0.2s ease;
         }
     
-        /* ── Professional IDE-Style Tab Navigation (Seamless Browser Tabs) ── */
-        :root {
-            --nav-height: 42px;
-            --tab-bg-active: #ffffff;
-            --tab-bg-inactive: transparent;
-            --tab-border-color: #cbd5e1;
-        }
-
+        /* ── Professional IDE-Style Tab Navigation ── */
         body {
             padding-top: var(--nav-height) !important;
             margin: 0 !important;
@@ -362,14 +547,15 @@
             align-items: flex-end;
             justify-content: space-between;
             padding: 0 16px;
-            background: #f1f5f9; /* Clean slate tab bar */
+            background: var(--nav-bg);
             border-bottom: 1px solid var(--tab-border-color);
-            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+            box-shadow: var(--nav-shadow);
             font-family: Vazirmatn, -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, sans-serif;
             direction: rtl;
             box-sizing: border-box;
             user-select: none;
             -webkit-user-select: none;
+            transition: background 0.2s ease, border-color 0.2s ease;
         }
 
         .nav-sections {
@@ -387,7 +573,7 @@
         .nav-controls {
             display: flex;
             align-items: center;
-            gap: 4px;
+            gap: 8px;
             height: 100%;
             flex-shrink: 0;
             padding-bottom: 4px;
@@ -406,7 +592,7 @@
             border-radius: 6px 6px 0 0;
             font-size: 13.5px;
             font-weight: 500;
-            color: #475569;
+            color: var(--nav-text);
             text-decoration: none;
             transition: all 0.15s ease;
             white-space: nowrap;
@@ -415,23 +601,23 @@
             border-bottom: none;
             background: var(--tab-bg-inactive);
             position: relative;
-            margin-bottom: -1px; /* Seamless overlap onto tab-bar bottom border */
+            margin-bottom: -1px;
             box-sizing: border-box;
         }
 
         .presentation-nav a:hover:not(.active) {
-            color: #111827;
-            background: rgba(255, 255, 255, 0.5);
+            color: var(--nav-text-hover);
+            background: rgba(125, 125, 125, 0.15);
         }
 
-        /* Seamless Active Tab (Visual continuation into presentation area) */
+        /* Seamless Active Tab */
         .presentation-nav a.active {
-            color: #c2410c !important; /* Rust warm orange/red */
+            color: var(--nav-active-text) !important;
             font-weight: 700;
             background: var(--tab-bg-active) !important;
             border-color: var(--tab-border-color) !important;
-            border-bottom: 2px solid #ffffff !important; /* Bridges seamlessly over bottom border */
-            box-shadow: 0 -2px 6px rgba(15, 23, 42, 0.04);
+            border-bottom: 2px solid var(--nav-active-bridge) !important;
+            box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.08);
             z-index: 2;
         }
         .presentation-nav a.active::after {
@@ -441,27 +627,52 @@
             left: 0;
             right: 0;
             height: 2px;
-            background: #ea580c;
+            background: var(--nav-active-accent);
             border-radius: 4px 4px 0 0;
         }
 
-        /* Prev / Next Minimal Controls */
-        .nav-prev-next {
-            height: 26px !important;
-            padding: 0 10px !important;
-            font-size: 12px !important;
-            font-weight: 500 !important;
-            color: #4b5563 !important;
-            background: #ffffff !important;
-            border: 1px solid #d1d5db !important;
-            border-radius: 4px !important;
-            margin-bottom: 0 !important;
-            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+        /* ── Dark / Light Theme Toggle Button ── */
+        .theme-toggle-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            height: 28px;
+            padding: 0 12px;
+            font-size: 12.5px;
+            font-weight: 600;
+            font-family: inherit;
+            color: var(--btn-text);
+            background: var(--btn-bg);
+            border: 1px solid var(--btn-border);
+            border-radius: 6px;
+            cursor: pointer;
+            box-shadow: var(--btn-shadow);
+            transition: all 0.18s ease;
+            pointer-events: auto !important;
+            user-select: none;
+            -webkit-user-select: none;
+            line-height: 1;
+            margin-bottom: 0;
         }
-        .nav-prev-next:hover {
-            background: #f9fafb !important;
-            color: #111827 !important;
-            border-color: #9ca3af !important;
+        .theme-toggle-btn:hover {
+            background: var(--btn-hover-bg);
+            color: var(--btn-hover-text);
+            border-color: var(--btn-hover-border);
+            transform: translateY(-1px);
+        }
+        .theme-toggle-btn:active {
+            transform: translateY(0);
+        }
+        .theme-toggle-icon {
+            font-size: 14px;
+            display: inline-block;
+            line-height: 1;
+        }
+        .theme-toggle-text {
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: -0.2px;
         }
 
         /* ── Mobile Responsive Drawer (<820px) ── */
@@ -473,13 +684,14 @@
             padding: 0 10px;
             font-size: 13px;
             font-family: inherit;
-            background: #ffffff;
-            border: 1px solid #d1d5db;
-            border-radius: 4px;
+            background: var(--btn-bg);
+            border: 1px solid var(--btn-border);
+            border-radius: 6px;
             cursor: pointer;
-            color: #374151;
-            margin-bottom: 5px;
+            color: var(--btn-text);
+            margin-bottom: 4px;
             pointer-events: auto !important;
+            transition: all 0.15s ease;
         }
 
         @media (max-width: 820px) {
@@ -493,13 +705,13 @@
                 left: 0;
                 right: 0;
                 height: auto;
-                background: #ffffff;
+                background: var(--nav-bg);
                 flex-direction: column;
                 align-items: stretch;
                 padding: 6px;
                 gap: 2px;
                 border-bottom: 1px solid var(--tab-border-color);
-                box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+                box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
                 z-index: 101;
             }
             .nav-sections.open {
@@ -513,9 +725,9 @@
                 margin-bottom: 0;
             }
             .presentation-nav a.active {
-                border-bottom: 1px solid #d1d5db !important;
-                border-right: 3px solid #ea580c !important;
-                background: #f3f4f6 !important;
+                border-bottom: 1px solid var(--tab-border-color) !important;
+                border-right: 3px solid var(--nav-active-accent) !important;
+                background: var(--tab-bg-active) !important;
             }
             .presentation-nav a.active::after {
                 display: none;

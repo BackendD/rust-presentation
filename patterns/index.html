@@ -10,6 +10,7 @@
     <link href="../css/impress-common.css" rel="stylesheet"/>
     <link href="../css/presentation.css" rel="stylesheet"/>
     <link href="../css/presentation-shared.css" rel="stylesheet"/>
+    <script src="../js/theme.js"></script>
 </head>
 <body class="impress-not-supported">
 
@@ -26,7 +27,10 @@
         </div>
     </div>
     <div class="nav-controls">
-        <a href="../sideline/index.html" class="nav-prev-next" title="مقایسه و حواشی">‹ قبلی</a>
+        <button class="theme-toggle-btn" onclick="toggleTheme()" aria-label="تغییر تم" title="تغییر تم">
+            <span class="theme-toggle-icon">🌙</span>
+            <span class="theme-toggle-text">تاریک</span>
+        </button>
     </div>
 </nav>
 
@@ -94,7 +98,7 @@
         </div>
         <table class="cmp-table" style="margin-top:20px; font-size:27px;">
             <thead>
-                <tr style="background:#f8fafc; font-weight:bold;">
+                <tr style="font-weight:bold;">
                     <th style="padding:10px 14px;">ضدالگو (Anti-Pattern)</th>
                     <th style="padding:10px 14px;">انگیزه اولیه برنامه‌نویس</th>
                     <th style="padding:10px 14px;">پیامد و هزینه در Rust</th>
@@ -452,7 +456,7 @@ pub fn get_config() -> &'static AppConfig {
         </div>
         <table class="cmp-table" style="margin-top:24px; font-size:28px;">
             <thead>
-                <tr style="background:#f8fafc; font-weight:bold;">
+                <tr style="font-weight:bold;">
                     <th style="padding:12px 16px;">الگو</th>
                     <th style="padding:12px 16px;">رویکرد سنتی شی‌گرایی</th>
                     <th style="padding:12px 16px;">معادل و نحوه تحقق در Rust</th>
