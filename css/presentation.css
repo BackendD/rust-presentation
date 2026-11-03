@@ -111,10 +111,13 @@ img {
 */
 .slide {
     position: relative;
-    display: block;
+    display: flex;
+    flex-direction: column;
 
     width: 1850px;
     height: 1000px;
+    max-height: 1000px;
+    overflow: hidden;
     padding: 36px 44px;
     margin: 20px auto;
 

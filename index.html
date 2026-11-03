@@ -527,13 +527,50 @@ println!("{}", grade);</code></pre>
         });
     }
 
+    // Function to monitor scroll positions and dynamically toggle fade indicators
+    function updateCodeBlockScrollFades() {
+        document.querySelectorAll(".code-block").forEach(function (container) {
+            var pre = container.querySelector("pre");
+            if (!pre) return;
+
+            function checkFades() {
+                var canScrollUp = pre.scrollTop > 3;
+                var canScrollDown = (pre.scrollHeight - pre.clientHeight - pre.scrollTop) > 3;
+
+                if (canScrollUp) {
+                    container.classList.add("fade-top");
+                } else {
+                    container.classList.remove("fade-top");
+                }
+
+                if (canScrollDown) {
+                    container.classList.add("fade-bottom");
+                } else {
+                    container.classList.remove("fade-bottom");
+                }
+            }
+
+            if (!pre.dataset.fadeListenerBound) {
+                pre.addEventListener("scroll", checkFades, { passive: true });
+                pre.dataset.fadeListenerBound = "true";
+            }
+
+            checkFades();
+        });
+    }
+
     // Run on page load
     applySyntaxHighlightingAndLineNumbers();
+    updateCodeBlockScrollFades();
 
     // Re-check on impress navigation to ensure any dynamic/rendered slide is properly styled
     document.addEventListener("impress:stepenter", function(event) {
         applySyntaxHighlightingAndLineNumbers();
+        setTimeout(updateCodeBlockScrollFades, 50);
     });
+
+    // Also update on window resize
+    window.addEventListener("resize", updateCodeBlockScrollFades);
 
     impress().init();
 </script>
