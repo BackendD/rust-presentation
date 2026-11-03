@@ -404,16 +404,16 @@
     function applySyntaxHighlightingAndLineNumbers() {
         if (!window.hljs) return;
 
-        // Ensure IDE window header buttons exist in all pre blocks
-        document.querySelectorAll(".code-block pre").forEach(function(pre) {
-            if (!pre.querySelector(".code-header")) {
+        // Ensure IDE window header buttons exist in all code blocks
+        document.querySelectorAll(".code-block").forEach(function(container) {
+            if (!container.querySelector(".code-header")) {
                 var header = document.createElement("div");
                 header.className = "code-header";
                 header.innerHTML = '<span class="code-btn code-btn-close" title="Close"></span>' +
                                    '<span class="code-btn code-btn-minimize" title="Minimize"></span>' +
                                    '<span class="code-btn code-btn-maximize" title="Maximize"></span>' +
                                    '<span class="code-title">rust</span>';
-                pre.insertBefore(header, pre.firstChild);
+                container.insertBefore(header, container.firstChild);
             }
         });
 

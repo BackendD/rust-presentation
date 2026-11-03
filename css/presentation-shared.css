@@ -192,51 +192,60 @@
             min-height: 0;
             display: flex;
             flex-direction: column;
+            background: var(--code-bg);
+            border-radius: 14px;
+            margin: 10px 0;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15), 0 1px 3px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--code-border);
+            overflow: hidden;
+            box-sizing: border-box;
+            transition: background 0.2s ease, border-color 0.2s ease;
         }
         .two-col .code-block {
             flex: 1 1 0;
             min-height: 0;
         }
         .code-block pre {
-            background: var(--code-bg);
+            background: transparent;
             color: var(--code-text);
-            border-radius: 14px;
-            padding: 20px 24px;
-            margin: 10px 0;
+            border-radius: 0;
+            padding: 10px 24px 20px 24px;
+            margin: 0;
             overflow-x: auto;
             overflow-y: auto;
-            max-height: 680px;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15), 0 1px 3px rgba(0, 0, 0, 0.1);
-            border: 1px solid var(--code-border);
+            max-height: 620px;
+            box-shadow: none;
+            border: none;
             position: relative;
             box-sizing: border-box;
             scrollbar-width: thin;
             scrollbar-color: var(--code-scrollbar-thumb) var(--code-scrollbar-track);
-            transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+            transition: color 0.2s ease;
         }
         /* Top and Bottom Scroll Fade Indicators */
         .code-block::before,
         .code-block::after {
             content: "";
             position: absolute;
-            left: 2px;
-            right: 12px; /* Leave space so scrollbar thumb remains crisp */
+            left: 0;
+            right: 0;
             height: 38px;
             pointer-events: none;
             z-index: 10;
             opacity: 0;
             transition: opacity 0.22s ease-in-out;
         }
-        /* Top fade positioned right below the IDE code-header inside the pre */
+        /* Top fade positioned right below the IDE code-header inside the scrollable content area */
         .code-block::before {
-            top: 55px;
+            top: 45px;
             border-top: 1px solid var(--code-fade-border);
             background: var(--code-fade-top);
         }
         /* Bottom fade positioned at bottom of the code container */
         .code-block::after {
-            bottom: 11px;
-            border-bottom-left-radius: 12px;
+            bottom: 0;
+            border-bottom-left-radius: 13px;
+            border-bottom-right-radius: 13px;
             background: var(--code-fade-bottom);
         }
         .code-block.fade-top::before {
@@ -265,11 +274,15 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            margin-bottom: 14px;
-            padding-bottom: 8px;
+            padding: 12px 20px 10px 20px;
             border-bottom: 1px solid var(--code-header-border);
+            background: var(--code-bg);
+            flex-shrink: 0;
+            position: relative;
+            z-index: 20;
             user-select: none;
             -webkit-user-select: none;
+            transition: background 0.2s ease, border-color 0.2s ease;
         }
         /* Code block control buttons: strictly circular, aspect-ratio 1/1 */
         .code-btn {
